@@ -3,8 +3,10 @@ namespace FinalProject.Data;
 // Paged class to hold paged data and paging information
 public class Paged<T> : PagedProps {  
 
+    // List to hold the actual data items for the current page
     public List<T> Data { get; set; } = new();
   
+   // Property to expose paging information
     public PagedProps Pages =>  new PagedProps {
         TotalRows = TotalRows,
         CurrentPage = CurrentPage,
