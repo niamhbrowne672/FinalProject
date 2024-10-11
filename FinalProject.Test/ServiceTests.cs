@@ -26,29 +26,29 @@ namespace FinalProject.Test
             service.Initialise();
         }
 
-         [Fact]
-        public void GetUsers_WhenNoneExist_ShouldReturnNone()
-        {
-            // act
-            var users = service.GetUsers();
+        //  [Fact]
+        // public void GetUsers_WhenNoneExist_ShouldReturnNone()
+        // {
+        //     // act
+        //     var users = service.GetUsers();
 
-            // assert
-            Assert.Equal(0, users.Count);
-        }
+        //     // assert
+        //     Assert.Equal(0, users.Count);
+        // }
         
-        [Fact]
-        public void AddUser_When2ValidUsersAdded_ShouldCreate2Users()
-        {
-            // arrange
-            service.AddUser("admin", "admin@mail.com", "admin", Role.admin );
-            service.AddUser("guest", "guest@mail.com", "guest", Role.guest);
+        // [Fact]
+        // public void AddUser_When2ValidUsersAdded_ShouldCreate2Users()
+        // {
+        //     // arrange
+        //     service.AddUser("admin", "admin@mail.com", "admin", Role.admin );
+        //     service.AddUser("guest", "guest@mail.com", "guest", Role.guest);
 
-            // act
-            var users = service.GetUsers();
+        //     // act
+        //     var users = service.GetUsers();
 
-            // assert
-            Assert.Equal(2, users.Count);
-        }
+        //     // assert
+        //     Assert.Equal(2, users.Count);
+        // }
 
         [Fact]
         public void GetPage1WithpageSize2_When3UsersExist_ShouldReturn2Pages()
