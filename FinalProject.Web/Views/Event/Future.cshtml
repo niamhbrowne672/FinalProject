@@ -1,0 +1,54 @@
+@model Paged<Event>
+
+<h3 class ="mb-3">Future Events</h3>
+
+@if (User.IsInRole("admin"))
+{
+    <a class="btn btn-primary" asp-controller="Future" asp-action="Create">Create New Event</a>
+}
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>
+                Id
+                <vc:sort-link column="id" />
+            </th>
+            <th>
+                Title
+                <vc:sort-link column="title" />
+            </th>
+            <th>
+                Date
+                <vc:sort-link column="date" />
+            </th>
+            <th>
+                Location
+                <vc:sort-link column="location" />
+            </th>
+            @if (User.IsInRole("admin"))
+            {
+                <th>Actions</th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var e in Model.Data) {
+            <tr>
+                <td>@e.Id</td>
+                <td>@e.Title</td>
+                <td>@e.Date.ToString("dd MMM yyyy")</td>
+                <td>@e.Location</td>
+                @if (User.IsInRole("admin"))
+                {
+                    <td>
+                        <a asp-controller="Future" asp-action="Edit" asp-route-id="@e.Id">Edit</a> |
+                        <a asp-controller="Future" asp-action="Delete" asp-route-id="@e.Id">Delete</a>
+                    </td>
+                }
+            </tr>
+        }
+    </tbody>
+</table>
+
+<vc:paginator pages="@Model.Pages" />

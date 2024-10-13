@@ -1,0 +1,13 @@
+@model int // Event Id
+
+<div class="mt-3">
+    <form asp-action="UploadImage" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="eventId" value="@Model" />
+        <div class="mb-3">
+            <label class="form-label">Upload Image</label>
+            <input type="file" name="imageFile" class="form-control" required />
+        </div>
+        <button type="submit" class="btn btn-primary">Upload</button>
+        <a class="btn btn-link" hx-get="@Url.Action("Index", "Past")" hx-target="#image-upload-@Model" hx-swap="innerHTML">Cancel</a>
+    </form>
+</div>

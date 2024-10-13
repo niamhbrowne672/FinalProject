@@ -14,6 +14,7 @@ namespace FinalProject.Data.Repositories
          // authentication store
         public DbSet<User> Users { get; set; }
         public DbSet<Post> Posts { get; set; }
+        public DbSet<Event> Events { get; set; }
         public DbSet<ForgotPassword> ForgotPasswords { get; set; }
         
         public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)
