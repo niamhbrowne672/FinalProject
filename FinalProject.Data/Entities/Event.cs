@@ -10,10 +10,11 @@ public class Event
     [Required]
     public DateTime Date { get; set; }
     [Required]
-    public string Time { get; set; }  // If you want time separately
+    public string Time { get; set; }  // time separate to date
     [Required]
-    public string Location { get; set; }  // You can add Google Maps URL here later
+    public string Location { get; set; }  // I can add Google Maps URL here later
     public string Description { get; set; }
+    [Url]
     public string ImageUrl { get; set; }  // URL for the image
     public int UserId { get; set; }  // Foreign key for user who created the event
 
