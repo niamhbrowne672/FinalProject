@@ -1,2 +1,29 @@
 @model Paged<Event>
-    
+
+    <h3 class="mb-3">Woof & Wander Events</h3>
+
+    <a class="btn btn-primary" asp-asp-controller="Event" asp-action="Create">Create Event</a>
+
+    <table class="table table-hover mt-4">
+        <thead>
+            <tr>
+                <th>Id <vc:vc:sort-link column="id"/></th>
+                <th>Title <vc:vc:sort-link column="title"/></th>
+                <th>Date <vc:vc:sort-link column="date"/></th>
+                <th>Location</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var e in Model.Data)
+            {
+                <tr>
+                    <td>@e.Id</td>
+                    <td>@e.Title</td>
+                    <td>@e.Date</td>
+                    <td>@e.Location</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <vc:paginator pages="@Model.Pages"/>
