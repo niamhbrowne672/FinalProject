@@ -27,19 +27,33 @@ public class PastController : BaseController
         return View(paged);
     }
 
-    [HttpPost]
-    [Authorize]
-    public async Task<IActionResult> UploadImage(int eventId, IFormFile imageFile)
-    {
-        if (imageFile != null && imageFile.Length > 0)
-        {
-            // Assuming you have a method to handle saving the image
-            await _eventService.UploadImage(eventId, imageFile);
-        }
+//    // HTTP POST - Upload Image for an Event
+//     [HttpPost]
+//     [Authorize]
+//     public async Task<IActionResult> UploadImage(int eventId, IFormFile imageFile)
+//     {
+//         if (imageFile != null && imageFile.Length > 0)
+//         {
+//             try
+//             {
+//                 // Assuming you have a method to handle saving the image
+//                 await _eventService.UploadImage(eventId, imageFile);
+//                 // Optional: You can add a success message here
+//             }
+//             catch (Exception ex)
+//             {
+//                 // Handle exceptions (e.g., log the error, return an error view)
+//                 ModelState.AddModelError("", "Image upload failed: " + ex.Message);
+//             }
+//         }
+//         else
+//         {
+//             ModelState.AddModelError("", "No file selected for upload.");
+//         }
 
-        // Redirect back to the index or return a success message
-        return RedirectToAction("Index");
-    }
+//         // Redirect back to the index after upload attempt
+//         return RedirectToAction("Index");
+//     }
 
 }
 

@@ -4,7 +4,7 @@
   <div class="container-fluid">
 
     <!-- change project title here -->
-    <a class="navbar-brand" href="#">FinalProjectBase</a>
+    <a class="navbar-brand" href="#">Woof & Wander</a>
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -35,8 +35,8 @@
                 Events
             </a>
             <ul class="dropdown-menu" aria-labelledby="eventsDropdown">
-                <li><a class="dropdown-item" asp-controller="Event" asp-action="FutureEvents">Future Events</a></li>
-                <li><a class="dropdown-item" asp-controller="Event" asp-action="PastEvents">Past Events</a></li>
+                <li><a class="dropdown-item" asp-controller="Event" asp-action="Future">Future Events</a></li>
+                <li><a class="dropdown-item" asp-controller="Event" asp-action="Past">Past Events</a></li>
                 @if (User.Identity.IsAuthenticated)
                     {
                         <li><a class="dropdown-item" asp-controller="Event" asp-action="Calendar">Calendar</a></li>

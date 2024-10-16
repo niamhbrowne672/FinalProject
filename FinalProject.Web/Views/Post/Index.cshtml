@@ -1,6 +1,6 @@
 @model Paged<Post>
 
-<h3 class ="mb-3">Post List</h3>
+<h3 class="mb-3">Post List</h3>
 
 <a class="btn btn-primary" asp-controller="Post" asp-action="Create">Create</a>
 
@@ -15,17 +15,18 @@
                 Title
                 <vc:sort-link column="title" />
             </th>
-        </tr>
-        <th>
+            <th>
                 User
                 <vc:sort-link column="user.name" />
             </th>
+        </tr>
 
         </tr>
         </tr>
     </thead>
     <tbody>
-        @foreach(var p in Model.Data) {
+        @foreach (var p in Model.Data)
+        {
             <tr>
                 <td>@p.Id</td>
                 <td>@p.Title</td>

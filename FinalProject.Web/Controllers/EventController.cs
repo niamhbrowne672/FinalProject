@@ -40,4 +40,67 @@ public class EventController : BaseController
         var events = _eventService.GetFutureEvents(page, pageSize);  // No pagination for calendar view
         return View(events);
     }
+
+    // HTTP GET - Show the Create event form
+    public IActionResult Create()
+    {
+        return View();
+    }
+
+    // HTTP POST - Handle the submission of the Create event form
+    [HttpPost]
+    [ValidateAntiForgeryToken] // Prevent CSRF attacks
+    public IActionResult Create(Event eventEntity)
+    {
+        if (ModelState.IsValid)
+        {
+            _eventService.AddEvent(eventEntity);
+            return RedirectToAction("Future"); // Redirect to future events after creation
+        }
+        return View(eventEntity); // Return the view with the event data if validation fails
+    }
+
+    // HTTP GET - Show the Edit event form
+    public IActionResult Edit(int id)
+    {
+        var eventEntity = _eventService.GetEventById(id);
+        if (eventEntity == null)
+        {
+            return NotFound(); // Return 404 if event not found
+        }
+        return View(eventEntity);
+    }
+
+    // HTTP POST - Handle the submission of the Edit event form
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public IActionResult Edit(Event eventEntity)
+    {
+        if (ModelState.IsValid)
+        {
+            _eventService.UpdateEvent(eventEntity);
+            return RedirectToAction("Future"); // Redirect to future events after editing
+        }
+        return View(eventEntity); // Return the view with the event data if validation fails
+    }
+
+    // HTTP GET - Show the Delete confirmation page
+    public IActionResult Delete(int id)
+    {
+        var eventEntity = _eventService.GetEventById(id);
+        if (eventEntity == null)
+        {
+            return NotFound(); // Return 404 if event not found
+        }
+        return View(eventEntity);
+    }
+
+    // HTTP POST - Handle the deletion of an event
+    [HttpPost, ActionName("Delete")]
+    [ValidateAntiForgeryToken]
+    public IActionResult DeleteConfirmed(int id)
+    {
+        _eventService.DeleteEvent(id);
+        return RedirectToAction("Future"); // Redirect to future events after deletion
+    }
 }

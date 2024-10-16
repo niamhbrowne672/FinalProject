@@ -2,7 +2,6 @@ using FinalProject.Data.Entities;
 using FinalProject.Data.Repositories;
 using Microsoft.EntityFrameworkCore;
 
-
 namespace FinalProject.Data.Services;
 
 public class EventServiceDb : IEventService
