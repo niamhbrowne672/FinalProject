@@ -26,7 +26,7 @@
         
         <!-- Post menu item --> 
         <li class="nav-item">
-            <a class="nav-link" asp-controller="Post" asp-action="Index">Posts</a>
+            <a class="nav-link" asp-controller="Post" asp-action="Index">Community</a>
         </li>
 
         <!-- Events dropdown menu item -->
@@ -35,6 +35,7 @@
                 Events
             </a>
             <ul class="dropdown-menu" aria-labelledby="eventsDropdown">
+                <li><a class="dropdown-item" asp-controller="Event" asp-action="Index">Events</a></li>
                 <li><a class="dropdown-item" asp-controller="Event" asp-action="Future">Future Events</a></li>
                 <li><a class="dropdown-item" asp-controller="Event" asp-action="Past">Past Events</a></li>
                 @if (User.Identity.IsAuthenticated)
