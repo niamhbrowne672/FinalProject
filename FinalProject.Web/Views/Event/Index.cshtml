@@ -9,8 +9,8 @@
             <tr>
                 <th>Id <vc:vc:sort-link column="id"/></th>
                 <th>Title <vc:vc:sort-link column="title"/></th>
-                <th>Date <vc:vc:sort-link column="date"/></th>
-                <th>Location</th>
+                <th>Date & Time <vc:vc:sort-link column="eventTime"/></th>
+                <th>Location<vc:vc:sort-link column="location"/></th>
             </tr>
         </thead>
         <tbody>
@@ -19,7 +19,7 @@
                 <tr>
                     <td>@e.Id</td>
                     <td>@e.Title</td>
-                    <td>@e.Date</td>
+                    <td>@e.EventTime</td>
                     <td>@e.Location</td>
                 </tr>
             }
