@@ -1,0 +1,61 @@
+@model Event
+
+@{
+    ViewData["Title"] = "Event Details";
+}
+
+<div class="card rounded shadow p-4">
+    <div class="border-bottom d-flex align-items-center justify-content-between mb-3">
+        <h3 class="text-primary">@Model.Title</h3>
+
+        <a asp-action="Index" class="btn btn-sm btn-primary" aria-label="event list">
+            <i class="bi bi-list"></i>
+            <span>Events</span>
+        </a>  
+    </div>
+    <div class="row">
+        <!-- Details and Navigation -->
+        <div class="col-8 d-flex flex-column justify-content-between">
+
+            <!-- Event details -->
+            <dl class="row">
+
+                <dt class="col-4 pb-1">Date & Time</dt>
+                <dd class="col-8 pb-1">@Model.EventTime.ToString("MMM, dd, yyy - HH:mm")</dd>
+
+                <dt class="col-4 pb-1">Location</dt>
+                <dd class="col-8 pb-1">@Model.Location</dd>
+
+                <dt class="col-4 pb-1">Description</dt>
+                <dd class="col-8 pb-1">@Model.Description</dd>
+
+                <dt class="col-4 pb-1">Created By (User ID)</dt>
+                <dd class="col-8 pb-1">@Model.UserId</dd>            
+            </dl>
+
+            <!-- Navigation links -->
+            <div>
+                <!-- Edit Button visible to admin and support --> 
+                <a asp-condition=@User.HasOneOfRoles("admin,support") asp-action="Edit" asp-route-id="@Model.Id" 
+                   class="btn btn-sm btn-secondary">
+                    <i class="bi bi-pencil"></i>
+                    <span>Edit</span>
+                </a>
+                
+                <!-- Delete button visible to admin --> 
+                <a asp-condition=@User.IsInRole("admin") asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-sm btn-danger">
+                        <i class="bi bi-trash"></i> 
+                        <span>Delete</span>  
+                </a>   
+            </div>
+        </div>
+
+        <!-- ImageUrl -->
+        <div class="col-4">            
+            <img asp-condition="@(!string.IsNullOrEmpty(Model.ImageUrl))" src="@Model.ImageUrl" class="img-fluid w-50" alt="movie poster"/>            
+            <span asp-condition="@string.IsNullOrEmpty(Model.ImageUrl)" class="text-muted" aria-label="missing movie poster">No image available</span>           
+        </div>
+
+    </div>
+</div>
+</div>

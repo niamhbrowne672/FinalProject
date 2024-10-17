@@ -22,6 +22,7 @@ builder.Services.AddDbContext<DatabaseContext>( options => {
 // Add Application Services to DI   
 builder.Services.AddTransient<IUserService,UserServiceDb>();
 builder.Services.AddTransient<IPostService,PostServiceDb>();
+builder.Services.AddTransient<IEventService,EventServiceDb>();
 builder.Services.AddTransient<IMailService,SmtpMailService>();
 
 var app = builder.Build();
@@ -40,6 +41,7 @@ else
     Seeder.Seed(
         scope.ServiceProvider.GetService<IUserService>(),
         scope.ServiceProvider.GetService<IPostService>()
+        // scope.ServiceProvider.GetService<IEventService>()
     );
 }
 

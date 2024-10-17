@@ -21,6 +21,20 @@
                     <td>@e.Title</td>
                     <td>@e.EventTime</td>
                     <td>@e.Location</td>
+                    <td class="text-end">
+                        <a asp-action="Details" asp-route-id=@e.Id> <i class="bi bi-display-fill"></i>
+                        </a>
+
+                        <!--  authorisation check -->
+                        @if (User.IsInRole("admin"))
+
+                        {
+                            <a asp-action="Edit" asp-route-id=@e.Id>
+                                <i class="bi bi-pencil-fill me-2" title="edit event" aria-label="edit event"></i>
+                            </a>
+                        }
+
+                    </td>
                 </tr>
             }
         </tbody>
