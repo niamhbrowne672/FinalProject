@@ -16,7 +16,7 @@ public class EventServiceDb : IEventService
     // Add a new event
     public Event AddEvent(Event eventEntity)
     {
-        if (eventEntity.Date < DateTime.Now)
+        if (eventEntity.EventTime < DateTime.Now)
         {
             throw new ArgumentException("Cannot add an event with a past date."); // Ensure the date is valid
         }
@@ -36,8 +36,8 @@ public class EventServiceDb : IEventService
             ("id", "desc") => ctx.Events.OrderByDescending(r => r.Id),
             ("title", "asc") => ctx.Events.OrderBy(r => r.Title),
             ("title", "desc") => ctx.Events.OrderByDescending(r => r.Title),
-            ("date", "asc") => ctx.Events.OrderBy(r => r.Date),
-            ("date", "desc") => ctx.Events.OrderByDescending(r => r.Date),
+            ("date", "asc") => ctx.Events.OrderBy(r => r.EventTime),
+            ("date", "desc") => ctx.Events.OrderByDescending(r => r.EventTime),
             _ => ctx.Events.OrderBy(r => r.Id)
         };
 
@@ -49,13 +49,13 @@ public class EventServiceDb : IEventService
     {
         var query = (orderBy.ToLower(), direction.ToLower()) switch
         {
-            ("id", "asc") => ctx.Events.Where(e => e.Date < DateTime.Now).OrderBy(r => r.Id),
-            ("id", "desc") => ctx.Events.Where(e => e.Date < DateTime.Now).OrderByDescending(r => r.Id),
-            ("title", "asc") => ctx.Events.Where(e => e.Date < DateTime.Now).OrderBy(r => r.Title),
-            ("title", "desc") => ctx.Events.Where(e => e.Date < DateTime.Now).OrderByDescending(r => r.Title),
-            ("date", "asc") => ctx.Events.Where(e => e.Date < DateTime.Now).OrderBy(r => r.Date),
-            ("date", "desc") => ctx.Events.Where(e => e.Date < DateTime.Now).OrderByDescending(r => r.Date),
-            _ => ctx.Events.Where(e => e.Date < DateTime.Now).OrderBy(r => r.Id)
+            ("id", "asc") => ctx.Events.Where(e => e.EventTime < DateTime.Now).OrderBy(r => r.Id),
+            ("id", "desc") => ctx.Events.Where(e => e.EventTime < DateTime.Now).OrderByDescending(r => r.Id),
+            ("title", "asc") => ctx.Events.Where(e => e.EventTime < DateTime.Now).OrderBy(r => r.Title),
+            ("title", "desc") => ctx.Events.Where(e => e.EventTime < DateTime.Now).OrderByDescending(r => r.Title),
+            ("date", "asc") => ctx.Events.Where(e => e.EventTime < DateTime.Now).OrderBy(r => r.EventTime),
+            ("date", "desc") => ctx.Events.Where(e => e.EventTime < DateTime.Now).OrderByDescending(r => r.EventTime),
+            _ => ctx.Events.Where(e => e.EventTime < DateTime.Now).OrderBy(r => r.Id)
         };
 
         // Return paginated results using ToPaged extension method
@@ -67,13 +67,13 @@ public class EventServiceDb : IEventService
     {
         var query = (orderBy.ToLower(), direction.ToLower()) switch
         {
-            ("id", "asc") => ctx.Events.Where(e => e.Date >= DateTime.Now).OrderBy(r => r.Id),
-            ("id", "desc") => ctx.Events.Where(e => e.Date >= DateTime.Now).OrderByDescending(r => r.Id),
-            ("title", "asc") => ctx.Events.Where(e => e.Date >= DateTime.Now).OrderBy(r => r.Title),
-            ("title", "desc") => ctx.Events.Where(e => e.Date >= DateTime.Now).OrderByDescending(r => r.Title),
-            ("date", "asc") => ctx.Events.Where(e => e.Date >= DateTime.Now).OrderBy(r => r.Date),
-            ("date", "desc") => ctx.Events.Where(e => e.Date >= DateTime.Now).OrderByDescending(r => r.Date),
-            _ => ctx.Events.Where(e => e.Date >= DateTime.Now).OrderBy(r => r.Id)
+            ("id", "asc") => ctx.Events.Where(e => e.EventTime >= DateTime.Now).OrderBy(r => r.Id),
+            ("id", "desc") => ctx.Events.Where(e => e.EventTime >= DateTime.Now).OrderByDescending(r => r.Id),
+            ("title", "asc") => ctx.Events.Where(e => e.EventTime >= DateTime.Now).OrderBy(r => r.Title),
+            ("title", "desc") => ctx.Events.Where(e => e.EventTime >= DateTime.Now).OrderByDescending(r => r.Title),
+            ("date", "asc") => ctx.Events.Where(e => e.EventTime >= DateTime.Now).OrderBy(r => r.EventTime),
+            ("date", "desc") => ctx.Events.Where(e => e.EventTime >= DateTime.Now).OrderByDescending(r => r.EventTime),
+            _ => ctx.Events.Where(e => e.EventTime >= DateTime.Now).OrderBy(r => r.Id)
         };
 
         return query.ToPaged(page, pageSize, orderBy, direction);
@@ -88,7 +88,7 @@ public class EventServiceDb : IEventService
     // Update an event
     public Event UpdateEvent(Event eventEntity)
     {
-        if (eventEntity.Date < DateTime.Now)
+        if (eventEntity.EventTime < DateTime.Now)
         {
             throw new ArgumentException("Cannot update an event to a past date."); // Ensure the date is valid
         }
@@ -112,7 +112,7 @@ public class EventServiceDb : IEventService
     // Move an event to past
     public void MoveEventToPast(Event eventEntity)
     {
-        if (eventEntity.Date >= DateTime.Now)
+        if (eventEntity.EventTime >= DateTime.Now)
         {
             throw new ArgumentException("The event date must be in the past to move it to past events.");
         }
