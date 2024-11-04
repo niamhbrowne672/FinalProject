@@ -28,7 +28,7 @@
 
 
 //     // GET: List of Future Events
-//     public IActionResult Index(int page = 1, int size = 20, string order = "id", string direction = "asc")
+//     public IActionResult Future(int page = 1, int size = 20, string order = "id", string direction = "asc")
 //     {
 //         var futureEvents = _eventService.GetFutureEvents(page, size, order, direction);
 //         return View(futureEvents);

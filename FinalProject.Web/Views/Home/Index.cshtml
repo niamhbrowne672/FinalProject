@@ -2,6 +2,8 @@
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
+<!-- woof and wag banner -->
+<div class="home-banner"></div>
 
 
 <!-- card is only visible when authorised -->
@@ -11,11 +13,382 @@
         <p class="card-text">This content is only visible if you are <span class="text-success">Authorized.</span></p>
 
         <!-- p elements are only rendered when user has specified role(s) -->
-        <p asp-condition=@User.HasOneOfRoles("admin")>This content is only visible if you are authenticated and have the <span class="text-danger">admin</span> role</p>
-        <p asp-condition=@User.HasOneOfRoles("guest")>This content is only visible if you are authenticated and have the <span class="text-danger">guest</span> role</p>
-        <p asp-condition=@User.HasOneOfRoles("manager")>This content is only visible if you are authenticated and have the <span class="text-danger">manager</span> role</p>
-        <p asp-condition=@User.HasOneOfRoles("admin,manager")>This content is visible if you have the <span class="text-danger">admin or manager</span> roles</p>  
+        <p asp-condition=@User.HasOneOfRoles("admin")>This content is only visible if you are authenticated and have the
+            <span class="text-danger">admin</span> role
+        </p>
+        <p asp-condition=@User.HasOneOfRoles("guest")>This content is only visible if you are authenticated and have the
+            <span class="text-danger">guest</span> role
+        </p>
+        <p asp-condition=@User.HasOneOfRoles("manager")>This content is only visible if you are authenticated and have
+            the <span class="text-danger">manager</span> role</p>
+        <p asp-condition=@User.HasOneOfRoles("admin,manager")>This content is visible if you have the <span
+                class="text-danger">admin or manager</span> roles</p>
     </div>
 </div>
 
+<!-- divider for sections-->
+<hr class="section-divider">
 
+<!--Why join woof and wag section-->
+<section class="why-choose-section container mt-5">
+    <h2 class="text-center mb-4">Why Choose Woof & Wag?</h2>
+    <div class="row">
+        <div class="col-md-6 col-lg-6 mb-4 benefit">
+            <h5><i class="why-choose-icon bi bi-broadcast"></i> Socialise with Your Dog's Breed</h5>
+            <p>Dogs feel more at ease when interacting with others of their own breed, which can lead to happier,
+                healthier social interactions. Breed meet-ups offer a chance for your dog to bond with similar pups,
+                fostering familiarity and confidence. Join Woof & Wag to set up safe and friendly playdates with local
+                dogs just like yours!</p>
+        </div>
+        <div class="col-md-6 col-lg-6 mb-4 benefit">
+            <h5><i class="why-choose-icon bi bi-info-circle"></i> Learn from Like-Minded Owners</h5>
+            <p>Every breed has unique traits and needs. Woof & Wag connects you with owners who know these quirks
+                firsthand and are eager to share advice. From training tips to dietary recommendations and behavioral
+                insights, this community is a resource for practical, breed-specific guidance that only fellow owners
+                can offer.</p>
+        </div>
+        <div class="col-md-6 col-lg-6 mb-4 benefit">
+            <h5><i class="why-choose-icon bi bi-clock"></i> Socialise Any Day of the Week</h5>
+            <p>With a variety of events scheduled during the week and weekends, there's always an opportunity to get
+                your dog active and socialized. No matter how busy you are, you'll find a time slot that works for you.
+                Regular outings keep dogs engaged, happy, and well-adjusted—and provide a welcome break for you too!</p>
+        </div>
+        <div class="col-md-6 col-lg-6 mb-4 benefit">
+            <h5><i class="why-choose-icon bi bi-chat-left-text"></i> Join a Supportive Community</h5>
+            <p>When you join Woof & Wag, you're becoming part of a supportive community of dog lovers who are dedicated
+                to creating a safe and friendly environment for their pets. Share experiences, give and receive advice,
+                and contribute to a space where everyone feels valued and heard. Your opinions matter here!</p>
+        </div>
+    </div>
+    <div class="text-center mt-4">
+        <a class="btn btn-green btn-lg" asp-controller="User" asp-action="Register">Join the
+            Community</a>
+    </div>
+</section>
+<!-- divider for sections-->
+<hr class="section-divider">
+
+<!-- Reviews Section -->
+<div class="text-center mt-5">
+    <h2>Woof & Wander Reviews</h2>
+    <p>Stuck for things to do with your furry friend? Join our community and meet up with like-minded dog owners!</p>
+
+    <div class="row justify-content-center">
+        <!-- Card 1 -->
+        <div class="col-md-3">
+            <div class="card review-card m-3">
+                <img src="~/images/reviews/Review1.jpg" class="card-img-top" alt="Review Image">
+                <div class="card-body review-card-body">
+                    <h5 class="card-title">
+                        <i class="bi bi-star-fill star-icon"></i>
+                        <i class="bi bi-star-fill star-icon"></i>
+                        <i class="bi bi-star-fill star-icon"></i>
+                        <i class="bi bi-star-fill star-icon"></i>
+                        <i class="bi bi-star-fill star-icon"></i>
+                    </h5>
+                    <i class="bi bi-chat-heart"></i>
+                    <p class="card-text">This app has transformed how I connect with fellow dog lovers!</p>
+                    <p class="font-weight-bold review-name"><i class="bi bi-person user-icon"></i><br>Alex M</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card 2-->
+        <div class="col-md-3">
+            <div class="card review-card m-3">
+                <img src="~/images/reviews/Review2.jpg" class="card-img-top" alt="Review Image">
+                <div class="card-body review-card-body">
+                    <h5 class="card-title">
+                        <i class="bi bi-star-fill star-icon"></i>
+                        <i class="bi bi-star-fill star-icon"></i>
+                        <i class="bi bi-star-fill star-icon"></i>
+                        <i class="bi bi-star-fill star-icon"></i>
+                        <i class="bi bi-star-fill star-icon"></i>
+                    </h5>
+                    <i class="bi bi-chat-heart"></i>
+                    <p class="card-text">A fantastic way to find local meet-ups and activities!</p>
+                    <p class="font-weight-bold review-name"><i class="bi bi-person user-icon"></i><br> Jamie B</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card 3-->
+        <div class="col-md-3">
+            <div class="card review-card m-3">
+                <img src="~/images/reviews/Review3.jpg" class="card-img-top" alt="Review Image">
+                <div class="card-body review-card-body">
+                    <h5 class="card-title">
+                        <i class="bi bi-star-fill star-icon"></i>
+                        <i class="bi bi-star-fill star-icon"></i>
+                        <i class="bi bi-star-fill star-icon"></i>
+                        <i class="bi bi-star-fill star-icon"></i>
+                        <i class="bi bi-star-fill star-icon"></i>
+                    </h5>
+                    <i class="bi bi-chat-heart"></i>
+                    <p class="card-text">Love this app! Met so many wonderful dog owners!</p>
+                    <p class="font-weight-bold review-name"><i class="bi bi-person user-icon"></i><br> Taylor S</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card 4-->
+        <div class="col-md-3">
+            <div class="card review-card m-3">
+                <img src="~/images/reviews/Review4.jpg" class="card-img-top" alt="Review Image">
+                <div class="card-body review-card-body">
+                    <h5 class="card-title">
+                        <i class="bi bi-star-fill star-icon"></i>
+                        <i class="bi bi-star-fill star-icon"></i>
+                        <i class="bi bi-star-fill star-icon"></i>
+                        <i class="bi bi-star-fill star-icon"></i>
+                        <i class="bi bi-star-fill star-icon"></i>
+                    </h5>
+                    <i class="bi bi-chat-heart"></i>
+                    <p class="card-text">A must-have for any dog owner looking to Socialise!</p>
+                    <p class="font-weight-bold review-name"><i class="bi bi-person user-icon"></i><br> Morgan W</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- divider for sections-->
+<hr class="section-divider">
+
+<!-- Dog Benefits Section-->
+<div class="container dog-benefits-section mt-5">
+    <!--Section 1 - Image on the right and text on the left-->
+    <div class="row align-items-center mb-5">
+        <div class="col-md-6">
+            <h3>Benefits of Daily Dog Walks</h3>
+            <p>You might be asking yourself, “How often should I walk my dog?” A minimum of two 15-minute walks to potty
+                and exercise are recommended for most dogs, with many needing one or two more during the day. Walking
+                your dog every day is a great way to stay in shape. Daily 30-minute walks reduce the risk of heart
+                disease and diabetes, and prevent inflammation and stiff joints.</p>
+        </div>
+        <div class="col-md-6 text-center">
+            <img src="~/images/home/image1.jpg" alt="Dog Walk Benefits Image" class="rounded mx-auto d-block">
+        </div>
+    </div>
+
+    <!--Section 2 - Image on the left and text on the right-->
+    <div class="row align-items-center mb-5 flex-md-row-reverse">
+        <div class="col-md-6">
+            <h3>Stimulate Your Pup's Mind</h3>
+            <p>Bored dogs are often destructive dogs. When they don't get enough stimulation, even trained dogs might
+                resort to gnawing on furniture, peeing on your shoes, or digging up the garden. A daily 30-minute walk
+                offers new sights, smells, and experiences for your pup to enjoy and stay mentally stimulated.</p>
+        </div>
+        <div class="col-md-6 text-center">
+            <img src="~/images/home/image2.jpg" alt="Dog Walk Benefits Image" class="rounded mx-auto d-block">
+        </div>
+    </div>
+
+    <!--Section 3 - Image on the right and text on the left-->
+    <div class="row align-items-center mb-5">
+        <div class="col-md-6">
+            <h3>Keep the Pounds Off</h3>
+            <p>Let's face it — we all love treating our good boys and girls now and then. Daily walks are essential to
+                prevent obesity, which is linked to various illnesses like heart disease, cancer, and diabetes. Regular
+                exercise helps your dog live a longer, healthier, and happier life!</p>
+        </div>
+        <div class="col-md-6 text-center">
+            <img src="~/images/home/image3.jpg" alt="Dog Walk Benefits Image" class="rounded mx-auto d-block">
+        </div>
+    </div>
+</div>
+
+<!-- divider for sections-->
+<hr class="section-divider">
+
+<!-- Frequently asked questions -->
+
+<div class="accordion accordion-flush" id="accordionFlushExample">
+    <div class="text-center">
+        <h2>Frequently Asked Questions</h2>
+    </div>
+    <!-- Question 1-->
+    <div class="accordion-item">
+        <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                1. What is Woof & Wag, and how does it work?
+            </button>
+        </h2>
+        <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+            <div class="accordion-body">Woof & Wag is a community platform designed to help dog owners connect with
+                others who have the same breed, share tips, and arrange meet-ups. You can join breed-specific groups,
+                participate in events, and meet like-minded dog owners. Sign up, create a profile for you and your pup,
+                and start connecting today!</div>
+        </div>
+    </div>
+    <!-- Question 2-->
+    <div class="accordion-item">
+        <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                2. Do I need a specific breed to join the meet-ups?
+            </button>
+        </h2>
+        <div id="flush-collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+            <div class="accordion-body">Not at all! While we have breed-specific groups, all dog lovers are welcome to
+                join any event that allows all breeds. Just check the event details to see if it's a general meet-up or
+                breed-specific.</div>
+        </div>
+    </div>
+    <!-- Question 3-->
+    <div class="accordion-item">
+        <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+                3. Are there membership fees or event costs?
+            </button>
+        </h2>
+        <div id="flush-collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+            <div class="accordion-body">Woof & Wag is free to join, and many meet-ups are free as well. However, some
+                events may have a small fee to cover venue or activity costs. These details will be listed on the event
+                page, so you'll know before signing up.</div>
+        </div>
+    </div>
+    <!-- Question 4-->
+    <div class="accordion-item">
+        <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                data-bs-target="#flush-collapseFour" aria-expanded="false" aria-controls="flush-collapseFour">
+                4. How can I view upcoming events?
+            </button>
+        </h2>
+        <div id="flush-collapseFour" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+            <div class="accordion-body">Only admins can create events, but all users can view them. To see upcoming
+                meet-ups, simply navigate to the “Events” section on the homepage, where a list of events will appear.
+                If you're logged in, you can also view events on the calendar to make it easier to plan ahead.</div>
+        </div>
+    </div>
+    <!-- Question 5-->
+    <div class="accordion-item">
+        <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                data-bs-target="#flush-collapseFive" aria-expanded="false" aria-controls="flush-collapseFive">
+                5. Is Woof & Wag safe for my dog and me?
+            </button>
+        </h2>
+        <div id="flush-collapseFive" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+            <div class="accordion-body">Absolutely! We encourage responsible pet ownership and prioritize safety. Each
+                event includes guidelines to ensure a fun, safe environment for all dogs and owners. We also encourage
+                users to report any issues so we can keep Woof & Wag a welcoming place for everyone.</div>
+        </div>
+    </div>
+</div>
+
+<!-- divider for sections-->
+<hr class="section-divider">
+
+<!-- Pet friendly locations -->
+<div class="pet-friendly-locations">
+    <div class="text-center">
+        <h2>Pet-Friendly Locations NI & RI</h2>
+        <p>Explore some of the best places to bring your furry friend!</p>
+    </div>
+    <div class="row">
+        <!--Column 1 : Restaurants-->
+        <div class="col-md-2 col-sm-6 mb-3">
+            <h4>Restaurants</h4>
+            <a href="" target="_blank" rel="noopener noreferrer" class="restaurant-link">The Barking Dog<span
+                    class="tooltip">Belfast</span></a>
+            <a href="" target="_blank" rel="noopener noreferrer" class="restaurant-link">The Dirty Onion<span
+                    class="tooltip">Belfast</span></a>
+            <a href="" target="_blank" rel="noopener noreferrer" class="restaurant-link">The Parador<span
+                    class="tooltip">Cushendall</span></a>
+            <a href="" target="_blank" rel="noopener noreferrer" class="restaurant-link">The Bull & Ram<span
+                    class="tooltip">Ballymena</span></a>
+            <a href="" target="_blank" rel="noopener noreferrer" class="restaurant-link">The Woollen Mills<span
+                    class="tooltip">Dublin</span></a>
+            <a href="" target="_blank" rel="noopener noreferrer" class="restaurant-link">The Dawson Lounge<span
+                    class="tooltip">Dublin</span></a>
+            <a href="" target="_blank" rel="noopener noreferrer" class="restaurant-link">The Greenhouse<span
+                    class="tooltip">Dublin</span></a>
+            <a href="" target="_blank" rel="noopener noreferrer" class="restaurant-link">The Happy Pear<span
+                    class="tooltip">Greystones</span></a>
+        </div>
+        <!--Column 2 : Hotels-->
+        <div class="col-md-2 col-sm-6 mb-3">
+            <h4>Hotels</h4>
+            <a href="" target="_blank" rel="noopener noreferrer" class="restaurant-link">The Fitzwilliam Hotel<span
+                    class="tooltip">Belfast</span></a>
+            <a href="" target="_blank" rel="noopener noreferrer" class="restaurant-link">The Merchant Hotek<span
+                    class="tooltip">Belfast</span></a>
+            <a href="" target="_blank" rel="noopener noreferrer" class="restaurant-link">The Bushmills Inn Hotel<span
+                    class="tooltip">Bushmills</span></a>
+            <a href="" target="_blank" rel="noopener noreferrer" class="restaurant-link">The Malton Hotel<span
+                    class="tooltip">Killarney</span></a>
+            <a href="" target="_blank" rel="noopener noreferrer" class="restaurant-link">The Castle Hotel<span
+                    class="tooltip">Tralee</span></a>
+            <a href="" target="_blank" rel="noopener noreferrer" class="restaurant-link">Ashford Castle<span
+                    class="tooltip">Cong</span></a>
+            <a href="" target="_blank" rel="noopener noreferrer" class="restaurant-link">The Merchant House<span
+                    class="tooltip">Dublin</span></a>
+            <a href="" target="_blank" rel="noopener noreferrer" class="restaurant-link">The Glenside Hotel<span
+                    class="tooltip">Wicklow</span></a>
+        </div>
+        <!--Column 3 : Activities-->
+        <div class="col-md-2 col-sm-6 mb-3">
+            <h4>Activities</h4>
+            <a href="" target="_blank" rel="noopener noreferrer" class="restaurant-link">Belfast Zoo<span
+                    class="tooltip">Belfast</span></a>
+            <a href="" target="_blank" rel="noopener noreferrer" class="restaurant-link">Giant's Causeway<span
+                    class="tooltip">Antrim</span></a>
+            <a href="" target="_blank" rel="noopener noreferrer" class="restaurant-link">Dublin's Phoenix Park<span
+                    class="tooltip">Dublin</span></a>
+            <a href="" target="_blank" rel="noopener noreferrer" class="restaurant-link">Glendalough National Park<span
+                    class="tooltip">Wicklow</span></a>
+            <a href="" target="_blank" rel="noopener noreferrer" class="restaurant-link">Carrick-a-Reed Rope Bridge<span
+                    class="tooltip">Antrim</span></a>
+            <a href="" target="_blank" rel="noopener noreferrer" class="restaurant-link">Ballygally Castle<span
+                    class="tooltip">Antrim</span></a>
+            <a href="" target="_blank" rel="noopener noreferrer" class="restaurant-link">The Strandhill Surf School<span
+                    class="tooltip">Strandhill</span></a>
+            <a href="" target="_blank" rel="noopener noreferrer" class="restaurant-link">Wildlife Safari<span
+                    class="tooltip">Wexford Wildfowl Reserve</span></a>
+        </div>
+        <!--Column 4 : Dog Parks-->
+        <div class="col-md-2 col-sm-6 mb-3">
+            <h4>Dog Parks</h4>
+            <a href="" target="_blank" rel="noopener noreferrer" class="restaurant-link">Wild River Dog Park<span
+                    class="tooltip">Ballynahinch</span></a>
+            <a href="" target="_blank" rel="noopener noreferrer" class="restaurant-link">Bark Park<span
+                    class="tooltip">Lisburn</span></a>
+            <a href="" target="_blank" rel="noopener noreferrer" class="restaurant-link">The Dog Park<span
+                    class="tooltip">Moira Demesne</span></a>
+            <a href="" target="_blank" rel="noopener noreferrer" class="restaurant-link">Happy Dogs Playground<span
+                    class="tooltip">Lurgan</span></a>
+            <a href="" target="_blank" rel="noopener noreferrer" class="restaurant-link">Dublin Dog Park<span
+                    class="tooltip">Dublin</span></a>
+            <a href="" target="_blank" rel="noopener noreferrer" class="restaurant-link">Woof Dog Park<span
+                    class="tooltip">Ashbourne</span></a>
+            <a href="" target="_blank" rel="noopener noreferrer" class="restaurant-link">Doggy Daycare and Training
+                Centre<span class="tooltip">Cork</span></a>
+            <a href="" target="_blank" rel="noopener noreferrer" class="restaurant-link">Paw Park<span
+                    class="tooltip">Belfast</span></a>
+        </div>
+        <!--Column 5 : Pubs-->
+        <div class="col-md-2 col-sm-6 mb-3">
+            <h4>Pubs</h4>
+            <a href="" target="_blank" rel="noopener noreferrer" class="restaurant-link">The John Hewitt<span
+                    class="tooltip">Belfast</span></a>
+            <a href="" target="_blank" rel="noopener noreferrer" class="restaurant-link">The Muddler's Club<span
+                    class="tooltip">Belfast</span></a>
+            <a href="" target="_blank" rel="noopener noreferrer" class="restaurant-link">The Dog House<span
+                    class="tooltip">Derry</span></a>
+            <a href="" target="_blank" rel="noopener noreferrer" class="restaurant-link">The Royal Oak<span
+                    class="tooltip">Killarney</span></a>
+            <a href="" target="_blank" rel="noopener noreferrer" class="restaurant-link">The Snug Bar<span
+                    class="tooltip">Ennis</span></a>
+            <a href="" target="_blank" rel="noopener noreferrer" class="restaurant-link">The Porterhouse<span
+                    class="tooltip">Dublin</span></a>
+            <a href="" target="_blank" rel="noopener noreferrer" class="restaurant-link">The Oar House<span
+                    class="tooltip">Kinsale</span></a>
+            <a href="" target="_blank" rel="noopener noreferrer" class="restaurant-link">The Fiddler's Elbow<span
+                    class="tooltip">Belfast</span></a>
+        </div>
+    </div>
+</div>

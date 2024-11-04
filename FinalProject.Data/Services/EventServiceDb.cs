@@ -116,22 +116,22 @@ public class EventServiceDb : IEventService
 //         return query.ToPaged(page, pageSize, orderBy, direction);
 //     }
 
-//     // Get future events with pagination
-//     public Paged<Event> GetFutureEvents(int page, int pageSize, string orderBy = "id", string direction = "asc")
-//     {
-//         var query = (orderBy.ToLower(), direction.ToLower()) switch
-//         {
-//             ("id", "asc") => ctx.Events.Where(e => e.EventTime >= DateTime.Now).OrderBy(r => r.Id),
-//             ("id", "desc") => ctx.Events.Where(e => e.EventTime >= DateTime.Now).OrderByDescending(r => r.Id),
-//             ("title", "asc") => ctx.Events.Where(e => e.EventTime >= DateTime.Now).OrderBy(r => r.Title),
-//             ("title", "desc") => ctx.Events.Where(e => e.EventTime >= DateTime.Now).OrderByDescending(r => r.Title),
-//             ("date", "asc") => ctx.Events.Where(e => e.EventTime >= DateTime.Now).OrderBy(r => r.EventTime),
-//             ("date", "desc") => ctx.Events.Where(e => e.EventTime >= DateTime.Now).OrderByDescending(r => r.EventTime),
-//             _ => ctx.Events.Where(e => e.EventTime >= DateTime.Now).OrderBy(r => r.Id)
-//         };
+    // // Get future events with pagination
+    // public Paged<Event> GetFutureEvents(int page, int pageSize, string orderBy = "id", string direction = "asc")
+    // {
+    //     var query = (orderBy.ToLower(), direction.ToLower()) switch
+    //     {
+    //         ("id", "asc") => ctx.Events.Where(e => e.EventTime >= DateTime.Now).OrderBy(r => r.Id),
+    //         ("id", "desc") => ctx.Events.Where(e => e.EventTime >= DateTime.Now).OrderByDescending(r => r.Id),
+    //         ("title", "asc") => ctx.Events.Where(e => e.EventTime >= DateTime.Now).OrderBy(r => r.Title),
+    //         ("title", "desc") => ctx.Events.Where(e => e.EventTime >= DateTime.Now).OrderByDescending(r => r.Title),
+    //         ("date", "asc") => ctx.Events.Where(e => e.EventTime >= DateTime.Now).OrderBy(r => r.EventTime),
+    //         ("date", "desc") => ctx.Events.Where(e => e.EventTime >= DateTime.Now).OrderByDescending(r => r.EventTime),
+    //         _ => ctx.Events.Where(e => e.EventTime >= DateTime.Now).OrderBy(r => r.Id)
+    //     };
 
-//         return query.ToPaged(page, pageSize, orderBy, direction);
-//     }
+    //     return query.ToPaged(page, pageSize, orderBy, direction);
+    // }
 
 //     // Get an event by ID
 //     public Event GetEventById(int id)

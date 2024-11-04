@@ -20,6 +20,13 @@ public class EventController : BaseController
         _eventService = eventService;
     }
 
+    public ActionResult Index(int page = 1, int size = 20, string order = "id", string direction = "asc")
+    {
+        var paged = _eventService.GetEvents(page, size, order, direction);
+        return View(paged);
+    }
+
+
     // // HTTP GET - Display paged list of future events
     // public ActionResult Future(int page = 1, int size = 20, string order = "id", string direction = "asc")
     // {

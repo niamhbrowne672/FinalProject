@@ -6,6 +6,9 @@ html {
   html {
     font-size: 16px;
   }
+  .home-banner {
+    height: 200px;
+  }
 }
 
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
@@ -19,4 +22,155 @@ html {
 
 body {
   margin-bottom: 60px;
+}
+
+/*Navbar logo*/
+.navbar-logo {
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  object-fit: cover;
+}
+
+/* Banner for home screen */
+.home-banner {
+  background-image: url('/images/logo/Banner.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 100%;
+  height: 300px;
+}
+
+/* Divider for sections*/
+.section-divider {
+  width: 80%;
+  margin: 2rem auto;
+  border: 0;
+  height: 1px;
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+/*Why choose woof and wag home page*/
+.why-choose-icon {
+  color: #0a5732;
+}
+
+.btn-green {
+  background-color: #0a5732;
+  border-color: #0a5732;
+  color: #fff;
+}
+
+.btn-green:hover,
+.btn-green:focus,
+.btn-green:active {
+  background-color: #084c28;
+  border-color: #084c28;
+}
+
+/* Review card style*/
+.review-card {
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+}
+
+.review-card img {
+  height: 180px;
+  object-fit: cover;
+}
+
+.review-card-body {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.review-name {
+  margin-top: auto;
+  padding-bottom: 10px;
+  font-weight: bold;
+}
+
+.star-icon {
+  color: gold;
+}
+
+.user-icon {
+  color: black;
+}
+
+/*Dog Benefits section Home page*/
+.dog-benefits-section {
+  max-width: 1200px;
+}
+
+.dog-benefits-section h3 {
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.dog-benefits-section p {
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.dog-benefits-section .row img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+/* Frequently asked questions Accordion*/
+.accordion-button:not(.collapsed) {
+  background-color: #0a5732;
+  color: #fff;
+}
+
+/*Pet-Friendly Locations - Home page*/
+.pet-friendly-locations h4 {
+  color: #0a5732;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.pet-friendly-locations a {
+  color: #0a5732;
+  text-decoration: none;
+  font-weight: bold;
+  display: block;
+}
+
+.pet-friendly-locations a:hover {
+  color: #084c28;
+  text-decoration: underline;
+}
+
+.restaurant-link {
+  position: relative;
+  text-decoration: none;
+  color: #0a5732;
+}
+
+.tooltip {
+  visibility: hidden;
+  width: 100px;
+  background-color: #f9f9f9;
+  color: #333;
+  text-align: center;
+  border-radius: 5px;
+  padding: 5px;
+  position: absolute;
+  z-index: 1;
+  bottom: 100%;
+  left: 50%;
+  margin-left: -50px;
+  opacity: 0;
+  transition: opacity 0.3;
+}
+
+.restaurant-link:hover .tooltip {
+  visibility: visible;
+  opacity: 1;
 }

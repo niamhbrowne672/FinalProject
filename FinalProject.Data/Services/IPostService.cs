@@ -1,4 +1,5 @@
 using FinalProject.Data.Entities;
+using Microsoft.EntityFrameworkCore;
 namespace FinalProject.Data.Services;
 
 public interface IPostService
@@ -9,13 +10,21 @@ public interface IPostService
 
     //Add a new post
     Post AddPost(Post post);
-
     //Get a post by id
-    //Post GetPost(int id);
+    Post GetPostById(int id);
+
+    //Comment Section
+    Comment AddComment(int postId, Comment comment);
+    IEnumerable<Comment> GetCommentsByPostId(int postId);
+    Comment GetCommentById(int id);
+    Comment UpdateComment(Comment comment);
+    void DeleteComment(int postId);
+
+
 
     //Update a post 
-    //Post UpdatePost(Post post);
+    Post UpdatePost(Post post);
 
     //Delete a post 
-    //void DeletePost(int id);
+    void DeletePost(int id);
 }
