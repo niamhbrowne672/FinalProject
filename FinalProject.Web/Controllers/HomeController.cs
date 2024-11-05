@@ -40,6 +40,31 @@ namespace FinalProject.Web.Controllers
             return View();
         }
 
+        public IActionResult Locations()
+        {
+            return View();
+        }
+
+        public IActionResult Vets()
+        {
+            return View();
+        }
+
+        public IActionResult Products()
+        {
+            return View();
+        }
+
+        public IActionResult Training()
+        {
+            return View();
+        }
+
+        public IActionResult Recipes()
+        {
+            return View();
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

@@ -24,7 +24,7 @@ body {
   margin-bottom: 60px;
 }
 
-h1 {
+h1, h2, h3, h4, h5 {
   color: #0a5732;
 }
 
@@ -243,4 +243,30 @@ h1 {
 
 .privacy-policy .nav-link:hover {
   color: #084c28;
+}
+
+.privacy-policy {
+  position: relative;
+  overflow: hidden;
+}
+
+.privacy-policy::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-image: url('images/logo/logo.jpg');
+  background-size: 300px 300px;
+  background-position: center top;
+  background-repeat: no-repeat;
+  opacity: 0.1;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.content-wrapper {
+  background-color: rbga(255, 255, 255, 0.9);
+  padding: 20px;
 }
