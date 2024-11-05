@@ -24,7 +24,33 @@ body {
   margin-bottom: 60px;
 }
 
-/*Navbar logo*/
+h1 {
+  color: #0a5732;
+}
+
+/*Navbar */
+.custom-green {
+  background-color: #0a5732;
+  color: white;
+}
+
+.custom-green .navbar-brand {
+  color: white;
+}
+
+.custom-green .navbar-nav .nav-link {
+  color: white;
+}
+
+.custom-green .navbar-nav .nav-link:hover {
+  color: #3cb371;
+}
+
+.custom-green .navbar-brand:hover {
+  color: #3cb371;
+}
+
+
 .navbar-logo {
   border-radius: 50%;
   width: 30px;
@@ -129,10 +155,31 @@ body {
 }
 
 /*Pet-Friendly Locations - Home page*/
+.pet-friendly-locations .row {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  text-align: center;
+}
+
+.pet-friendly-locations .col-md-2 {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  max-height: 400px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 10px;
+}
+
 .pet-friendly-locations h4 {
   color: #0a5732;
   margin-bottom: 5px;
   font-weight: bold;
+  margin-top: 0;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  text-decoration: underline;
 }
 
 .pet-friendly-locations a {
@@ -140,6 +187,9 @@ body {
   text-decoration: none;
   font-weight: bold;
   display: block;
+  margin: 5px 0;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .pet-friendly-locations a:hover {
@@ -173,4 +223,24 @@ body {
 .restaurant-link:hover .tooltip {
   visibility: visible;
   opacity: 1;
+}
+
+/*Privacy Page*/
+.scrollspy-example {
+  position: relative;
+  height: 400px;
+  overflow-y: auto;
+}
+
+.privacy-policy .nav-link {
+  color: #0a5732;
+}
+
+.privacy-policy .nav-link.active {
+  font-weight: bold;
+  color: #0a5732;
+}
+
+.privacy-policy .nav-link:hover {
+  color: #084c28;
 }
