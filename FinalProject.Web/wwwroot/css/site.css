@@ -28,6 +28,43 @@ h1, h2, h3, h4, h5 {
   color: #0a5732;
 }
 
+#back-to-top {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  padding: 8px;
+  font-size: 24px;
+  background-color: #0a5732;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 1000;
+  display: none; /* Initially hidden until scroll */
+  transition: background-color 0.3s ease;
+}
+
+#back-to-top:hover {
+  background-color: #084c28;
+}
+
+/* Tooltip styling */
+#back-to-top:hover:after {
+  content: "Back to Top";
+  position: absolute;
+  bottom: 50px;
+  right: 0;
+  white-space: nowrap;
+  background-color: #333;
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 12px;
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.3s;
+}
+
 /*Navbar */
 .custom-green {
   background-color: #0a5732;
@@ -297,4 +334,146 @@ h1, h2, h3, h4, h5 {
   border-radius: 50%;
   object-fit: cover;
   margin: 0 auto;
+}
+
+/*Training Page*/
+
+.hero-section {
+  background-image: url('/images/training/DogTrainingMain.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 60vh;
+  width: 100vw;
+  color: white;
+  position: relative;
+  overflow: hidden;
+  left: 50%;
+  right: 50%;
+  transform: translateX(-50%);
+}
+
+.hero-section::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1;
+}
+
+.hero-section .container {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+}
+
+.hero-section h1{
+  font-weight: 400;
+  color: #fff;
+}
+
+.hero-section p {
+  font-weight: 600;
+  color: #fff;
+}
+
+.text-background {
+  background-color: rgba(34, 139, 34, 0.5);
+  padding: 20px;
+  border-radius: 5px;
+}
+
+.hero-logo-container {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-logo {
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+}
+
+/*Training page video section*/
+
+.card .embed-responsive {
+  position: relative;
+  padding-bottom: 56.25%;
+  height: 0;
+  overflow: hidden;
+  max-width: 100%;
+}
+
+.card .embed-responsive iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+/*Training page - recommended trainers*/
+
+.dog-trainers-section .row {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  text-align: center;
+}
+
+.dog-trainers-section .col-md-2 {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  max-height: 400px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 10px;
+}
+
+.dog-trainers-section h4 {
+  color: #0a5732;
+  margin-bottom: 5px;
+  font-weight: bold;
+  margin-top: 0;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  text-decoration: underline;
+}
+
+.dog-trainers-section a {
+  color: #0a5732;
+  text-decoration: none;
+  font-weight: bold;
+  display: block;
+  margin: 5px 0;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.dog-trainers-section a:hover {
+  color: #084c28;
+  text-decoration: underline;
+}
+
+.trainer-link {
+  position: relative;
+  text-decoration: none;
+  color: #0a5732;
+}
+
+.trainer-link:hover .tooltip {
+  visibility: visible;
+  opacity: 1;
 }
