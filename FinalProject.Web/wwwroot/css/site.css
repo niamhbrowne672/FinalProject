@@ -270,3 +270,31 @@ h1, h2, h3, h4, h5 {
   background-color: rbga(255, 255, 255, 0.9);
   padding: 20px;
 }
+
+/*********************** Recommendations Section*/
+/*Recipes*/
+.recipe-intro {
+  max-width: 1100px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.recipe-intro h2 {
+  font-size: 2em;
+  color: #2f855a;
+  margin-bottom: 10px;
+  padding-bottom: 20px;
+}
+
+.recipe-intro p {
+  font-size: 1.1em;
+  line-height: 1.6;
+}
+
+.recommendations-logo-image {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin: 0 auto;
+}
