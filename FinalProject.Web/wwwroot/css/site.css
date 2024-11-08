@@ -95,15 +95,13 @@ h1, h2, h3, h4, h5 {
   object-fit: cover;
 }
 
-/* Banner for home screen */
-.home-banner {
-  background-image: url('/images/logo/Banner.jpg');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+/* Banner for home screen for all screens*/
+.banner-full-width {
   width: 100%;
-  height: 300px;
+  height: auto;
+  max-width: 100vw;
 }
+
 
 /* Divider for sections*/
 .section-divider {

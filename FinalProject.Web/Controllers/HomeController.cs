@@ -65,6 +65,11 @@ namespace FinalProject.Web.Controllers
             return View();
         }
 
+         public IActionResult Breed()
+        {
+            return View();
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
