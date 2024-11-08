@@ -1,56 +1,98 @@
-﻿<div class="container mt-5">
-    <div class="row">
-        <div class="col-md-8 offset-md-2">
-            <div class="card shadow-lg">
-                <div class="card-header bg-primary text-white text-center">
-                    <h1>About Us</h1>
-                </div>
-                <div class="card-body">
-                    <p class="lead">
-                        Welcome to <strong>Woof & Wander</strong> — a friendly and fun dog breed meet-up community
-                        for pet lovers across Northern Ireland and Ireland!
-                    </p>
+﻿<div class="about-us">
+    <div class="about-banner">
+        <div class="overlay">
+            <h1 class="banner-title text-center">About Woof & Wander</h1>
+            <p class="banner-subtitle text-center">Bringing dog lovers together across Northern Ireland and Ireland</p>
+        </div>
+    </div>
 
-                    <p>
-                        Whether you're a new dog owner or a seasoned pet parent, Woof and Wander offers a space to
-                        connect,
-                        explore, and create wonderful memories with your canine companions. We believe that
-                        everything is better with friends — especially the furry kind!
-                    </p>
+    <!-- Divider for sections -->
+    <hr class="section-divider">
 
-                    <h3 class="mt-4">What We Offer:</h3>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item">
-                            <i class="bi bi-calendar-event"> </i><strong>Event Calendar:</strong> Find exciting dog
-                            meet-ups happening near you — from group walks along scenic trails to fun social events
-                            with fellow dog owners.
-                        </li>
-                        <li class="list-group-item">
-                            <i class="bi bi-chat-left-dots"> </i><strong>Community Forum:</strong> Get advice, ask
-                            questions, and share your
-                            experiences in our friendly community forum.
-                        </li>
-                        <li class="list-group-item">
-                            <i class="bi bi-camera-fill"></i></i> <strong>Event Gallery:</strong> View photos from
-                            past events and upload your own memories! See the joy in every wagging tail.
-                        </li>
-                    </ul>
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-4">
+                <nav id="about-navbar" class="h-100 flex-column align-items-stretch pe-4 border-end">
+                    <nav class="nav nav-pills flex-column">
+                        <a class="nav-link" href="#welcome">Welcome</a>
+                        <a class="nav-link" href="#what-we-offer">What We Offer</a>
+                        <a class="nav-link" href="#why-join">Why Join Us</a>
+                        <a class="nav-link" href="#our-story">Our Story</a>
+                        <a class="nav-link" href="#join-community">Join the Community</a>
+                    </nav>
+                </nav>
+            </div>
 
-                    <h3 class="mt-4">Why Join Woof & Wander?</h3>
-                    <p>
-                        We know that life is better when shared — with both people and pets. By joining our
-                        community, you'll gain access to:
-                    </p>
-                    <ul>
-                        <li>Exclusive event calendars and meet-ups.</li>
-                        <li>A network of fellow dog lovers.</li>
-                        <li>The ability to share your experiences through photos and discussions.</li>
-                    </ul>
+            <div class="col-8">
+                <div data-bs-spy="scroll" data-bs-target="#about-navbar" data-bs-smooth-scroll="true"
+                    class="scrollspy-example" tabindex="0">
 
-                    <div class="text-center mt-4">
-                        <a class="btn btn-primary btn-lg" asp-controller="User" asp-action="Register">Join the
-                            Community</a>
+                    <!-- Welcome Section -->
+                    <div id="welcome" class="mb-4">
+                        <h4>Welcome</h4>
+                        <p>
+                            Welcome to <strong>Woof & Wander</strong> — a friendly, fun, and supportive community for
+                            dog lovers across Northern Ireland and Ireland. Whether you're a new dog owner or a seasoned
+                            pet parent, we're here to help you connect with other dog enthusiasts, explore new places,
+                            and create lasting memories with your furry friends!
+                        </p>
                     </div>
+
+                    <!-- What We Offer Section -->
+                    <div id="what-we-offer" class="mb-4">
+                        <h4>What We Offer</h4>
+                        <ul>
+                            <li><strong>Event Calendar:</strong> Find exciting meet-ups and events happening near you —
+                                from group walks on scenic trails to social events with fellow dog owners.</li>
+                            <li><strong>Community Forum:</strong> Share tips, ask questions, and connect with others in
+                                our friendly forums.</li>
+                            <li><strong>Event Gallery:</strong> Capture and share memories! View photos from past events
+                                or add your own from recent gatherings.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Why Join Us Section -->
+                    <div id="why-join" class="mb-4">
+                        <h4>Why Join Us?</h4>
+                        <p>
+                            Life is better with friends—especially the furry kind! By joining <strong>Woof &
+                                Wander</strong>, you'll gain access to a supportive network of fellow dog lovers,
+                            exclusive event updates, and a vibrant platform to share experiences and make new friends.
+                        </p>
+                        <ul>
+                            <li>Exclusive event calendars and meet-ups.</li>
+                            <li>A network of like-minded dog enthusiasts.</li>
+                            <li>A space to share experiences through photos, posts, and more.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Our Story Section -->
+                    <div id="our-story" class="mb-4">
+                        <h4>Our Story</h4>
+                        <p>
+                            Woof & Wander was created with a simple goal: to bring dog lovers together. Our team
+                            understands the joy that dogs bring into our lives, and we wanted to create a space where
+                            those experiences could be shared. Since then, we've grown into a community where dog owners
+                            of all ages and backgrounds can come together to celebrate, connect, and make memories.
+                        </p>
+                        <p>
+                            From the first meet-up to today, we're here to support dog owners and their best friends,
+                            and we can't wait for you to be a part of our journey!
+                        </p>
+                    </div>
+
+                    <!-- Join the Community Section -->
+                    <div id="join-community" class="mb-4">
+                        <h4>Join the Community</h4>
+                        <p>
+                            Ready to become part of the Woof & Wander family? Join us today and start exploring
+                            everything our community has to offer. Click the button below to sign up!
+                        </p>
+                        <div class="text-center mt-4">
+                            <a class="btn btn-primary btn-lg" href="/register">Join the Community</a>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>

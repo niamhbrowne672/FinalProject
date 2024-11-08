@@ -1,8 +1,16 @@
 @model Paged<Post>
 
-<h3 class="mb-3">Woof & Wander Community</h3>
+<div class="hero-section-post text-center text-white d-flex align-items-center justify-content-center">
+    <div class="overlay"></div>
+    <div class="container position-relative">
+        <h1 class="display-4 fw-bold">Welcome to the Community!</h1>
+        <p class="lead">Share your thoughts, ask questions, and engage with others. Start by creating your own post or explore what others are discussing.</p>
+        <a asp-controller="Post" asp-action="Create" class="btn btn-primary btn-lg mt-3">Create Post</a>
+    </div>
+</div>
 
-<a class="btn btn-primary" asp-controller="Post" asp-action="Create">Create</a>
+<!-- divider for sections-->
+<hr class="section-divider">
 
 <table class="table table-hover">
     <thead>

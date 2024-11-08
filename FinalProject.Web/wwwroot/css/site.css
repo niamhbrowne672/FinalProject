@@ -270,7 +270,8 @@ h1, h2, h3, h4, h5 {
 }
 
 .privacy-policy .nav-link {
-  color: #0a5732;
+  transition: color 0.3s;
+  font-weight: 0.3s;
 }
 
 .privacy-policy .nav-link.active {
@@ -279,7 +280,8 @@ h1, h2, h3, h4, h5 {
 }
 
 .privacy-policy .nav-link:hover {
-  color: #084c28;
+  color: #06371a;
+  font-weight: bold;
 }
 
 .privacy-policy {
@@ -305,7 +307,85 @@ h1, h2, h3, h4, h5 {
 
 .content-wrapper {
   background-color: rbga(255, 255, 255, 0.9);
-  padding: 20px;
+  padding: 40px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.privacy-policy h1 {
+  font-size: 2.5rem;
+  color: #084c28;
+  font-weight: 700;
+}
+
+.privacy-policy .section-divider {
+  width: 60%;
+  height: 2px;
+  background-color: #0a5732;
+  margin: 30px auto;
+}
+
+.privacy-policy .nav {
+  background-color: rgba(10, 87, 50, 0.05);
+  padding: 15px;
+  border-radius: 8px;
+}
+
+/*About Page*/
+.about-us .nav-link {
+  transition: color 0.3s;
+  font-weight: 0.3s;
+}
+
+.about-us .nav-link.active {
+  font-weight: bold;
+  color: #0a5732;
+}
+
+.about-us .nav-link:hover {
+  color: #06371a;
+  font-weight: bold;
+}
+
+.about-us {
+  position: relative;
+  overflow: hidden;
+}
+
+.about-us::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-image: url('images/logo/logo.jpg');
+  background-size: 300px 300px;
+  background-position: center top;
+  background-repeat: no-repeat;
+  opacity: 0.1;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.about-us h1 {
+  font-size: 2.5rem;
+  color: #084c28;
+  font-weight: 700;
+}
+
+.about-us .section-divider {
+  width: 60%;
+  height: 2px;
+  background-color: #0a5732;
+  margin: 30px auto;
+}
+
+.about-us .nav {
+  background-color: rgba(10, 87, 50, 0.05);
+  padding: 15px;
+  border-radius: 8px;
 }
 
 /*********************** Recommendations Section*/
@@ -476,4 +556,44 @@ h1, h2, h3, h4, h5 {
 .trainer-link:hover .tooltip {
   visibility: visible;
   opacity: 1;
+}
+
+/***************************************************Community Posts*/
+.hero-section-post {
+  position: relative;
+  height: 300px;
+  background-image: url('/images/logo/LogoBannerLogos.png');
+  background-size: cover;
+  background-position: center;
+  color: white;
+}
+
+.hero-section-post h1 {
+  color: white;
+}
+
+.hero-section-post .overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 1;
+}
+
+.hero-section-post .container {
+  position: relative;
+  z-index: 2;
+}
+
+.hero-section-post .btn-primary {
+  background-color: #0a5732;
+  border-color: #0a5732;
+  transition: background-color 0.3s;
+}
+
+.hero-section-post .btn-primary:hover {
+  background-color: #084c28;
+  border-color: #084c28;
 }
