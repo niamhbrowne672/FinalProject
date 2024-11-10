@@ -112,6 +112,155 @@ h1, h2, h3, h4, h5 {
   background-color: rgba(0, 0, 0, 0.2);
 }
 
+/***************************Footer styling *********************/
+/* Footer container*/
+footer {
+  background-color: #004d2a;
+  color: white;
+  padding: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+/* footer left section - logo, slogan, social media, store links*/
+.footer-left {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 250px;
+  margin-bottom: 20px;
+}
+
+.footer-logo img{
+  width: 150px;
+  margin-bottom: 10px;
+  align-items: center;
+}
+
+.footer-logo p {
+  margin: 0;
+  font-size: 14px;
+  color: #ffffff;
+  font-style: italic;
+  text-align: center;
+}
+
+/*Social Media Links*/
+.social-media-links {
+  display: flex;
+  gap: 15px;
+  margin: 15px 0;
+}
+
+.social-media-links a {
+  color: white;
+  font-size: 20px;
+  text-decoration: none;
+}
+
+.social-media-links a:hover {
+  color: #dddddd;
+}
+
+/*Store Links*/
+.footer-store-links {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+.footer-store-links img {
+  width: 140px;
+}
+
+/* Main Footer Section*/
+.footer-section {
+  display: flex;
+  gap: 50px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.footer-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.footer-column h3 {
+  color: white;
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.footer-column a {
+  color: white;
+  text-decoration: none;
+  margin: 5px 0;
+  text-align: center;
+}
+
+.footer-column a:hover {
+  text-decoration: underline;
+}
+
+/* Seperate Recommendations and Events sections*/
+.footer-recommendations, .footer-events {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+
+.footer-recommendations h3, .footer-events h3 {
+  color: white;
+  font-size: 16px;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.footer-recommendations a, .footer-events a {
+  color: white;
+  text-decoration: none;
+  margin: 5px 0;
+  text-align: center;
+}
+
+.footer-recommendations a:hover, .footer-events a:hover {
+  text-decoration: underline;
+}
+
+/*Footer Bottom - copyright*/
+footer .container {
+  width: 100%;
+  text-align: center;
+  margin-top: 20px;
+  color: #dddddd;
+  font-size: 14px;
+}
+
+/* Responsive Design*/
+@media (max-width: 768px) {
+  footer {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .footer-section {
+    justify-content: center;
+  }
+
+  .footer-left,
+  .footer-section,
+  .footer-recommendations,
+  .footer-events {
+    align-items: center;
+  }
+}
+
 /*Why choose woof and wag home page*/
 .why-choose-icon {
   color: #0a5732;

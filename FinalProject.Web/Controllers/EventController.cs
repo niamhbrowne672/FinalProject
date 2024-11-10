@@ -26,6 +26,11 @@ public class EventController : BaseController
         return View(paged);
     }
 
+    public IActionResult Past()
+    {
+        return View();
+    }
+
 
     // // HTTP GET - Display paged list of future events
     // public ActionResult Future(int page = 1, int size = 20, string order = "id", string direction = "asc")
