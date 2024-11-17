@@ -112,6 +112,24 @@ h1, h2, h3, h4, h5 {
   background-color: rgba(0, 0, 0, 0.2);
 }
 
+
+/***********************lock image*/
+.bg-green {
+  background-color: #004d2a;
+}
+
+.lock-image {
+  color: white;
+}
+
+.reviews h3 {
+  color: #004d2a;
+}
+
+.reviews-table {
+  color: #004d2a;
+}
+
 /***************************Footer styling *********************/
 /* Footer container*/
 footer {

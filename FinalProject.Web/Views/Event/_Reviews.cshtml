@@ -1,16 +1,16 @@
 @model Event
 
 <!-- Title -->
-<div class="mb-3 d-flex border-bottom align-items-center justify-content-between">
+<div class="mb-3 d-flex border-bottom align-items-center justify-content-between reviews">
 
-    <h3 class="text-secondary">Reviews</h3>
+    <h3>Reviews</h3>
     <a asp-action="ReviewCreate" asp-route-id="@Model.Id" class="btn btn-sm btn-secondary" aria-label="create review">
         <i class="bi bi-bag-plus-fill" title="create review"></i>
         <span class="ms-1 d-none d-md-inline">Add Review</span>
     </a>
 </div>
 
-<table class="table table-sm">
+<table class="table table-sm reviews-table">
     <thead>
         <tr>          
             <th>Name</th>

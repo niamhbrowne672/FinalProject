@@ -43,7 +43,7 @@
                 </a>
 
                 <!-- Delete button visible to admin -->
-                <a asp-condition=@User.IsInRole("admin") asp-action="Delete" asp-route-id="@Model.Id"
+                <a asp-condition=@User.IsInRole("admin") asp-controller="Event" asp-action="Delete" asp-route-id="@Model.Id"
     using SQLitePCL;
     using Microsoft.EntityFrameworkCore.Migrations;
                     class="btn btn-sm btn-danger">
