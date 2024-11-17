@@ -1,5 +1,6 @@
 using FinalProject.Data.Entities;
 using FinalProject.Data.Repositories;
+using FinalProject.Data.Extensions;
 
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
@@ -14,6 +15,11 @@ public class PostServiceDb : IPostService
     public PostServiceDb(DatabaseContext ctx)
     {
         this.ctx = ctx;
+    }
+
+    public void Initialise()
+    {
+        ctx.Initialise();
     }
 
     public Post AddPost(Post post)
@@ -119,9 +125,5 @@ public class PostServiceDb : IPostService
 
         ctx.Posts.Remove(post);
         ctx.SaveChanges();
-    }
-    public void Initialise()
-    {
-        ctx.Initialise();
     }
 }

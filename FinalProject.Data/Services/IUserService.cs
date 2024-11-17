@@ -1,5 +1,6 @@
 
 using FinalProject.Data.Entities;
+using FinalProject.Data.Extensions;
 
 namespace FinalProject.Data.Services
 {

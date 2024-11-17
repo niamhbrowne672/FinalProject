@@ -38,11 +38,15 @@ else
 {
     // seed users in development mode - using service provider to get UserService from DI
     using var scope = app.Services.CreateScope();
-    Seeder.Seed(
-        scope.ServiceProvider.GetService<IUserService>(),
-        scope.ServiceProvider.GetService<IPostService>()
-        // scope.ServiceProvider.GetService<IEventService>()
-    );
+    var dbContext = scope.ServiceProvider.GetRequiredService<DatabaseContext>();
+    Seeder.Seed(dbContext);
+
+    // //Retrieve services from the DI container
+    // var userService = scope.ServiceProvider.GetService<IUserService>();
+    // var postService = scope.ServiceProvider.GetService<IPostService>();
+    // var eventService = scope.ServiceProvider.GetService<IEventService>();
+
+    // Seeder.Seed(userService, postService, eventService);
 }
 
 app.UseHttpsRedirection();

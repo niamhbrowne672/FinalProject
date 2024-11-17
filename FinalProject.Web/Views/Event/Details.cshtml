@@ -8,10 +8,10 @@
     <div class="border-bottom d-flex align-items-center justify-content-between mb-3">
         <h3 class="text-primary">@Model.Title</h3>
 
-        <a asp-action="Index" class="btn btn-sm btn-primary" aria-label="event list">
+        <a asp-action="Index" class="btn btn-sm btn-green" aria-label="event list">
             <i class="bi bi-list"></i>
             <span>Events</span>
-        </a>  
+        </a>
     </div>
     <div class="row">
         <!-- Details and Navigation -->
@@ -29,33 +29,54 @@
                 <dt class="col-4 pb-1">Description</dt>
                 <dd class="col-8 pb-1">@Model.Description</dd>
 
-                <dt class="col-4 pb-1">Created By (User ID)</dt>
-                <dd class="col-8 pb-1">@Model.UserId</dd>            
+                <dt class="col-4 pb-1">Created By</dt>
+                <dd class="col-8 pb-1">Woof & Wander</dd>
             </dl>
 
             <!-- Navigation links -->
             <div>
-                <!-- Edit Button visible to admin and support --> 
-                <a asp-condition=@User.HasOneOfRoles("admin,support") asp-action="Edit" asp-route-id="@Model.Id" 
-                   class="btn btn-sm btn-secondary">
+                <!-- Edit Button visible to admin and support -->
+                <a asp-condition=@User.HasOneOfRoles("admin,support") asp-action="Edit" asp-route-id="@Model.Id"
+                    class="btn btn-sm btn-secondary">
                     <i class="bi bi-pencil"></i>
                     <span>Edit</span>
                 </a>
-                
-                <!-- Delete button visible to admin --> 
-                <a asp-condition=@User.IsInRole("admin") asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-sm btn-danger">
-                        <i class="bi bi-trash"></i> 
-                        <span>Delete</span>  
-                </a>   
+
+                <!-- Delete button visible to admin -->
+                <a asp-condition=@User.IsInRole("admin") asp-action="Delete" asp-route-id="@Model.Id"
+    using SQLitePCL;
+    using Microsoft.EntityFrameworkCore.Migrations;
+                    class="btn btn-sm btn-danger">
+                    <i class="bi bi-trash"></i>
+                    <span>Delete</span>
+                </a>
             </div>
         </div>
 
         <!-- ImageUrl -->
-        <div class="col-4">            
-            <img asp-condition="@(!string.IsNullOrEmpty(Model.ImageUrl))" src="@Model.ImageUrl" class="img-fluid w-50" alt="movie poster"/>            
-            <span asp-condition="@string.IsNullOrEmpty(Model.ImageUrl)" class="text-muted" aria-label="missing movie poster">No image available</span>           
+        <div class="col-4">
+            @if (!string.IsNullOrEmpty(Model.ImageUrl))
+            {
+                <img src="@Url.Content(Model.ImageUrl)" class="img-fluid w-50" alt="Event Location Image" />
+            }
+            else
+            {
+                <span class="text-muted" aria-label="missing location image">No image available</span>
+            }
         </div>
+
+        @* <div class="col-4">
+            <img asp-condition="@(!string.IsNullOrEmpty(Model.ImageUrl))" src="@Model.ImageUrl" class="img-fluid w-50"
+                alt="Event Location Image" />
+            <span asp-condition="@string.IsNullOrEmpty(Model.ImageUrl)" class="text-muted"
+                aria-label="missing location image">No image available</span>
+        </div> *@
 
     </div>
 </div>
 </div>
+<!-- Reviews -->
+<div class="card rounded shadow p-4 mt-4">
+    <partial name="_Reviews" />
+</div>
+<partial name="_DeleteModal" />

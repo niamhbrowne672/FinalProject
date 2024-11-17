@@ -1,13 +1,11 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
-using System.Security.Claims;
-
 using FinalProject.Data.Entities;
 using FinalProject.Data.Services;
-using FinalProject.Data.Security;
+using FinalProject.Data.Extensions;
 using FinalProject.Web.Models.User;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+
 
 namespace FinalProject.Web.Controllers;
 
@@ -20,99 +18,225 @@ public class EventController : BaseController
         _eventService = eventService;
     }
 
-    public ActionResult Index(int page = 1, int size = 20, string order = "id", string direction = "asc")
+    public IActionResult Index(int page = 1, int size = 20, string order = "id", string direction = "asc")
     {
-        var paged = _eventService.GetEvents(page, size, order, direction);
-        return View(paged);
+        var query = _eventService.GetAllEvents();
+        var pagedEvents = query.ToPaged(page, size, order);
+        return View(pagedEvents);
+        // var events = _eventService.GetEvents(page, size, order, direction);
+        // return View(events);
     }
 
-    public IActionResult Past()
+    public IActionResult Details(int id)
     {
-        return View();
+        var eventItem = _eventService.GetEventById(id);
+
+        if (eventItem == null)
+        {
+            Alert($"Event {id} not found.", AlertType.warning);
+            return RedirectToAction(nameof(Index));
+        }
+        return View(eventItem);
     }
 
-
-    // // HTTP GET - Display paged list of future events
-    // public ActionResult Future(int page = 1, int size = 20, string order = "id", string direction = "asc")
-    // {
-    //     var futureEvents = _eventService.GetFutureEvents(page, size, order, direction);
-    //     return View(futureEvents);
-    // }
-
-    // // HTTP GET - Display paged list of past events
-    // public ActionResult Past(int page = 1, int size = 20, string order = "id", string direction = "asc")
-    // {
-    //     var pastEvents = _eventService.GetPastEvents(page, size, order, direction);
-    //     return View(pastEvents);
-    // }
-
-    // // HTTP GET - Display calendar with future events
-    // public ActionResult Calendar(int page = 1, int pageSize = 100)
-    // {
-    //     var events = _eventService.GetFutureEvents(page, pageSize);  // No pagination for calendar view
-    //     return View(events);
-    // }
-
-    // HTTP GET - Show the Create event form
+    [Authorize(Roles = "admin")]
     public IActionResult Create()
     {
         return View();
     }
 
-    // HTTP POST - Handle the submission of the Create event form
     [HttpPost]
-    [ValidateAntiForgeryToken] // Prevent CSRF attacks
-    public IActionResult Create(Event eventEntity)
+    [ValidateAntiForgeryToken]
+    public IActionResult Create(Event e)
     {
+        //validate title as unique
+        if (_eventService.GetEventByTitle(e.Title) != null)
+        {
+            ModelState.AddModelError(nameof(e.Title), "Event is already in the database.");
+        }
+
+        //complete POST action to add event
         if (ModelState.IsValid)
         {
-            _eventService.AddEvent(eventEntity);
-            return RedirectToAction("Future"); // Redirect to future events after creation
+            e = _eventService.AddEvent(e);
+            if (e != null)
+            {
+                return RedirectToAction(nameof(Details), new { id = e.Id });
+            }
         }
-        return View(eventEntity); // Return the view with the event data if validation fails
+        return View(e);
     }
 
-    // // HTTP GET - Show the Edit event form
-    // public IActionResult Edit(int id)
-    // {
-    //     var eventEntity = _eventService.GetEventById(id);
-    //     if (eventEntity == null)
-    //     {
-    //         return NotFound(); // Return 404 if event not found
-    //     }
-    //     return View(eventEntity);
-    // }
+    [Authorize(Roles = "admin")]
+    public IActionResult Edit(int id)
+    {
+        //load the event using the service
+        var eventItem = _eventService.GetEventById(id);
 
-    // // HTTP POST - Handle the submission of the Edit event form
-    // [HttpPost]
-    // [ValidateAntiForgeryToken]
-    // public IActionResult Edit(Event eventEntity)
-    // {
-    //     if (ModelState.IsValid)
-    //     {
-    //         _eventService.UpdateEvent(eventEntity);
-    //         return RedirectToAction("Future"); // Redirect to future events after editing
-    //     }
-    //     return View(eventEntity); // Return the view with the event data if validation fails
-    // }
+        //check ifevent is null
+        if (eventItem == null)
+        {
+            Alert($"Event {id} not found.", AlertType.warning);
+            return RedirectToAction(nameof(Index));
+        }
 
-    // // HTTP GET - Show the Delete confirmation page
-    // public IActionResult Delete(int id)
-    // {
-    //     var eventEntity = _eventService.GetEventById(id);
-    //     if (eventEntity == null)
-    //     {
-    //         return NotFound(); // Return 404 if event not found
-    //     }
-    //     return View(eventEntity);
-    // }
+        return View(eventItem);
+    }
 
-    // // HTTP POST - Handle the deletion of an event
-    // [HttpPost, ActionName("Delete")]
-    // [ValidateAntiForgeryToken]
-    // public IActionResult DeleteConfirmed(int id)
-    // {
-    //     _eventService.DeleteEvent(id);
-    //     return RedirectToAction("Future"); // Redirect to future events after deletion
-    // }
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    [Authorize(Roles = "admin")]
+    public IActionResult Edit(int id, Event updatedEvent)
+    {
+        //check if the provided even ID matches the ID of the updated movie
+        if (id != updatedEvent.Id)
+        {
+            return NotFound();
+        }
+
+        if (ModelState.IsValid)
+        {
+            var existingEvent = _eventService.GetEventById(id);
+
+            //check if the event exists in the database
+            if (existingEvent == null)
+            {
+                Alert($"Event {id} not found.", AlertType.warning);
+                return RedirectToAction(nameof(Index));
+            }
+
+            //update the existing event entity with the new values
+            existingEvent.Title = updatedEvent.Title;
+            existingEvent.EventTime = updatedEvent.EventTime;
+            existingEvent.Location = updatedEvent.Location;
+            existingEvent.Description = updatedEvent.Description;
+            existingEvent.ImageUrl = updatedEvent.ImageUrl;
+
+            //save the changes to the database
+            var savedEvent = _eventService.UpdateEvent(existingEvent);
+
+            if (savedEvent != null)
+            {
+                Alert($"Event updated.", AlertType.success);
+                return RedirectToAction(nameof(Details), new { id = savedEvent.Id });
+            }
+        }
+        //if ModelState is not valid or event update failed, redisplay the form for editing
+        return View(updatedEvent);
+    }
+
+    [Authorize(Roles = "admin")]
+    public IActionResult Delete(int id)
+    {
+        //load the event using the service
+        var eventItem = _eventService.GetEventById(id);
+        //check the returned event is not null
+        if (eventItem == null)
+        {
+            Alert($"Event {id} could not be deleted.", AlertType.danger);
+            return RedirectToAction(nameof(Index));
+        }
+
+        //pass event to view for deletion confirmation
+        return View(eventItem);
+    }
+
+    [HttpPost, ActionName("DeleteConfirm")]
+    [ValidateAntiForgeryToken]
+    [Authorize(Roles = "admin")]
+    public IActionResult DeleteConfirmed(int id)
+    {
+        //delete event via service
+        var deleted = _eventService.DeleteEvent(id);
+        if (deleted)
+        {
+            Alert("Event Deleted.", AlertType.success);
+        }
+        else
+        {
+            Alert("Event could not be deleted", AlertType.warning);
+        }
+
+        //redirect to the index view
+        return RedirectToAction(nameof(Index));
+    }
+
+    //========================= Event Review Management ====================
+    public IActionResult ReviewCreate(int id)
+    {
+        var eventItem = _eventService.GetEventById(id);
+        if (eventItem == null)
+        {
+            Alert("Event does not exist.", AlertType.warning);
+            return RedirectToAction(nameof(Index));
+        }
+
+        //create a review view model and set foreign key
+        var review = new Review { EventId = id };
+        //render blank form
+        return View(review);
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public IActionResult ReviewCreate(Review review)
+    {
+        if (ModelState.IsValid)
+        {                
+            var createdReview = _eventService.CreateReview(review); 
+            if (createdReview != null)
+            {
+                Alert("Review Created Successfully.", AlertType.success);
+                return RedirectToAction(nameof(Details), new { id = review.EventId});
+            }
+            else
+            {
+                Alert("Review could not be created.", AlertType.warning);
+            }
+        }
+        // redisplay the form for editing
+        return View(review);
+    }
+
+    [Authorize(Roles = "admin")]
+    public IActionResult ReviewDelete(int id)
+    {
+        // load the ticket using the service
+        var review = _eventService.GetReview(id);
+        // check the returned Review is not null
+        if (review == null)
+        {
+            Alert("Review does not exist.", AlertType.warning);
+            return RedirectToAction(nameof(Index));
+        }     
+        
+        // pass review to view for deletion confirmation
+        return View(review);
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    [Authorize(Roles = "admin")]
+    public IActionResult ReviewDeleteConfirm(int id, int eventId)
+    {
+        var deleted = _eventService.DeleteReview(id);
+
+        if (deleted)
+            {
+                Alert("Review deleted Successfully.", AlertType.success);
+            }
+            else
+            {
+                Alert("Review could not be deleted.", AlertType.warning);
+            }
+
+        // redirect to the event details view
+        return RedirectToAction(nameof(Details), new { Id = eventId });
+    }
+
+
+    public IActionResult Past()
+    {
+        return View();
+    }
 }

@@ -3,6 +3,7 @@ using FinalProject.Data.Entities;
 using FinalProject.Data.Services;
 using FinalProject.Data.Security;
 using FinalProject.Data.Repositories;
+using FinalProject.Data.Extensions;
 using Microsoft.Extensions.Logging;
 
 namespace FinalProject.Data.Services

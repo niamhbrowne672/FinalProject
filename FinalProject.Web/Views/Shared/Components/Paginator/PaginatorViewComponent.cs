@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using FinalProject.Data;
+using FinalProject.Data.Extensions;
 
 namespace FinalProject.Web.Views.Shared.Components;
 

@@ -1,7 +1,7 @@
 using FinalProject.Data.Entities;
 using FinalProject.Data.Repositories;
-
 using Microsoft.EntityFrameworkCore;
+using FinalProject.Data.Extensions;
 
 namespace FinalProject.Data.Services;
 
@@ -14,31 +14,34 @@ public class EventServiceDb : IEventService
         this.ctx = ctx;
     }
 
-    public Event AddEvent(Event eventEntity)
+    public void Initialise()
     {
-        ctx.Events.Add(eventEntity);
-        ctx.SaveChanges();
-        return eventEntity;
+        ctx.Initialise();
     }
 
     public Paged<Event> GetEvents(int page, int pageSize, string orderBy = "id", string direction = "asc")
     {
-        var query = (orderBy.ToLower(),direction.ToLower()) switch
+        var query = (orderBy.ToLower(), direction.ToLower()) switch
         {
-            ("id","asc")         => ctx.Events.OrderBy(r => r.Id),
-            ("id","desc")        => ctx.Events.OrderByDescending(r => r.Id),
-            ("title","asc")      => ctx.Events.OrderBy(r => r.Title),
-            ("title","desc")     => ctx.Events.OrderByDescending(r => r.Title),
-            ("eventTime","asc")      => ctx.Events.OrderBy(r => r.EventTime),
-            ("eventTime","desc")     => ctx.Events.OrderByDescending(r => r.EventTime),
+            ("id", "asc") => ctx.Events.OrderBy(r => r.Id),
+            ("id", "desc") => ctx.Events.OrderByDescending(r => r.Id),
+            ("title", "asc") => ctx.Events.OrderBy(r => r.Title),
+            ("title", "desc") => ctx.Events.OrderByDescending(r => r.Title),
+            ("eventTime", "asc") => ctx.Events.OrderBy(r => r.EventTime),
+            ("eventTime", "desc") => ctx.Events.OrderByDescending(r => r.EventTime),
             // ("decription","asc")      => ctx.Events.OrderBy(r => r.Description),
             // ("description","desc")     => ctx.Events.OrderByDescending(r => r.Description),
-            ("location","asc")  => ctx.Events.OrderBy(r => r.Location),
-            ("location","desc") => ctx.Events.OrderByDescending(r => r.Location),
-            _                    => ctx.Events.OrderBy(r => r.Id)
+            ("location", "asc") => ctx.Events.OrderBy(r => r.Location),
+            ("location", "desc") => ctx.Events.OrderByDescending(r => r.Location),
+            _ => ctx.Events.OrderBy(r => r.Id)
         };
 
-        return query.ToPaged(page,pageSize,orderBy,direction);
+        return query.ToPaged(page, pageSize, orderBy, direction);
+    }
+
+    public IQueryable<Event> GetAllEvents()
+    {
+        return ctx.Events;
     }
 
     public Paged<Event> GetEvents()
@@ -46,140 +49,153 @@ public class EventServiceDb : IEventService
         return ctx.Events.ToPaged();
     }
 
-    public void Initialise()
+    //get the event by the id
+    public Event GetEventById(int id)
     {
-        ctx.Initialise();
+        return ctx.Events.Include(e => e.Reviews).FirstOrDefault(e => e.Id == id);
+    }
+
+    public Event GetEventByTitle(string title)
+    {
+        return ctx.Events
+        .Include(e => e.Reviews)
+        .FirstOrDefault(e => e.Title == title);
+    }
+
+    //add a new event
+    public Event AddEvent(Event e)
+    {
+        //check if event exists
+        if (GetEventByTitle(e.Title) != null)
+        {
+            return null;
+        }
+
+        //create new event
+        var newEvent = new Event
+        {
+            Id = e.Id,
+            Title = e.Title,
+            EventTime = e.EventTime,
+            Location = e.Location,
+            Description = e.Description,
+            ImageUrl = e.ImageUrl
+        };
+        ctx.Events.Add(newEvent);
+        ctx.SaveChanges();
+        return newEvent;
+    }
+
+    //delete the event identified by Id returning true if deleted and false if not found
+    public bool DeleteEvent(int id)
+    {
+        var eventToDelete = GetEventById(id);
+        if (eventToDelete == null)
+        {
+            return false;
+        }
+        ctx.Events.Remove(eventToDelete);
+        ctx.SaveChanges();
+        return true;
+    }
+
+    //Update the event with the details in updated
+    public Event UpdateEvent(Event updated)
+    {
+        //verify the event exists
+        var existingEvent = GetEventById(updated.Id);
+        if (existingEvent == null)
+        {
+            return null;
+        }
+
+        //verify event is still unique
+        var eventWithSameTitle = GetEventByTitle(updated.Title);
+        if (eventWithSameTitle != null && eventWithSameTitle.Id != updated.Id)
+        {
+            Console.WriteLine($"Event with title '{updated.Title}' already exists with a different ID.");
+            return null;
+        }
+
+        //update the details of the event retrieved and save
+        existingEvent.Title = updated.Title;
+        existingEvent.EventTime = updated.EventTime;
+        existingEvent.Location = updated.Location;
+        existingEvent.Description = updated.Description;
+        existingEvent.ImageUrl = updated.ImageUrl;
+
+        ctx.SaveChanges();
+        Console.WriteLine($"Event with ID {updated.Id} updated successfully.");
+        return existingEvent;
+    }
+
+    // ================= Review Management =================
+    public Review CreateReview(int eventId, string name, string comment, int rating)
+    {
+        var eventToReview = GetEventById(eventId);
+        if (eventToReview == null)
+        {
+            return null;
+        }
+
+        var review = new Review
+        {
+            Name = name,
+            Comment = comment,
+            Rating = rating,
+            On = DateTime.Now
+        };
+
+        eventToReview.Reviews.Add(review);
+        ctx.SaveChanges();
+        return review;
+    }
+
+    //convenience method to align Review creation format used in Event Creation
+    public Review CreateReview(Review review)
+    {
+        return CreateReview(review.EventId, review.Name, review.Comment, review.Rating);
+    }
+
+    public Review GetReview(int id)
+    {
+        return ctx.Reviews.Include(r => r.Event).FirstOrDefault(r => r.Id == id);
+    }
+
+    public bool DeleteReview(int id)
+    {
+        //find review
+        var reviewToDelete = GetReview(id);
+        if (reviewToDelete == null)
+        {
+            return false;
+        }
+
+        //remove review
+        ctx.Reviews.Remove(reviewToDelete);
+
+        ctx.SaveChanges();
+        return true;
+    }
+
+    //retrieve all reviews and the events associated with the review
+    public IList<Review> GetAllReviews()
+    {
+        return ctx.Reviews.Include(r => r.Event).ToList();
+    }
+
+    public Review UpdateReview(int id, Review updated)
+    {
+        var existingReview = GetReview(id);
+
+        if (existingReview != null) return null;
+
+        existingReview.Name = updated.Name;
+        existingReview.On = updated.On;
+        existingReview.Comment = updated.Comment;
+        existingReview.Rating = updated.Rating;
+
+        ctx.SaveChanges();
+        return existingReview;
     }
 }
-
-// using FinalProject.Data.Entities;
-// using FinalProject.Data.Repositories;
-// using Microsoft.EntityFrameworkCore;
-
-// namespace FinalProject.Data.Services;
-
-// public class EventServiceDb : IEventService
-// {
-//     private readonly DatabaseContext ctx;
-
-//     public EventServiceDb(DatabaseContext ctx)
-//     {
-//         this.ctx = ctx;
-//     }
-
-//     // Add a new event
-//     public Event AddEvent(Event eventEntity)
-//     {
-//         if (eventEntity.EventTime < DateTime.Now)
-//         {
-//             throw new ArgumentException("Cannot add an event with a past date."); // Ensure the date is valid
-//         }
-
-//         ctx.Events.Add(eventEntity);
-//         ctx.SaveChanges();
-//         return eventEntity;
-//     }
-
-
-//     // Get events with optional ordering
-//     public List<Event> GetEvents(int page, int size, string orderBy = "id", string direction = "asc")
-//     {
-//         var query = (orderBy.ToLower(), direction.ToLower()) switch
-//         {
-//             ("id", "asc") => ctx.Events.OrderBy(r => r.Id),
-//             ("id", "desc") => ctx.Events.OrderByDescending(r => r.Id),
-//             ("title", "asc") => ctx.Events.OrderBy(r => r.Title),
-//             ("title", "desc") => ctx.Events.OrderByDescending(r => r.Title),
-//             ("date", "asc") => ctx.Events.OrderBy(r => r.EventTime),
-//             ("date", "desc") => ctx.Events.OrderByDescending(r => r.EventTime),
-//             _ => ctx.Events.OrderBy(r => r.Id)
-//         };
-
-//         return query.ToList(); // Return the list of events
-//     }
-
-//     // Get past events with pagination
-//     public Paged<Event> GetPastEvents(int page, int pageSize, string orderBy = "id", string direction = "asc")
-//     {
-//         var query = (orderBy.ToLower(), direction.ToLower()) switch
-//         {
-//             ("id", "asc") => ctx.Events.Where(e => e.EventTime < DateTime.Now).OrderBy(r => r.Id),
-//             ("id", "desc") => ctx.Events.Where(e => e.EventTime < DateTime.Now).OrderByDescending(r => r.Id),
-//             ("title", "asc") => ctx.Events.Where(e => e.EventTime < DateTime.Now).OrderBy(r => r.Title),
-//             ("title", "desc") => ctx.Events.Where(e => e.EventTime < DateTime.Now).OrderByDescending(r => r.Title),
-//             ("date", "asc") => ctx.Events.Where(e => e.EventTime < DateTime.Now).OrderBy(r => r.EventTime),
-//             ("date", "desc") => ctx.Events.Where(e => e.EventTime < DateTime.Now).OrderByDescending(r => r.EventTime),
-//             _ => ctx.Events.Where(e => e.EventTime < DateTime.Now).OrderBy(r => r.Id)
-//         };
-
-//         // Return paginated results using ToPaged extension method
-//         return query.ToPaged(page, pageSize, orderBy, direction);
-//     }
-
-    // // Get future events with pagination
-    // public Paged<Event> GetFutureEvents(int page, int pageSize, string orderBy = "id", string direction = "asc")
-    // {
-    //     var query = (orderBy.ToLower(), direction.ToLower()) switch
-    //     {
-    //         ("id", "asc") => ctx.Events.Where(e => e.EventTime >= DateTime.Now).OrderBy(r => r.Id),
-    //         ("id", "desc") => ctx.Events.Where(e => e.EventTime >= DateTime.Now).OrderByDescending(r => r.Id),
-    //         ("title", "asc") => ctx.Events.Where(e => e.EventTime >= DateTime.Now).OrderBy(r => r.Title),
-    //         ("title", "desc") => ctx.Events.Where(e => e.EventTime >= DateTime.Now).OrderByDescending(r => r.Title),
-    //         ("date", "asc") => ctx.Events.Where(e => e.EventTime >= DateTime.Now).OrderBy(r => r.EventTime),
-    //         ("date", "desc") => ctx.Events.Where(e => e.EventTime >= DateTime.Now).OrderByDescending(r => r.EventTime),
-    //         _ => ctx.Events.Where(e => e.EventTime >= DateTime.Now).OrderBy(r => r.Id)
-    //     };
-
-    //     return query.ToPaged(page, pageSize, orderBy, direction);
-    // }
-
-//     // Get an event by ID
-//     public Event GetEventById(int id)
-//     {
-//         return ctx.Events.Find(id); // Retrieves the event by its ID
-//     }
-
-//     // Update an event
-//     public Event UpdateEvent(Event eventEntity)
-//     {
-//         if (eventEntity.EventTime < DateTime.Now)
-//         {
-//             throw new ArgumentException("Cannot update an event to a past date."); // Ensure the date is valid
-//         }
-
-//         ctx.Events.Update(eventEntity);
-//         ctx.SaveChanges();
-//         return eventEntity;
-//     }
-
-//     // Delete an event
-//     public void DeleteEvent(int id)
-//     {
-//         var eventEntity = ctx.Events.Find(id);
-//         if (eventEntity != null)
-//         {
-//             ctx.Events.Remove(eventEntity);
-//             ctx.SaveChanges();
-//         }
-//     }
-
-//     // Move an event to past
-//     public void MoveEventToPast(Event eventEntity)
-//     {
-//         if (eventEntity.EventTime >= DateTime.Now)
-//         {
-//             throw new ArgumentException("The event date must be in the past to move it to past events.");
-//         }
-
-//         // Logic to mark the event as past (or move it to a different collection)
-//         ctx.Events.Update(eventEntity);
-//         ctx.SaveChanges();
-//     }
-
-//     // Initialize database if needed
-//     public void Initialise()
-//     {
-//         ctx.Initialise();
-//     }
-// }
-

@@ -1,0 +1,58 @@
+@model Event
+
+<!-- Title -->
+<div class="mb-3 d-flex border-bottom align-items-center justify-content-between">
+
+    <h3 class="text-secondary">Reviews</h3>
+    <a asp-action="ReviewCreate" asp-route-id="@Model.Id" class="btn btn-sm btn-secondary" aria-label="create review">
+        <i class="bi bi-bag-plus-fill" title="create review"></i>
+        <span class="ms-1 d-none d-md-inline">Add Review</span>
+    </a>
+</div>
+
+<table class="table table-sm">
+    <thead>
+        <tr>          
+            <th>Name</th>
+            <th>Created On</th>  
+            <th>Comment</th>       
+            <th class="text-end">Rating</th>  
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.Reviews.Count == 0)
+        {
+            <tr>              
+                <td colspan="4">No reviews...</td>
+            </tr>
+        }
+        else
+        {
+            @foreach(var r in Model.Reviews) {
+                <tr>             
+                    <td>@r.Name</td>
+                    <td>@r.On</td>
+                    <td>@r.Comment</td>
+                    <td>@r.Rating</td>  
+                    
+
+                     <td>
+
+                            <button asp-condition=@User.IsInRole("admin")
+                                    class="btn btn-sm btn-danger"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#deleteReviewModal-@r.Id">
+                                <i class="bi bi-trash"></i>
+                                <span>Delete</span>
+                            </button>
+                    
+
+                    </td>           
+                </tr>
+                <!-- Include the delete review modal -->
+                @await Html.PartialAsync("_DeleteReviewModal", r)
+                
+            }
+        }
+    </tbody>
+</table> 

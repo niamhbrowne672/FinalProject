@@ -744,3 +744,87 @@ footer .container {
   background-color: #084c28;
   border-color: #084c28;
 }
+
+/******************************************** Breed Page**/
+/**Images same height and width**/
+.breed-image {
+  height: 100%;
+  object-fit: cover;
+}
+
+/** Toggle button**/
+.toggle-description {
+  margin-top: 10px;
+  width: 100%;
+}
+
+/*Buttos same height*/
+.breed .card-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: auto;
+}
+
+.breed .card-text {
+  flex-grow: 1;
+}
+
+.breed button {
+  align-self: flex-end;
+  margin-top: 10px;
+}
+
+/*Search bar*/
+.search-container {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.search-bar-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+#search-bar {
+  padding: 10px;
+  width: 50%;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+#search-button {
+  padding: 10px;
+  font-size: 16px;
+}
+
+/*Default Card Layout*/
+.breed-cards-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+}
+
+/*Search Results Layout*/
+.breed-cards-container.search-active {
+  justify-content: flex-start; /*cards display from the left when search is successful*/
+}
+
+/*Search result card styling*/
+.breed-cards-container.search-active .card {
+  width: 250px;
+  height: 300px;
+}
+
+/*No Results Message*/
+.no-results {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #888;
+  margin-top: 20px;
+  display: none;
+}

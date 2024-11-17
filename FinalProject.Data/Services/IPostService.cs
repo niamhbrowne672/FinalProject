@@ -1,5 +1,6 @@
 using FinalProject.Data.Entities;
 using Microsoft.EntityFrameworkCore;
+using FinalProject.Data.Extensions;
 namespace FinalProject.Data.Services;
 
 public interface IPostService

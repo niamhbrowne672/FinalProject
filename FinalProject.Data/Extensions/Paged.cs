@@ -1,4 +1,4 @@
-namespace FinalProject.Data;
+namespace FinalProject.Data.Extensions;
 
 // Paged class to hold paged data and paging information
 public class Paged<T> : PagedProps {  

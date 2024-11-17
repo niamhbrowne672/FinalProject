@@ -1,16 +1,19 @@
 @model Paged<Event>
 
     <h3 class="mb-3">Woof & Wander Events</h3>
-
-    <a class="btn btn-primary" asp-asp-controller="Event" asp-action="Create">Create Event</a>
+    @if (User.IsInRole("admin"))
+        {        
+            <a asp-condition=@User.IsInRole("admin") class="btn btn-green" asp-controller="Event" asp-action="Create" title="add an event" aria-label="add an event">Create Event</a>
+        }
+    
 
     <table class="table table-hover mt-4">
         <thead>
             <tr>
-                <th>Id <vc:vc:sort-link column="id"/></th>
-                <th>Title <vc:vc:sort-link column="title"/></th>
-                <th>Date & Time <vc:vc:sort-link column="eventTime"/></th>
-                <th>Location<vc:vc:sort-link column="location"/></th>
+                <th>Id <vc:sort-link column="id"/></th>
+                <th>Title <vc:sort-link column="title"/></th>
+                <th>Date & Time <vc:sort-link column="eventTime"/></th>
+                <th>Location<vc:sort-link column="location"/></th>
             </tr>
         </thead>
         <tbody>
