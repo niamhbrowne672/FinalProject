@@ -1,19 +1,41 @@
 @model Paged<Event>
 
-    <h3 class="mb-3">Woof & Wander Events</h3>
-    @if (User.IsInRole("admin"))
-        {        
-            <a asp-condition=@User.IsInRole("admin") class="btn btn-green" asp-controller="Event" asp-action="Create" title="add an event" aria-label="add an event">Create Event</a>
-        }
-    
+    <!-- woof and wag banner -->
+<img src="~/images/banners/Events.svg" class="banner-full-width img-fluid" alt="Events">
 
-    <table class="table table-hover mt-4">
+<!-- divider for sections-->
+<hr class="section-divider">
+
+<form method="get" asp-action="Index">
+    <div class="input-group mb-3">
+        <input type="text" class="form-control" name="searchQuery" value="@ViewBag.SearchQuery"
+            placeholder="Search for breed or location..." aria-label="Search">
+        <button type="submit" class="btn btn-green"><i class="bi bi-search"></i>  Search</button>
+    </div>
+</form>
+
+@if (User.IsInRole("admin"))
+{
+    <a asp-condition=@User.IsInRole("admin") class="btn btn-green" asp-controller="Event" asp-action="Create"
+        title="add an event" aria-label="add an event">Create Event</a>
+}
+
+@if (!Model.Data.Any())
+{
+    <p class="text-center">No events found. <a asp-contoller="Home" asp-action="Contact">Contact Us</a> for enquiries or post on our <a href="/Post">community page</a> to
+        organise an event suited for you and your furry friend!</p>
+}
+else
+{
+
+
+    <table class="table table-hover mt-4 table-headings">
         <thead>
             <tr>
-                <th>Id <vc:sort-link column="id"/></th>
-                <th>Title <vc:sort-link column="title"/></th>
-                <th>Date & Time <vc:sort-link column="eventTime"/></th>
-                <th>Location<vc:sort-link column="location"/></th>
+                <th>Id <vc:sort-link column="id" /></th>
+                <th>Title <vc:sort-link column="title" /></th>
+                <th>Date & Time <vc:sort-link column="eventTime" /></th>
+                <th>Location<vc:sort-link column="location" /></th>
             </tr>
         </thead>
         <tbody>
@@ -25,15 +47,14 @@
                     <td>@e.EventTime</td>
                     <td>@e.Location</td>
                     <td class="text-end">
-                        <a asp-action="Details" asp-route-id=@e.Id> <i class="bi bi-display-fill"></i>
+                        <a asp-action="Details" asp-route-id=@e.Id title="More details"> <i class="bi bi-info-square icon"></i>
                         </a>
-
+                        <br>
                         <!--  authorisation check -->
                         @if (User.IsInRole("admin"))
-
                         {
-                            <a asp-action="Edit" asp-route-id=@e.Id>
-                                <i class="bi bi-pencil-fill me-2" title="edit event" aria-label="edit event"></i>
+                            <a asp-action="Edit" asp-route-id=@e.Id title="Edit event">
+                                <i class="bi bi-pencil-square icon"></i>
                             </a>
                         }
 
@@ -43,4 +64,5 @@
         </tbody>
     </table>
 
-    <vc:paginator pages="@Model.Pages"/>
+    <vc:paginator pages="@Model.Pages" />
+}

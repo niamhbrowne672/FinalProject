@@ -39,6 +39,11 @@ public class EventServiceDb : IEventService
         return query.ToPaged(page, pageSize, orderBy, direction);
     }
 
+    public IQueryable<Event> SearchEvents(string searchQuery)
+    {
+        return ctx.Events.Where(e => e.Title.Contains(searchQuery) || e.Location.Contains(searchQuery));
+    }
+
     public IQueryable<Event> GetAllEvents()
     {
         return ctx.Events;

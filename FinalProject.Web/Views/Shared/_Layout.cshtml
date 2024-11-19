@@ -14,6 +14,7 @@
 <body class="d-flex flex-column min-vh-100">
     <header>
         <partial name="_NavBar" />
+        @RenderSection("Header", required: false)
     </header>
 
     <div class="container flex-grow-1">

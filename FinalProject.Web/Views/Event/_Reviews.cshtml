@@ -4,8 +4,8 @@
 <div class="mb-3 d-flex border-bottom align-items-center justify-content-between reviews">
 
     <h3>Reviews</h3>
-    <a asp-action="ReviewCreate" asp-route-id="@Model.Id" class="btn btn-sm btn-secondary" aria-label="create review">
-        <i class="bi bi-bag-plus-fill" title="create review"></i>
+    <a asp-controller="Event" asp-action="ReviewCreate" asp-route-id="@Model.Id" class="btn btn-sm btn-green" aria-label="create review">
+        <i class="bi bi-chat-square-text"></i>
         <span class="ms-1 d-none d-md-inline">Add Review</span>
     </a>
 </div>

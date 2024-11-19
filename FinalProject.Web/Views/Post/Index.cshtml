@@ -24,37 +24,42 @@
                 <vc:sort-link column="title" />
             </th>
             <th>
-                User
+                Posted By
                 <vc:sort-link column="user.name" />
             </th>
-            <th>Actions</th>
+            <th>
+                Posted On
+                <vc:sort-link column="createdAt" />
+            </th>
+            
         </tr>
     </thead>
     <tbody>
-        @foreach (var post in Model.Data)
+        @foreach (var p in Model.Data)
         {
             <tr>
-                <td>@post.Id</td>
-                <td>@post.Title</td>
-                <td>@post.User.Name</td>
+                <td>@p.Id</td>
+                <td>@p.Title</td>
+                <td>@p.User.Name</td>
+                <td>@p.CreatedAt</td>
                 <td>
-                    <a class="btn btn-secondary" asp-controller="Post" asp-action="Details" asp-route-id="@post.Id">Details</a>
+                    <a class="btn btn-green" asp-controller="Post" asp-action="Details" asp-route-id="@p.Id">Details</a>
                     <!--  authorisation check -->
                         @if (User.IsInRole("admin"))
 
                         {
-                            <a asp-action="Delete" asp-route-id=@post.Id>
+                            <a asp-action="Delete" asp-route-id=@p.Id>
                                 <i class="bi bi-trash" title="delete post" aria-label="delete post"></i>
                             </a>
                         }
                 </td>
             </tr>
             @* Delete Modal for each post*@
-            <div class="modal fade" id="deleteModal-@post.Id" tabindex="-1" aria-labelledby="deleteModalLabel-@post.Id" aria-hidden="true">
+            <div class="modal fade" id="deleteModal-@p.Id" tabindex="-1" aria-labelledby="deleteModalLabel-@p.Id" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="deleteModalLabel-@post.Id">Confirm Delete</h5>
+                            <h5 class="modal-title" id="deleteModalLabel-@p.Id">Confirm Delete</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
@@ -62,7 +67,7 @@
                         </div>
                         <div class="modal-footer">
                             <form asp-action="Delete" method="post">
-                                <input type="hidden" name="id" value="@post.Id"/>
+                                <input type="hidden" name="id" value="@p.Id"/>
                                 <button type="submit" class="btn btn-danger">Delete</button>
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                             </form>

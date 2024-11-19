@@ -4,13 +4,6 @@
     ViewData["Title"] = "Post Details";
 }
 
-<partial name="_BreadCrumbs" model=@(new [] {
-    ("/","Home"),
-    ("/post","Posts"),
-    ($"/post/details/{Model.Id}", $"{Model.Title}"),
-    ("","Details")
-}) />
-
 <div class="card rounded shadow p-4">
     <!-- Title bar -->
     <div class="border-bottom d-flex align-items-center justify-content-between mb-3">
@@ -27,8 +20,11 @@
         <div class="col-8 d-flex flex-column justify-content-between">
             <!-- Post details -->
             <dl class="row">
-                <dt class="col-4 pb-1">Body</dt>
-                <dd class="col-8 pb-1">@Model.Body</dd>
+                <dt class="col-4 pb-1">Title</dt>
+                <dd class="col-8 pb-1">@Model.Title</dd>
+
+                <dt class="col-4 pb-1">Post</dt>
+                <dd class="col-8 pb-1">@Model.Content</dd>
 
                 <dt class="col-4 pb-1">Posted by</dt>
                 <dd class="col-8 pb-1">@Model.User.Name</dd>

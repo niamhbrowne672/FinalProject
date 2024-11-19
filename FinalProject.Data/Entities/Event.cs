@@ -17,6 +17,7 @@ public class Event
     public string ImageUrl { get; set; }  // URL for the image
     public int? UserId { get; set; }  // Foreign key for user who created the event
     public User User { get; set; }
+    public string Breed { get; set; }
 
     // public bool IsPast => Date < DateTime.Now;
 

@@ -3,8 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using FinalProject.Data.Entities;
 using FinalProject.Data.Services;
 using FinalProject.Data.Extensions;
-using FinalProject.Web.Models.User;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
+
 
 
 namespace FinalProject.Web.Controllers;
@@ -18,13 +17,23 @@ public class EventController : BaseController
         _eventService = eventService;
     }
 
-    public IActionResult Index(int page = 1, int size = 20, string order = "id", string direction = "asc")
+    public IActionResult Index(string searchQuery, int page = 1, int size = 20, string order = "id", string direction = "asc")
     {
-        var query = _eventService.GetAllEvents();
+        var query = string.IsNullOrWhiteSpace(searchQuery) 
+            ? _eventService.GetAllEvents()
+            : _eventService.SearchEvents(searchQuery);
+
+        //apply pagination, sorting etc
         var pagedEvents = query.ToPaged(page, size, order);
+
+        //pass the search query back to the view for display in the search bar
+        ViewBag.SearchQuery = searchQuery;
+
         return View(pagedEvents);
-        // var events = _eventService.GetEvents(page, size, order, direction);
-        // return View(events);
+        
+        // var query = _eventService.GetAllEvents();
+        // var pagedEvents = query.ToPaged(page, size, order);
+        // return View(pagedEvents);
     }
 
     public IActionResult Details(int id)
@@ -88,7 +97,7 @@ public class EventController : BaseController
     [Authorize(Roles = "admin")]
     public IActionResult Edit(int id, Event updatedEvent)
     {
-        //check if the provided even ID matches the ID of the updated movie
+        //check if the provided even ID matches the ID of the updated post
         if (id != updatedEvent.Id)
         {
             return NotFound();

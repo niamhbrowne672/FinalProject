@@ -28,6 +28,9 @@ namespace FinalProject.Data.Services
         // Delete an event 
         bool DeleteEvent(int id);
 
+        //search bar
+        IQueryable<Event> SearchEvents(string searchQuery);
+
         //============== Review Management =============
         Review CreateReview(int id, string name, string comment, int rating);
         Review CreateReview(Review review);

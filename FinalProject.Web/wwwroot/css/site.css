@@ -122,14 +122,6 @@ h1, h2, h3, h4, h5 {
   color: white;
 }
 
-.reviews h3 {
-  color: #004d2a;
-}
-
-.reviews-table {
-  color: #004d2a;
-}
-
 /***************************Footer styling *********************/
 /* Footer container*/
 footer {
@@ -845,4 +837,29 @@ footer .container {
   color: #888;
   margin-top: 20px;
   display: none;
+}
+
+/*=========================== Events section=======================*/
+
+/*Events Index*/
+.icon {
+  color: #004d2a;
+}
+
+.table-headings {
+  color: #004d2a;
+}
+
+/*Details section*/
+.details-text {
+  color: #004d2a;
+}
+
+/*Reviews section*/
+.reviews h3 {
+  color: #004d2a;
+}
+
+.reviews-table {
+  color: #004d2a;
 }

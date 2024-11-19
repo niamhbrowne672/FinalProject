@@ -43,23 +43,43 @@ public static class Seeder
         }
     }
 
+    // private static void SeedPosts(IPostService psvc, IUserService svc)
+    // {
+    //     var faker = new Faker();
+    //     // add some fake posts
+    //     var userIdArray = svc.GetUsers().Data.Select(u => u.Id).ToArray();
+    //     //add some fake posts
+    //     for (int i = 1; i <= 200; i++)
+    //     {
+    //         var p = new Post
+    //         {
+    //             Title = faker.Lorem.Sentence(),
+    //             Body = faker.Lorem.Paragraph(),
+    //             UserId = faker.Random.ArrayElement([1, 2, 3]) //faker.Random.ArrayElement(userIdArray)
+    //         };
+
+    //         psvc.AddPost(p);
+    //     }
+    // }
+
+    //data for posts
     private static void SeedPosts(IPostService psvc, IUserService svc)
     {
-        var faker = new Faker();
-        // add some fake posts
-        var userIdArray = svc.GetUsers().Data.Select(u => u.Id).ToArray();
-        //add some fake posts
-        for (int i = 1; i <= 200; i++)
+        var p1 = psvc.AddPost(new Post
         {
-            var p = new Post
-            {
-                Title = faker.Lorem.Sentence(),
-                Body = faker.Lorem.Paragraph(),
-                UserId = faker.Random.ArrayElement([1, 2, 3]) //faker.Random.ArrayElement(userIdArray)
-            };
+            Title = "Hungarian Vizsla Meet-Up",
+            CreatedAt = new DateTime(2024, 11, 20, 14, 0, 0),
+            Content = "Join us for a great event play with other vizslas",
+            ImagePath = "/images/events/e1.jpg"
+        });
 
-            psvc.AddPost(p);
-        }
+        var p2 = psvc.AddPost(new Post
+        {
+            Title = "Hungarian Vizsla Meet-Up",
+            CreatedAt = new DateTime(2024, 11, 20, 14, 0, 0),
+            Content = "Join us for a great event play with other vizslas",
+            ImagePath = "/images/events/e1.jpg"
+        });
     }
 
     //data for events
@@ -348,6 +368,56 @@ public static class Seeder
             Description = "A woodland meet-up for Collies to run, play, and socialize.",
             ImageUrl = "~/images/events/e31.jpg"
         });
+
+        var r1 = esvc.CreateReview(e2.Id, "Niamh Browne", "I've been to this meet-up before and my dog Rex had the best time playing with all of his friends! Would highly recommend.", 5);
+        var r2 = esvc.CreateReview(e2.Id, "John Doe", "Wonderful meet-up, the location was perfect and my dog made so many friends!", 5);
+        var r3 = esvc.CreateReview(e2.Id, "Jane Smith", "This is always my favorite event to attend! Highly recommend to dog lovers.", 5);
+
+        var r4 = esvc.CreateReview(e5.Id, "Alex Johnson", "Had a great time, the organizers were fantastic and the dogs were so well-behaved!", 5);
+        var r5 = esvc.CreateReview(e5.Id, "Chris Brown", "Beautiful location, perfect for a dog meet-up!", 4);
+
+        var r6 = esvc.CreateReview(e9.Id, "Emily White", "Lovely event, my dog absolutely loved playing in the open fields!", 5);
+        var r7 = esvc.CreateReview(e9.Id, "Laura Green", "Had an amazing experience, can't wait for the next one!", 5);
+
+        var r8 = esvc.CreateReview(e13.Id, "Michael Gold", "Serene forest park with lots of space for the dogs to run around.", 4);
+        var r9 = esvc.CreateReview(e13.Id, "Sarah Black", "Highly recommend this meet-up, the location is just beautiful.", 5);
+        var r10 = esvc.CreateReview(e13.Id, "Tom Blue", "Great event! My dog had the time of his life.", 5);
+
+        var r11 = esvc.CreateReview(e16.Id, "Anna Grey", "Such a fantastic park for meet-ups, been here previously and it's always great!", 5);
+        var r12 = esvc.CreateReview(e16.Id, "John Doe", "Perfect for dogs and owners alike, well-organized event.", 5);
+
+        var r13 = esvc.CreateReview(e21.Id, "Alex Johnson", "A hidden gem for meet-ups, peaceful and spacious!", 4);
+        var r14 = esvc.CreateReview(e21.Id, "Emily White", "Loved everything about this event, will definitely attend again.", 5);
+        var r15 = esvc.CreateReview(e21.Id, "Chris Brown", "The dogs had so much fun, and so did I!", 5);
+
+        var r16 = esvc.CreateReview(e25.Id, "Laura Green", "Beautiful location and great company, highly recommend!", 5);
+        var r17 = esvc.CreateReview(e25.Id, "Sarah Black", "My dog loved the open spaces, great event overall!", 4);
+
+         var r18 = esvc.CreateReview(e3.Id, "Niamh Browne", "I've been to this meet-up before and my dog Rex had the best time playing with all of his friends! Would highly recommend.", 5);
+        var r19 = esvc.CreateReview(e3.Id, "John Doe", "Wonderful meet-up, the location was perfect and my dog made so many friends!", 5);
+        var r20 = esvc.CreateReview(e3.Id, "Jane Smith", "This is always my favorite event to attend! Highly recommend to dog lovers.", 5);
+
+        var r21 = esvc.CreateReview(e6.Id, "Alex Johnson", "Had a great time, the organizers were fantastic and the dogs were so well-behaved!", 5);
+        var r22 = esvc.CreateReview(e6.Id, "Chris Brown", "Beautiful location, perfect for a dog meet-up!", 4);
+
+        var r23 = esvc.CreateReview(e10.Id, "Emily White", "Lovely event, my dog absolutely loved playing in the open fields!", 5);
+        var r24 = esvc.CreateReview(e10.Id, "Laura Green", "Had an amazing experience, can't wait for the next one!", 5);
+
+        var r25 = esvc.CreateReview(e30.Id, "Michael Gold", "Serene forest park with lots of space for the dogs to run around.", 4);
+        var r26 = esvc.CreateReview(e30.Id, "Sarah Black", "Highly recommend this meet-up, the location is just beautiful.", 5);
+        var r27 = esvc.CreateReview(e30.Id, "Tom Blue", "Great event! My dog had the time of his life.", 5);
+
+        var r28 = esvc.CreateReview(e26.Id, "Anna Grey", "Such a fantastic park for meet-ups, been here previously and it's always great!", 5);
+        var r29 = esvc.CreateReview(e26.Id, "John Doe", "Perfect for dogs and owners alike, well-organized event.", 5);
+
+        var r30 = esvc.CreateReview(e12.Id, "Alex Johnson", "A hidden gem for meet-ups, peaceful and spacious!", 4);
+        var r31 = esvc.CreateReview(e12.Id, "Emily White", "Loved everything about this event, will definitely attend again.", 5);
+        var r32 = esvc.CreateReview(e12.Id, "Chris Brown", "The dogs had so much fun, and so did I!", 5);
+
+        var r33 = esvc.CreateReview(e1.Id, "Laura Green", "Beautiful location and great company, highly recommend!", 5);
+        var r34 = esvc.CreateReview(e1.Id, "Sarah Black", "My dog loved the open spaces, great event overall!", 4);
+
+
     }
 }
 

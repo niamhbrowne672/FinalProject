@@ -3,8 +3,6 @@ using FinalProject.Data.Repositories;
 using FinalProject.Data.Extensions;
 
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace FinalProject.Data.Services;
 
@@ -22,12 +20,12 @@ public class PostServiceDb : IPostService
         ctx.Initialise();
     }
 
-    public Post AddPost(Post post)
-    {
-        ctx.Posts.Add(post);
-        ctx.SaveChanges();
-        return post;
-    }
+    // public Post AddPost(Post post)
+    // {
+    //     ctx.Posts.Add(post);
+    //     ctx.SaveChanges();
+    //     return post;
+    // }
 
     public Paged<Post> GetPosts(int page, int pageSize, string orderBy = "id", string direction = "asc")
     {
@@ -37,6 +35,8 @@ public class PostServiceDb : IPostService
             ("id","desc")        => ctx.Posts.OrderByDescending(r => r.Id),
             ("title","asc")      => ctx.Posts.OrderBy(r => r.Title),
             ("title","desc")     => ctx.Posts.OrderByDescending(r => r.Title),
+            ("postedOn", "asc") => ctx.Posts.OrderBy(r => r.PostedOn),
+            ("postedOn", "desc") => ctx.Posts.OrderByDescending(r => r.PostedOn),
             ("user.name","asc")  => ctx.Posts.OrderBy(r => r.User.Name),
             ("user.name","desc") => ctx.Posts.OrderByDescending(r => r.User.Name),
             _                    => ctx.Posts.OrderBy(r => r.Id)
@@ -45,9 +45,19 @@ public class PostServiceDb : IPostService
         return query.Include(p => p.User).ToPaged(page,pageSize,orderBy,direction);
     }
 
+    public IQueryable<Post> SearchPosts(string searchQuery)
+    {
+       return ctx.Posts.Where(p => p.Title.Contains(searchQuery)); 
+    }
+
+     public IQueryable<Post> GetAllPosts()
+    {
+        return ctx.Posts;
+    }
+
     public Paged<Post> GetPosts()
     {
-        return ctx.Posts.Include(p => p.User).ToPaged();
+        return ctx.Posts.ToPaged();
     }
 
     public Post GetPostById(int id)
@@ -55,75 +65,147 @@ public class PostServiceDb : IPostService
         return ctx.Posts.Include(p => p.User).Include(p => p.Comments).ThenInclude(c => c.User).FirstOrDefault(p => p.Id == id);
     }
 
-    //Add a new comment to a post
-    public Comment AddComment(int postId, Comment comment)
+    public Post GetPostByTitle(string title)
     {
-        var post = ctx.Posts.Include(p => p.Comments).FirstOrDefault(p => p.Id == postId);
-        if (post == null) return null;
+        return ctx.Posts
+        .Include(p => p.Comments)
+        .FirstOrDefault(p => p.Title == title);
+    }
 
-        //Attach the comment to the post
-        comment.PostId = postId;
-        ctx.Comments.Add(comment);
+    public Post AddPost(Post p)
+    {
+        //check if event exists
+        if (GetPostByTitle(p.Title) != null)
+        {
+            return null;
+        }
+
+        //create new event
+        var newPost = new Post
+        {
+            Id = p.Id,
+            Title = p.Title,
+            Content = p.Content,
+            PostedOn = p.PostedOn,
+            ImagePath = p.ImagePath
+        };
+        ctx.Posts.Add(newPost);
         ctx.SaveChanges();
-
-        return comment;
+        return newPost;
     }
 
-    //Get all comments for a specific post
-    public IEnumerable<Comment> GetCommentsByPostId(int postId)
+    //delete the event identified by Id returning true if deleted and false if not found
+    public bool DeletePost(int id)
     {
-        return ctx.Comments.Where(c => c.PostId == postId).Include(c => c.User).ToList();
-    }
-
-    //Get a specific comment by its ID
-    public Comment GetCommentById(int id)
-    {
-        return ctx.Comments.Include(c => c.User).FirstOrDefault(c => c.Id == id);
-    }
-
-    //Update an existing comment
-    public Comment UpdateComment(Comment comment)
-    {
-        var existingComment = ctx.Comments.Find(comment.Id);
-        if (existingComment == null) return null;
-
-        existingComment.Content = comment.Content;
-        existingComment.ModifiedAt = comment.ModifiedAt;
+        var postToDelete = GetPostById(id);
+        if (postToDelete == null)
+        {
+            return false;
+        }
+        ctx.Posts.Remove(postToDelete);
         ctx.SaveChanges();
-
-        return existingComment;
+        return true;
     }
 
-    public void DeleteComment(int id)
+    //Update the event with the details in updated
+    public Post UpdatePost(Post updated)
     {
-        var comment = ctx.Comments.Find(id);
-        if (comment == null) return;
+        //verify the event exists
+        var existingPost = GetPostById(updated.Id);
+        if (existingPost == null)
+        {
+            return null;
+        }
 
-        ctx.Comments.Remove(comment);
+        //verify event is still unique
+        var postWithSameTitle = GetPostByTitle(updated.Title);
+        if (postWithSameTitle != null && postWithSameTitle.Id != updated.Id)
+        {
+            Console.WriteLine($"Post with title '{updated.Title}' already exists with a different ID.");
+            return null;
+        }
+
+        //update the details of the event retrieved and save
+        existingPost.Title = updated.Title;
+        existingPost.PostedOn = updated.PostedOn;
+        existingPost.Content = updated.Content;
+        existingPost.ImagePath = updated.ImagePath;
+
         ctx.SaveChanges();
-    }
-
-    //UpdatePost
-    public Post UpdatePost(Post post)
-    {
-        var existingPost = ctx.Posts.Find(post.Id);
-        if (existingPost == null) return null;
-
-        existingPost.Title = post.Title;
-        existingPost.Content = post.Content;
-        existingPost.ModifiedAt = post.ModifiedAt;
-        ctx.SaveChanges();
-
+        Console.WriteLine($"Post with ID {updated.Id} updated successfully.");
         return existingPost;
     }
 
-    //DeletePost
-    public void DeletePost(int id)
-    {
-        var post = ctx.Posts.Find(id);
-        if(post == null) return;
 
-        ctx.Posts.Remove(post);
+
+    //=================================== Comments Section ==========================================
+
+    //Add a new comment to a post
+    public Comment CreateComment(int postId, string name, string comments)
+    {
+        var postToComment = GetPostById(postId);
+        if (postToComment == null)
+        { 
+            return null;
+        }
+        var comment = new Comment
+        {
+            Name = name,
+            Comments = comments,
+            CreatedAt = DateTime.Now
+        };
+
+        postToComment.Comments.Add(comment);
         ctx.SaveChanges();
+        return comment;
     }
+
+    public Comment CreateComment(Comment comment)
+    {
+        return CreateComment(comment.PostId, comment.Name, comment.Comments);
+    }
+
+    public Comment GetComment(int id)
+    {
+        return ctx.Comments.Include(c => c.Post).FirstOrDefault(c => c.Id == id);
+    }
+
+    public bool DeleteComment(int id)
+    {
+        //find review
+        var commentToDelete = GetComment(id);
+        if (commentToDelete == null)
+        {
+            return false;
+        }
+
+        //remove review
+        ctx.Comments.Remove(commentToDelete);
+
+        ctx.SaveChanges();
+        return true;
+    }
+
+    //retrieve all reviews and the events associated with the review
+    public IList<Comment> GetAllComments()
+    {
+        return ctx.Comments.Include(c => c.Post).ToList();
+    }
+
+    public Comment UpdateComment(int id, Comment updated)
+    {
+        var existingComment = GetComment(id);
+
+        if (existingComment != null) return null;
+
+        existingComment.Name = updated.Name;
+        existingComment.CreatedAt = updated.CreatedAt;
+        existingComment.Comments = updated.Comments;
+
+        ctx.SaveChanges();
+        return existingComment;
+    }
+
+
+    
 }

@@ -1,17 +1,10 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
-using System.Security.Claims;
-using FinalProject.Web.Models;
-
 using FinalProject.Data.Entities;
 using FinalProject.Data.Services;
-using FinalProject.Data.Security;
+using FinalProject.Data.Extensions;
 using FinalProject.Web.Models.User;
-using Microsoft.AspNetCore.Components.Web;
-using System.Security.Cryptography.Xml;
-using Microsoft.Extensions.Configuration.UserSecrets;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 /**
 * Post Controller
@@ -20,19 +13,40 @@ namespace FinalProject.Web.Controllers;
 
 public class PostController : BaseController
 {
-    private readonly IPostService _svc;
+    private readonly IPostService _postService;
 
-    public PostController(IPostService svc)
+    public PostController(IPostService postService)
     {
-        _svc = svc;
+        _postService = postService;
     }
 
     //HTTP GET - Display Paged List of Posts
 
-    public IActionResult Index(int page=1, int size=20, string order="id", string direction="asc")
+    public IActionResult Index(string searchQuery, int page=1, int size=20, string order="id", string direction="asc")
     {
-        var paged = _svc.GetPosts(page,size,order,direction);
-        return View(paged);
+        var query = string.IsNullOrWhiteSpace(searchQuery) 
+            ? _postService.GetAllPosts()
+            : _postService.SearchPosts(searchQuery);
+
+        //apply pagination, sorting etc
+        var pagedPosts = query.ToPaged(page, size, order);
+
+        //pass the search query back to the view for display in the search bar
+        ViewBag.SearchQuery = searchQuery;
+
+        return View(pagedPosts);
+    }
+
+    public IActionResult Details(int id)
+    {
+        var postItem = _postService.GetPostById(id);
+
+        if (postItem == null)
+        {
+            Alert($"Post {id} not found.", AlertType.warning);
+            return RedirectToAction(nameof(Index));
+        }
+        return View(postItem);
     }
 
     [Authorize]
@@ -42,93 +56,191 @@ public class PostController : BaseController
     }
 
     //HTTP POST - Create a new Post
-    [Authorize]
     [HttpPost]
-    public IActionResult Create(Post post)
+    [ValidateAntiForgeryToken]
+    public IActionResult Create(Post p)
     {
+        //validate title as unique
+        if (_postService.GetPostByTitle(p.Title) != null)
+        {
+            ModelState.AddModelError(nameof(p.Title), "Post is already exists.");
+        }
+
+        //complete POST action to add post
         if (ModelState.IsValid)
         {
-            post.UserId = User.GetSignedInUserId();
-            _svc.AddPost(post);
-            return RedirectToAction("Index");
+            p = _postService.AddPost(p);
+            if (p != null)
+            {
+                return RedirectToAction(nameof(Details), new { id = p.Id });
+            }
         }
-        return View(post);
+        return View(p);
     }
 
-    public IActionResult Details(int id)
+    [Authorize(Roles = "admin")]
+    public IActionResult Edit(int id)
     {
-        var post = _svc.GetPostById(id);
-        if (post == null) return NotFound();
+        //load the post using the service
+        var postItem = _postService.GetPostById(id);
 
-        var viewModel = new PostDetailsViewModel
+        //check if post is null
+        if (postItem == null)
         {
-            Id = post.Id,
-            Title = post.Title,
-            Content = post.Content,
-            Comments = post.Comments.Select(c => new CommentModel { 
-                Id = c.Id,
-                Content = c.Content,
-                CreatedAt = c.CreatedAt,
-                UserName = c.User.Name
-                }).ToList()
-        };
-        return View(viewModel);
+            Alert($"Post {id} not found.", AlertType.warning);
+            return RedirectToAction(nameof(Index));
+        }
+
+        return View(postItem);
     }
-
-
-    //Comment section
 
     [HttpPost]
-    [Authorize]
-    public IActionResult AddComment(int postId, string content)
+    [ValidateAntiForgeryToken]
+    [Authorize(Roles = "admin")]
+    public IActionResult Edit(int id, Post updatedPost)
     {
-        if (string.IsNullOrWhiteSpace(content))
+        //check if the provided even ID matches the ID of the updated post
+        if (id != updatedPost.Id)
         {
-            ModelState.AddModelError("", "Comment cannot be empty.");
-            return RedirectToAction("Details", new { id = postId });
+            return NotFound();
         }
-        var comment = new Comment
-        {
-            Content = content,
-            PostId = postId,
-            UserId = User.GetSignedInUserId(),
-            CreatedAt = DateTime.Now
-        };
 
-        _svc.AddComment(postId, comment);
-        return RedirectToAction("Details", new { id = postId });
+        if (ModelState.IsValid)
+        {
+            var existingPost = _postService.GetPostById(id);
+
+            //check if the post exists in the database
+            if (existingPost == null)
+            {
+                Alert($"Post {id} not found.", AlertType.warning);
+                return RedirectToAction(nameof(Index));
+            }
+
+            existingPost.Title = updatedPost.Title;
+            existingPost.Content = updatedPost.Content;
+            existingPost.ImagePath = updatedPost.ImagePath;
+
+            //save the changes to the database
+            var savedPost = _postService.UpdatePost(existingPost);
+
+            if (savedPost != null)
+            {
+                Alert($"Post updated.", AlertType.success);
+                return RedirectToAction(nameof(Details), new { id = savedPost.Id });
+            }
+        }
+        //if ModelState is not valid or post update failed, redisplay the form for editing
+        return View(updatedPost);
     }
 
-    [HttpGet]
-    [Authorize]
-    public IActionResult EditComment(int id)
+    [Authorize(Roles = "admin")]
+    public IActionResult Delete(int id)
     {
-        var comment = _svc.GetCommentById(id);
-        if (comment == null || comment.UserId != User.GetSignedInUserId()) return Forbid();
+        //load the post using the service
+        var postItem = _postService.GetPostById(id);
+        //check the returned post is not null
+        if (postItem == null)
+        {
+            Alert($"Post {id} could not be deleted.", AlertType.danger);
+            return RedirectToAction(nameof(Index));
+        }
+
+        //pass post to view for deletion confirmation
+        return View(postItem);
+    }
+
+    [HttpPost, ActionName("DeleteConfirm")]
+    [ValidateAntiForgeryToken]
+    [Authorize(Roles = "admin")]
+    public IActionResult DeleteConfirmed(int id)
+    {
+        //delete event via service
+        var deleted = _postService.DeletePost(id);
+        if (deleted)
+        {
+            Alert("Post Deleted.", AlertType.success);
+        }
+        else
+        {
+            Alert("Post could not be deleted", AlertType.warning);
+        }
+
+        //redirect to the index view
+        return RedirectToAction(nameof(Index));
+    }
+
+
+    //========================= Post Comment Section ====================
+    public IActionResult CommentCreate(int id)
+    {
+        var postItem = _postService.GetPostById(id);
+        if (postItem == null)
+        {
+            Alert("Post does not exist.", AlertType.warning);
+            return RedirectToAction(nameof(Index));
+        }
+
+        //create a review view model and set foreign key
+        var comment = new Comment { PostId = id };
+        //render blank form
         return View(comment);
     }
 
     [HttpPost]
-    [Authorize]
-    public IActionResult EditComment(Comment comment)
+    [ValidateAntiForgeryToken]
+    public IActionResult CommentCreate(Comment comment)
     {
-        if (!ModelState.IsValid) return View(comment);
-        var existingComment = _svc.GetCommentById(comment.Id);
-        if (existingComment == null || existingComment.UserId != User.GetSignedInUserId()) return Forbid();
-
-        _svc.UpdateComment(comment);
-        return RedirectToAction("Details", new { id = comment.PostId });
+        if (ModelState.IsValid)
+        {                
+            var createdComment = _postService.CreateComment(comment); 
+            if (createdComment != null)
+            {
+                Alert("Comment Created Successfully.", AlertType.success);
+                return RedirectToAction(nameof(Details), new { id = comment.PostId});
+            }
+            else
+            {
+                Alert("Comment could not be created.", AlertType.warning);
+            }
+        }
+        // redisplay the form for editing
+        return View(comment);
     }
 
-    //Delete Comment 
-    [HttpPost]
-    [Authorize]
-    public IActionResult DeleteComment(int id)
+    [Authorize(Roles = "admin")]
+    public IActionResult CommentDelete(int id)
     {
-        var comment = _svc.GetCommentById(id);
-        if (comment == null || comment.UserId != User.GetSignedInUserId()) return Forbid();
+        // load the comment using the service
+        var comment = _postService.GetComment(id);
+        // check the returned comment is not null
+        if (comment == null)
+        {
+            Alert("Comment does not exist.", AlertType.warning);
+            return RedirectToAction(nameof(Index));
+        }     
         
-        _svc.DeleteComment(id);
-        return RedirectToAction("Details", new { id = comment.PostId});
+        // pass comment to view for deletion confirmation
+        return View(comment);
     }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    [Authorize(Roles = "admin")]
+    public IActionResult CommentDeleteConfirm(int id, int postId)
+    {
+        var deleted = _postService.DeleteComment(id);
+
+        if (deleted)
+            {
+                Alert("Comment deleted Successfully.", AlertType.success);
+            }
+            else
+            {
+                Alert("Comment could not be deleted.", AlertType.warning);
+            }
+
+        // redirect to the event details view
+        return RedirectToAction(nameof(Details), new { Id = postId });
+    }
+
 }
