@@ -20,13 +20,6 @@ public class PostServiceDb : IPostService
         ctx.Initialise();
     }
 
-    // public Post AddPost(Post post)
-    // {
-    //     ctx.Posts.Add(post);
-    //     ctx.SaveChanges();
-    //     return post;
-    // }
-
     public Paged<Post> GetPosts(int page, int pageSize, string orderBy = "id", string direction = "asc")
     {
         var query = (orderBy.ToLower(),direction.ToLower()) switch
@@ -37,8 +30,8 @@ public class PostServiceDb : IPostService
             ("title","desc")     => ctx.Posts.OrderByDescending(r => r.Title),
             ("postedOn", "asc") => ctx.Posts.OrderBy(r => r.PostedOn),
             ("postedOn", "desc") => ctx.Posts.OrderByDescending(r => r.PostedOn),
-            ("user.name","asc")  => ctx.Posts.OrderBy(r => r.User.Name),
-            ("user.name","desc") => ctx.Posts.OrderByDescending(r => r.User.Name),
+            ("createdBy","asc")  => ctx.Posts.OrderBy(r => r.CreatedBy),
+            ("createdBy","desc") => ctx.Posts.OrderByDescending(r => r.CreatedBy),
             _                    => ctx.Posts.OrderBy(r => r.Id)
         };
 
@@ -62,7 +55,7 @@ public class PostServiceDb : IPostService
 
     public Post GetPostById(int id)
     {
-        return ctx.Posts.Include(p => p.User).Include(p => p.Comments).ThenInclude(c => c.User).FirstOrDefault(p => p.Id == id);
+        return ctx.Posts.Include(p => p.Comments).FirstOrDefault(p => p.Id == id);
     }
 
     public Post GetPostByTitle(string title)
@@ -74,27 +67,27 @@ public class PostServiceDb : IPostService
 
     public Post AddPost(Post p)
     {
-        //check if event exists
+        //check if post exists
         if (GetPostByTitle(p.Title) != null)
         {
             return null;
         }
 
-        //create new event
+        //create new post
         var newPost = new Post
         {
-            Id = p.Id,
             Title = p.Title,
             Content = p.Content,
             PostedOn = p.PostedOn,
-            ImagePath = p.ImagePath
+            ImagePath = p.ImagePath,
+            CreatedBy = p.CreatedBy
         };
         ctx.Posts.Add(newPost);
         ctx.SaveChanges();
         return newPost;
     }
 
-    //delete the event identified by Id returning true if deleted and false if not found
+    //delete the post identified by Id returning true if deleted and false if not found
     public bool DeletePost(int id)
     {
         var postToDelete = GetPostById(id);
@@ -107,17 +100,17 @@ public class PostServiceDb : IPostService
         return true;
     }
 
-    //Update the event with the details in updated
+    //Update the post with the details in updated
     public Post UpdatePost(Post updated)
     {
-        //verify the event exists
+        //verify the post exists
         var existingPost = GetPostById(updated.Id);
         if (existingPost == null)
         {
             return null;
         }
 
-        //verify event is still unique
+        //verify post is still unique
         var postWithSameTitle = GetPostByTitle(updated.Title);
         if (postWithSameTitle != null && postWithSameTitle.Id != updated.Id)
         {
@@ -125,10 +118,11 @@ public class PostServiceDb : IPostService
             return null;
         }
 
-        //update the details of the event retrieved and save
+        //update the details of the post retrieved and save
         existingPost.Title = updated.Title;
-        existingPost.PostedOn = updated.PostedOn;
         existingPost.Content = updated.Content;
+        existingPost.PostedOn = updated.PostedOn;
+        existingPost.CreatedBy = updated.CreatedBy;
         existingPost.ImagePath = updated.ImagePath;
 
         ctx.SaveChanges();
@@ -141,7 +135,7 @@ public class PostServiceDb : IPostService
     //=================================== Comments Section ==========================================
 
     //Add a new comment to a post
-    public Comment CreateComment(int postId, string name, string comments)
+    public Comment CreateComment(int postId, string comments, string createdBy)
     {
         var postToComment = GetPostById(postId);
         if (postToComment == null)
@@ -150,8 +144,8 @@ public class PostServiceDb : IPostService
         }
         var comment = new Comment
         {
-            Name = name,
             Comments = comments,
+            CreatedBy = createdBy,
             CreatedAt = DateTime.Now
         };
 
@@ -162,7 +156,7 @@ public class PostServiceDb : IPostService
 
     public Comment CreateComment(Comment comment)
     {
-        return CreateComment(comment.PostId, comment.Name, comment.Comments);
+        return CreateComment(comment.PostId, comment.Comments, comment.CreatedBy);
     }
 
     public Comment GetComment(int id)
@@ -179,14 +173,14 @@ public class PostServiceDb : IPostService
             return false;
         }
 
-        //remove review
+        //remove comment
         ctx.Comments.Remove(commentToDelete);
 
         ctx.SaveChanges();
         return true;
     }
 
-    //retrieve all reviews and the events associated with the review
+    //retrieve all comments and the posts associated with the comment
     public IList<Comment> GetAllComments()
     {
         return ctx.Comments.Include(c => c.Post).ToList();
@@ -198,14 +192,11 @@ public class PostServiceDb : IPostService
 
         if (existingComment != null) return null;
 
-        existingComment.Name = updated.Name;
-        existingComment.CreatedAt = updated.CreatedAt;
         existingComment.Comments = updated.Comments;
+        existingComment.CreatedBy = updated.CreatedBy;
+        existingComment.CreatedAt = updated.CreatedAt;
 
         ctx.SaveChanges();
         return existingComment;
-    }
-
-
-    
+    }    
 }

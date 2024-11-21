@@ -25,7 +25,7 @@ public interface IPostService
     IQueryable<Post> SearchPosts(string searchQuery);
 
     //------------------------------------------Comment Section--------------------------------
-    Comment CreateComment(int id, string name, string comment);
+    Comment CreateComment(int id, string comment, string createdBy);
     Comment CreateComment(Comment comment);
     Comment GetComment(int id);
     //IEnumerable<Comment> GetCommentsByPostId(int postId);

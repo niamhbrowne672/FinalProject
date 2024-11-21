@@ -37,5 +37,12 @@ namespace FinalProject.Data.Services
         Review GetReview(int id);
         bool DeleteReview(int id);
         IList<Review> GetAllReviews();
+
+        //Past Event Gallery
+        IList<PastEventImage> GetPastEventImages(int eventId);
+        PastEventImage AddPastEventImage(int eventId, PastEventImage newImage);
+        bool DeletePastEventImage(int imageId);
+        IQueryable<Event> GetPastEvents();
+        //IEnumerable<Event> GetAllEvnets();
     }
 }

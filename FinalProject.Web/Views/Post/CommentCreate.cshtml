@@ -14,21 +14,21 @@
         <input type="hidden" asp-for="PostId" />
 
         <div class="mt-3">
-            <label asp-for="Name" class="form-label"></label>      
-            <input asp-for="Name" class="form-control"/>
-            <span asp-validation-for="Name" class="text-danger"></span>
+            <label asp-for="Comments" class="form-label"></label>      
+            <textarea rows="5" asp-for="Comments" class="form-control"></textarea>
+            <span asp-validation-for="Comments" class="text-danger"></span>
+        </div>
+
+        <div class="mt-3">
+            <label asp-for="CreatedBy" class="form-label"></label>      
+            <input asp-for="CreatedBy" class="form-control"/>
+            <span asp-validation-for="CreatedBy" class="text-danger"></span>
         </div>
 
         <div class="mt-3">
             <label asp-for="CreatedAt" class="form-label"></label>      
             <input asp-for="CreatedAt" class="form-control"/>
             <span asp-validation-for="CreatedAt" class="text-danger"></span>
-        </div>
-
-        <div class="mt-3">
-            <label asp-for="Content" class="form-label"></label>      
-            <textarea rows="5" asp-for="Content" class="form-control"></textarea>
-            <span asp-validation-for="Content" class="text-danger"></span>
         </div>
     
         <div class="mt-3">

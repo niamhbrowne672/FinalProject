@@ -244,8 +244,36 @@ public class EventController : BaseController
     }
 
 
-    public IActionResult Past()
+   // Past events page
+    public IActionResult Past(int page = 1, int size = 10, string order = "eventTime", string direction = "desc")
     {
-        return View();
+        var pastEvents = _eventService.GetPastEvents(); // Fetch all past events
+
+        // Apply pagination and sorting
+        var pagedPastEvents = pastEvents.ToPaged(page, size, order, direction);
+
+        return View(pagedPastEvents);
+    }
+
+    // Display images for a specific past event
+    public IActionResult PastEventImages(int eventId, int page = 1, int size = 20)
+    {
+        var images = _eventService.GetPastEventImages(eventId);
+
+        if (images == null || !images.Any())
+        {
+            Alert($"No images found for Event {eventId}.", AlertType.warning);
+            return RedirectToAction(nameof(Past));
+        }
+
+        // Apply pagination
+        var pagedImages = images.AsQueryable().ToPaged(page, size);
+
+        return View(pagedImages);
+    }
+
+    public IEnumerable<Event> GetPastEvents()
+    {
+        return _eventService.GetPastEvents().Where(e => e.EventTime < DateTime.Now).ToList();
     }
 }

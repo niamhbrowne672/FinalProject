@@ -63,7 +63,7 @@ public class PostController : BaseController
         //validate title as unique
         if (_postService.GetPostByTitle(p.Title) != null)
         {
-            ModelState.AddModelError(nameof(p.Title), "Post is already exists.");
+            ModelState.AddModelError(nameof(p.Title), "Post already exists.");
         }
 
         //complete POST action to add post
@@ -118,6 +118,8 @@ public class PostController : BaseController
 
             existingPost.Title = updatedPost.Title;
             existingPost.Content = updatedPost.Content;
+            existingPost.PostedOn = updatedPost.PostedOn;
+            existingPost.CreatedBy = updatedPost.CreatedBy;
             existingPost.ImagePath = updatedPost.ImagePath;
 
             //save the changes to the database
@@ -180,7 +182,7 @@ public class PostController : BaseController
             return RedirectToAction(nameof(Index));
         }
 
-        //create a review view model and set foreign key
+        //create a comment view model and set foreign key
         var comment = new Comment { PostId = id };
         //render blank form
         return View(comment);
@@ -239,8 +241,7 @@ public class PostController : BaseController
                 Alert("Comment could not be deleted.", AlertType.warning);
             }
 
-        // redirect to the event details view
+        // redirect to the post details view
         return RedirectToAction(nameof(Details), new { Id = postId });
     }
-
 }

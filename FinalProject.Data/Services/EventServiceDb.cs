@@ -2,6 +2,7 @@ using FinalProject.Data.Entities;
 using FinalProject.Data.Repositories;
 using Microsoft.EntityFrameworkCore;
 using FinalProject.Data.Extensions;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace FinalProject.Data.Services;
 
@@ -202,5 +203,68 @@ public class EventServiceDb : IEventService
 
         ctx.SaveChanges();
         return existingReview;
+    }
+
+    // Past Event Images/ Gallery
+
+    public IQueryable<Event> GetPastEvents()
+    {
+        var currentDate = DateTime.Now;
+        return ctx.Events.Where(e => e.EventTime < currentDate);
+    }
+    public IList<PastEventImage> GetPastEventImages(int eventId)
+    {
+        //get all images associated with a specific event
+        return ctx.PastEventImages.Where(img => img.EventId == eventId).ToList();
+    }
+
+    public PastEventImage AddPastEventImage(int eventId, PastEventImage newImage)
+    {
+        //validate event existence
+        var eventExists = ctx.Events.Any(e => e.Id == eventId);
+        if (!eventExists)
+        {
+            return null; // return null if the event doesn't exist
+        }
+
+        // set the event ID for the image and add it to the database
+        newImage.EventId = eventId;
+        ctx.PastEventImages.Add(newImage);
+        ctx.SaveChanges();
+
+        return newImage;
+    }
+
+    public bool DeletePastEventImage(int ImageId)
+    {
+        //find the image by ID
+        var imageToDelete = ctx.PastEventImages.FirstOrDefault(img => img.Id == ImageId);
+        if (imageToDelete == null)
+        {
+            return false; // return false if the image doesn't exist
+        }
+
+        //delete the image from the database
+        ctx.PastEventImages.Remove(imageToDelete);
+        ctx.SaveChanges();
+        return true;
+    }
+
+    public Paged<Event> GetPastEvents(int page, int pageSize, string orderBy = "id", string direction = "asc")
+    {
+        var currentDate = DateTime.Now;
+
+        var query = ctx.Events.Where(e => e.EventTime < currentDate);
+
+        query = (orderBy.ToLower(), direction.ToLower()) switch
+        {
+            ("id", "asc") => query.OrderBy(r => r.Id),
+            ("id", "desc") => query.OrderByDescending(r => r.Id),
+            ("title", "asc") => query.OrderBy(r => r.Title),
+            ("title", "desc") => query.OrderByDescending(r => r.Title),
+            _ => query.OrderBy(r => r.Id)
+        };
+
+        return query.ToPaged(page, pageSize, orderBy, direction);
     }
 }

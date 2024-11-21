@@ -1,2 +1,50 @@
+@model IList<PastEventImage>
+
+@{
+    ViewBag.Title = "Past Event Gallery";
+    var isUserLoggedIn = User.Identity.IsAuthenticated; // Check if the user is logged in
+}
+
 <!-- woof and wag banner -->
-    <img src="~/images/banners/Gallery.svg" class="banner-full-width img-fluid" alt="Gallery banner">
+<img src="~/images/banners/Gallery.svg" class="banner-full-width img-fluid" alt="Gallery banner">
+
+<div class="row">
+    @foreach (var image in Model)
+    {
+        <div class="col-md-4 mb-4">
+            <div class="card" style="width: 18rem;">
+                <img src="@image.ImageUrl" class="card-img-top" alt="@image.Title" />
+                <div class="card-body">
+                    <h5 class="card-title">@image.Title</h5>
+                    <p class="card-text">@image.Description</p>
+                    <p class="card-text"><small class="text-muted">Uploaded by: @image.User.Name ?? "Unknown"</small></p>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@if (isUserLoggedIn)
+{
+    <hr />
+    <h2>Add Your Image</h2>
+    <form asp-action="AddPastEventImage" asp-controller="Event" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="Title">Title</label>
+            <input type="text" id="Title" name="Title" class="form-control" required maxlength="100" />
+        </div>
+        <div class="form-group">
+            <label for="Description">Description</label>
+            <textarea id="Description" name="Description" class="form-control" rows="3" required maxlength="250"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="ImageFile">Upload Image</label>
+            <input type="file" id="ImageFile" name="ImageFile" class="form-control-file" accept="image/*" required />
+        </div>
+        <button type="submit" class="btn btn-primary mt-2">Submit</button>
+    </form>
+}
+else
+{
+    <p class="text-muted">Log in to add your images to the gallery!</p>
+}

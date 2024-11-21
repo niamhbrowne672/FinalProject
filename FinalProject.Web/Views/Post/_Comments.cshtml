@@ -1,0 +1,100 @@
+@model Post
+
+<!-- Title -->
+<div class="mb-3 d-flex border-bottom align-items-center justify-content-between reviews">
+    <h4>Comments</h4>
+    <a asp-controller="Post" asp-action="CommentCreate" asp-route-id="@Model.Id" class="btn btn-sm btn-green"
+        aria-label="create comment">
+        <i class="bi bi-chat-square-text"></i>
+        <span class="ms-1 d-none d-md-inline">Add Comment</span>
+    </a>
+</div>
+
+<table class="table table-sm reviews-table">
+    <thead>
+        <tr>
+            <th>Comment</th>
+            <th>Posted By</th>
+            <th>Posted At</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.Comments.Count == 0)
+        {
+            <tr>
+                <td colspan="4" class="text-muted">No comments yet. Be the first to add one!</td>
+            </tr>
+        }
+        else
+        {
+            @foreach (var c in Model.Comments)
+            {
+                <tr>
+                    <td>@c.Comments</td>
+                    <td>@c.CreatedBy</td>
+                    <td>@c.CreatedAt</td>
+
+
+                    <td>
+
+                        <button asp-condition=@User.IsInRole("admin") class="btn btn-sm btn-danger" data-bs-toggle="modal"
+                            data-bs-target="#deleteCommentModal-@c.Id">
+                            <i class="bi bi-trash"></i>
+                            <span>Delete</span>
+                        </button>
+
+
+                    </td>
+                </tr>
+                <!-- Include the delete review modal -->
+                @await Html.PartialAsync("_DeleteCommentModal", c)
+
+            }
+        }
+    </tbody>
+</table>
+
+@* @model Post
+
+<div class="comments-section mt-4">
+<div class="mb-3 d-flex border-bottom align-items-center justify-content-between reviews">
+<h4>Comments</h4>
+<a asp-controller="Post" asp-action="CommentCreate" asp-route-id="@Model.Id" class="btn btn-sm btn-green"
+aria-label="create comment">
+<i class="bi bi-chat-square-text"></i>
+<span class="ms-1 d-none d-md-inline">Add Comment</span>
+</a>
+</div>
+
+@if (Model.Comments == null || !Model.Comments.Any())
+{
+<p class="text-muted">No comments yet. Be the first to add one!</p>
+}
+else
+{
+<ul class="list-group">
+@foreach (var comment in Model.Comments)
+{
+<li class="list-group-item">
+<div class="d-flex justify-content-between">
+<div>
+<strong>@comment.Name</strong>
+<small class="text-muted">(@comment.CreatedAt.ToString("g"))</small>
+</div>
+@if (User.IsInRole("admin"))
+{
+<button
+class="btn btn-sm btn-danger"
+data-bs-toggle="modal"
+data-bs-target="#deleteCommentModal-@comment.Id">
+<i class="bi bi-trash"></i>
+<span>Delete</span>
+</button>
+}
+</div>
+<p class="mt-2">@comment.Comments</p>
+</li>
+}
+</ul>
+}
+</div> *@

@@ -1,5 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 namespace FinalProject.Data.Entities;
 
 public class Event
@@ -24,5 +26,9 @@ public class Event
     public IList<Review> Reviews { get; set; } = new List<Review>();
     public string Query { get; set; } = string.Empty;
     public int Rating { get; set; }
+
+    //past event gallery
+    public IList<PastEventImage> PastEventImages { get; set; } = new List<PastEventImage>();
+    public bool IsPast => EventTime < DateTime.Now;
 }
 
