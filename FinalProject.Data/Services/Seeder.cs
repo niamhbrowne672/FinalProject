@@ -14,12 +14,14 @@ public static class Seeder
         IUserService svc = new UserServiceDb(ctx);
         IPostService psvc = new PostServiceDb(ctx);
         IEventService esvc = new EventServiceDb(ctx);
+        IGalleryService galleryService = new GalleryServiceDb(ctx);
         // seeder destroys and recreates the database - NOT to be called in production!!!
         svc.Initialise();
 
         SeedUsers(svc);
         SeedPosts(psvc);
         SeedEvents(esvc);
+        SeedGalleryImages(galleryService);
     }
 
     // add users
@@ -419,199 +421,17 @@ public static class Seeder
 
         var r33 = esvc.CreateReview(e1.Id, "Laura Green", "Beautiful location and great company, highly recommend!", 5);
         var r34 = esvc.CreateReview(e1.Id, "Sarah Black", "My dog loved the open spaces, great event overall!", 4);
+    }
 
-        //Past Event Gallery
-        var i1 = esvc.AddPastEventImage(e31.Id, new PastEventImage
-        {
-            Title = "Collies Playing Together",
-            Description = "A snapshot of the collies enjoying the forest trails.",
-            ImageUrl = "~/images/events/i1",
-            UserId = 1
-        });
-
-        var i2 = esvc.AddPastEventImage(e31.Id, new PastEventImage
-        {
-            Title = "Group Photo",
-            Description = "All the dogs and owners gathered for a group picture.",
-            ImageUrl = "~/images/events/i2",
-            UserId = 2
-        });
-
-        var i3 = esvc.AddPastEventImage(e31.Id, new PastEventImage
-        {
-            Title = "Trail Run",
-            Description = "Collies running through the scenic forest trails.",
-            ImageUrl = "~/images/events/i3",
-            UserId = 3
-        });
-
-        var i4 = esvc.AddPastEventImage(e31.Id, new PastEventImage
-        {
-            Title = "Playful Pups",
-            Description = "Dogs playing a lively game of tag in the open field.",
-            ImageUrl = "~/images/events/i4",
-            UserId = 4
-        });
-
-        var i5 = esvc.AddPastEventImage(e31.Id, new PastEventImage
-        {
-            Title = "Water Break",
-            Description = "Dogs cooling off and rehydrating after a fun run.",
-            ImageUrl = "~/images/events/i5",
-            UserId = 5
-        });
-
-        var i6 = esvc.AddPastEventImage(e31.Id, new PastEventImage
-        {
-            Title = "Ball Chase",
-            Description = "Dogs enthusiastically chasing after balls thrown by their owners.",
-            ImageUrl = "~/images/events/i6",
-            UserId = 6
-        });
-
-        var i7 = esvc.AddPastEventImage(e31.Id, new PastEventImage
-        {
-            Title = "Sunset Stroll",
-            Description = "A picturesque end to the day with dogs walking together at sunset.",
-            ImageUrl = "~/images/events/i7",
-            UserId = 7
-        });
-
-        var i8 = esvc.AddPastEventImage(e31.Id, new PastEventImage
-        {
-            Title = "Agility Fun",
-            Description = "Dogs navigating agility obstacles set up for the event.",
-            ImageUrl = "~/images/events/i8",
-            UserId = 8
-        });
-
-        var i9 = esvc.AddPastEventImage(e31.Id, new PastEventImage
-        {
-            Title = "Owner-Dog Bonding",
-            Description = "A candid moment of an owner sharing a hug with their dog.",
-            ImageUrl = "~/images/events/i9",
-            UserId = 9
-        });
-
-        var i10 = esvc.AddPastEventImage(e31.Id, new PastEventImage
-        {
-            Title = "Picnic Time",
-            Description = "Owners and dogs enjoying a relaxing picnic under the trees.",
-            ImageUrl = "~/images/events/i10",
-            UserId = 10
-        });
-
-        var i11 = esvc.AddPastEventImage(e31.Id, new PastEventImage
-        {
-            Title = "Meet and Greet",
-            Description = "New dogs and owners getting acquainted at the start of the event.",
-            ImageUrl = "~/images/events/i11",
-            UserId = 11
-        });
-
-        var i12 = esvc.AddPastEventImage(e31.Id, new PastEventImage
-        {
-            Title = "Playground Fun",
-            Description = "Dogs having fun exploring a nearby playground area.",
-            ImageUrl = "~/images/events/i12",
-            UserId = 12
-        });
-
-        var i13 = esvc.AddPastEventImage(e31.Id, new PastEventImage
-        {
-            Title = "Rainy Adventure",
-            Description = "Dogs splashing in puddles during an unexpected rain shower.",
-            ImageUrl = "~/images/events/i13",
-            UserId = 13
-        });
-
-        var i14 = esvc.AddPastEventImage(e31.Id, new PastEventImage
-        {
-            Title = "Chill Zone",
-            Description = "Dogs relaxing in the shade while owners chat.",
-            ImageUrl = "~/images/events/i14",
-            UserId = 14
-        });
-
-        var i15 = esvc.AddPastEventImage(e31.Id, new PastEventImage
-        {
-            Title = "Forest Friends",
-            Description = "Dogs exploring and sniffing the forest trails together.",
-            ImageUrl = "~/images/events/i15",
-            UserId = 15
-        });
-
-        var i16 = esvc.AddPastEventImage(e31.Id, new PastEventImage
-        {
-            Title = "Puppy Parade",
-            Description = "Puppies leading the way during a cheerful walk.",
-            ImageUrl = "~/images/events/i16",
-            UserId = 16
-        });
-
-        var i17 = esvc.AddPastEventImage(e31.Id, new PastEventImage
-        {
-            Title = "Training Session",
-            Description = "An impromptu training demonstration by an experienced owner.",
-            ImageUrl = "~/images/events/i17",
-            UserId = 17
-        });
-
-        var i18 = esvc.AddPastEventImage(e31.Id, new PastEventImage
-        {
-            Title = "High Five!",
-            Description = "Dogs showing off their tricks, including a cute high-five.",
-            ImageUrl = "~/images/events/i18",
-            UserId = 18
-        });
-
-        var i19 = esvc.AddPastEventImage(e31.Id, new PastEventImage
-        {
-            Title = "Fetch Champion",
-            Description = "A dog proudly returning the ball during a fetch competition.",
-            ImageUrl = "~/images/events/i19",
-            UserId = 19
-        });
-
-        var i20 = esvc.AddPastEventImage(e31.Id, new PastEventImage
-        {
-            Title = "Scenic View",
-            Description = "Dogs and owners enjoying a panoramic view from the trail summit.",
-            ImageUrl = "~/images/events/i20",
-            UserId = 20
-        });
-
-        var i21 = esvc.AddPastEventImage(e31.Id, new PastEventImage
-        {
-            Title = "Happy Faces",
-            Description = "Dogs posing with their owners, all smiles for the camera.",
-            ImageUrl = "~/images/events/i21",
-            UserId = 21
-        });
-
-        var i22 = esvc.AddPastEventImage(e31.Id, new PastEventImage
-        {
-            Title = "Tug of War",
-            Description = "Dogs enthusiastically participating in a tug-of-war game.",
-            ImageUrl = "~/images/events/i22",
-            UserId = 22
-        });
-
-        var i23 = esvc.AddPastEventImage(e31.Id, new PastEventImage
-        {
-            Title = "Nature Walk",
-            Description = "Dogs and owners strolling through a scenic woodland path.",
-            ImageUrl = "~/images/events/i23",
-            UserId = 23
-        });
-
-        var i24 = esvc.AddPastEventImage(e31.Id, new PastEventImage
-        {
-            Title = "Splash Time",
-            Description = "Dogs playing in a shallow stream to beat the heat.",
-            ImageUrl = "~/images/events/i24",
-            UserId = 24
-        });
+    private static void SeedGalleryImages(IGalleryService galleryService)
+    {
+        // var i1 = galleryService.AddImage(new PastEventImage
+        // {
+        //     ImageTitle = "Splash Time",
+        //     ImageDescription = "Dogs playing in a shallow stream to beat the heat.",
+        //     GalleryImageUrl = "~/images/events/i24",
+        //     ImagePostedBy = "Niamh Browne"
+        // });
     }
 }
 

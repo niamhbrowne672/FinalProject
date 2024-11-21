@@ -47,14 +47,14 @@ else
                     <td>@e.EventTime</td>
                     <td>@e.Location</td>
                     <td class="text-end">
-                        <a asp-action="Details" asp-route-id=@e.Id title="More details"> <i class="bi bi-info-square icon"></i>
+                        <a asp-action="Details" asp-route-id=@e.Id title="More details"> <i class="bi bi-info-square click-icon"></i>
                         </a>
-                        <br>
+            
                         <!--  authorisation check -->
                         @if (User.IsInRole("admin"))
                         {
                             <a asp-action="Edit" asp-route-id=@e.Id title="Edit event">
-                                <i class="bi bi-pencil-square icon"></i>
+                                <i class="bi bi-pencil-square click-icon"></i>
                             </a>
                         }
 

@@ -24,6 +24,7 @@ builder.Services.AddTransient<IUserService,UserServiceDb>();
 builder.Services.AddTransient<IPostService,PostServiceDb>();
 builder.Services.AddTransient<IEventService,EventServiceDb>();
 builder.Services.AddTransient<IMailService,SmtpMailService>();
+builder.Services.AddTransient<IGalleryService,GalleryServiceDb>();
 
 var app = builder.Build();
 

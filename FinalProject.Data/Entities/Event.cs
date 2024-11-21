@@ -29,6 +29,7 @@ public class Event
 
     //past event gallery
     public IList<PastEventImage> PastEventImages { get; set; } = new List<PastEventImage>();
-    public bool IsPast => EventTime < DateTime.Now;
+
 }
+
 

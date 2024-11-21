@@ -38,7 +38,7 @@
             </a>
             <ul class="dropdown-menu" aria-labelledby="eventsDropdown">
                 <li><a class="dropdown-item" asp-controller="Event" asp-action="Index">Events</a></li>
-                <li><a class="dropdown-item" asp-controller="Event" asp-action="Past">Past Events Gallery</a></li>
+                <li><a class="dropdown-item" asp-controller="Gallery" asp-action="Past">Past Events Gallery</a></li>
                 @if (User.Identity.IsAuthenticated)
                     {
                         <li><a class="dropdown-item" asp-controller="Event" asp-action="Calendar">Calendar</a></li>

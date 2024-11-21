@@ -42,17 +42,19 @@
                 <td>@p.Title</td>
                 <td>@p.CreatedBy</td>
                 <td>@p.CreatedAt</td>
-                <td>
-                    <a class="btn btn-green" asp-controller="Post" asp-action="Details" asp-route-id="@p.Id">Details</a>
-                    <!--  authorisation check -->
+                <td class="text-end">
+                        <a asp-action="Details" asp-route-id=@p.Id title="More details"> <i class="bi bi-info-square click-icon"></i>
+                        </a>
+            
+                        <!--  authorisation check -->
                         @if (User.IsInRole("admin"))
-
                         {
-                            <a asp-action="Delete" asp-route-id=@p.Id>
-                                <i class="bi bi-trash" title="delete post" aria-label="delete post"></i>
+                            <a asp-action="Edit" asp-route-id=@p.Id title="Edit post">
+                                <i class="bi bi-pencil-square click-icon"></i>
                             </a>
                         }
-                </td>
+
+                    </td>
             </tr>
             @* Delete Modal for each post*@
             <div class="modal fade" id="deleteModal-@p.Id" tabindex="-1" aria-labelledby="deleteModalLabel-@p.Id" aria-hidden="true">

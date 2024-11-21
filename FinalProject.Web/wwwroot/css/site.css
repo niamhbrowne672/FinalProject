@@ -755,6 +755,11 @@ footer .container {
   border-color: #084c28;
 }
 
+/*Create form cancel button*/
+.cancel-link {
+  color: #007a50;
+}
+
 /******************************************** Breed Page**/
 /**Images same height and width**/
 .breed-image {
@@ -839,12 +844,29 @@ footer .container {
   display: none;
 }
 
-/*=========================== Events section=======================*/
-
-/*Events Index*/
-.icon {
+/* Index icons*/
+.click-icon {
   color: #004d2a;
+  font-size: 1.5rem;
+  padding: 0.5rem;
 }
+
+td.text-end a {
+  display: inline-block;
+}
+
+.click-icon:hover {
+  color: #007a50;
+  cursor: pointer;
+}
+
+@media (min-width: 1200px) {
+  .click-icon {
+    font-size: 2rem;
+  }
+}
+
+/*=========================== Events section=======================*/
 
 .table-headings {
   color: #004d2a;
