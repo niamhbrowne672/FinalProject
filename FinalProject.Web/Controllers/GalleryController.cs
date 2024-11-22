@@ -22,45 +22,54 @@ public class GalleryController : BaseController
         return View(images);
     }
 
-    // Add a new image
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public IActionResult AddImage(PastEventImage image, IFormFile ImageFile)
+    public IActionResult AddImage(PastEventImage image, IList<IFormFile> ImageFiles)
     {
-        if (ImageFile != null && ImageFile.Length > 0)
+        if (ImageFiles != null && ImageFiles.Count > 0)
         {
-            // Save the uploaded image file
-            var fileName = Path.GetFileNameWithoutExtension(ImageFile.FileName) + "-" + Guid.NewGuid().ToString("N") + Path.GetExtension(ImageFile.FileName);
-            var uploadsDir = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/gallery");
+            var uploadedImageUrls = new List<string>();
 
-            if (!Directory.Exists(uploadsDir))
+            // Process each uploaded file
+            foreach (var file in ImageFiles)
             {
-                Directory.CreateDirectory(uploadsDir);
+                if (file.Length > 0)
+                {
+                    var fileName = Path.GetFileNameWithoutExtension(file.FileName) + "-" + Guid.NewGuid().ToString("N") + Path.GetExtension(file.FileName);
+                    var uploadsDir = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/gallery");
+
+                    if (!Directory.Exists(uploadsDir))
+                    {
+                        Directory.CreateDirectory(uploadsDir);
+                    }
+
+                    var filePath = Path.Combine(uploadsDir, fileName);
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        file.CopyTo(stream);
+                    }
+
+                    uploadedImageUrls.Add($"/images/gallery/{fileName}");
+                }
             }
 
-            var filePath = Path.Combine(uploadsDir, fileName);
-            using (var stream = new FileStream(filePath, FileMode.Create))
-            {
-                ImageFile.CopyTo(stream);
-            }
+            // Assign the uploaded image URLs to the entity
+            image.GalleryImageUrls = uploadedImageUrls;
 
-            // Set the image path
-            image.GalleryImageUrl = $"/images/gallery/{fileName}";
-
-            // Save the image details to the database
+            // Save to the database
             var addedImage = _galleryService.AddImage(image);
-
             if (addedImage != null)
             {
-                Alert("Image added successfully.", AlertType.success);
+                Alert("Image(s) added successfully.", AlertType.success);
                 return RedirectToAction(nameof(Past));
             }
         }
 
-        // Handle errors
-        Alert("Error adding image. Please check your inputs and try again.", AlertType.warning);
+        Alert("Error adding images. Please check your inputs and try again.", AlertType.warning);
         return RedirectToAction(nameof(Past));
     }
+
+
 
     // Delete an image (Admin only)
     [HttpPost]

@@ -103,14 +103,14 @@ h1, h2, h3, h4, h5 {
 }
 
 
-/* Divider for sections*/
+/* Divider for sections
 .section-divider {
   width: 80%;
   margin: 2rem auto;
   border: 0;
   height: 1px;
   background-color: rgba(0, 0, 0, 0.2);
-}
+} */
 
 
 /***********************lock image*/
@@ -279,6 +279,12 @@ footer .container {
 .btn-green {
   background-color: #0a5732;
   border-color: #0a5732;
+  color: #fff;
+}
+
+.btn-light-green {
+  background-color: #007a50;
+  border-color: #007a50;
   color: #fff;
 }
 
@@ -476,12 +482,12 @@ footer .container {
   font-weight: 700;
 }
 
-.privacy-policy .section-divider {
+/* .privacy-policy .section-divider {
   width: 60%;
   height: 2px;
   background-color: #0a5732;
   margin: 30px auto;
-}
+} */
 
 .privacy-policy .nav {
   background-color: rgba(10, 87, 50, 0.05);
@@ -532,12 +538,21 @@ footer .container {
   font-weight: 700;
 }
 
-.about-us .section-divider {
-  width: 60%;
-  height: 2px;
+.section-divider {
+  width: 80%;
+  height: 2px auto;
   background-color: #0a5732;
   margin: 30px auto;
 }
+
+/* Divider for sections
+.section-divider {
+  width: 80%;
+  margin: 2rem auto;
+  border: 0;
+  height: 1px;
+  background-color: rgba(0, 0, 0, 0.2);
+} */
 
 .about-us .nav {
   background-color: rgba(10, 87, 50, 0.05);
@@ -884,4 +899,28 @@ td.text-end a {
 
 .reviews-table {
   color: #004d2a;
+}
+
+/**********************************Gallery*/
+.gallery-card {
+  height: 650px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.gallery-card img {
+  height: 400px;
+  width: 100%;
+  object-fit: cover;
+  border-radius: 5px;
+}
+
+.gallery-card .card-body {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }

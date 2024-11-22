@@ -18,13 +18,13 @@ public class GalleryServiceDb : IGalleryService
         return ctx.PastEventImages.ToList();
     }
 
-    // Add a new image to the gallery
+    // Add a new image or set of images to the gallery
     public PastEventImage AddImage(PastEventImage image)
     {
         // Validate required fields
         if (string.IsNullOrWhiteSpace(image.ImageTitle) ||
             string.IsNullOrWhiteSpace(image.ImageDescription) ||
-            string.IsNullOrWhiteSpace(image.GalleryImageUrl))
+            image.GalleryImageUrls == null || !image.GalleryImageUrls.Any())
         {
             return null;
         }
@@ -48,6 +48,16 @@ public class GalleryServiceDb : IGalleryService
         // Remove the image and save changes
         ctx.PastEventImages.Remove(imageToDelete);
         ctx.SaveChanges();
+
+        // delete physical files if required
+        foreach (var imageUrl in imageToDelete.GalleryImageUrls)
+        {
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", imageUrl.TrimStart('/'));
+            if (File.Exists(filePath))
+            {
+                File.Delete(filePath);
+            }
+        }
         return true;
     }
 }

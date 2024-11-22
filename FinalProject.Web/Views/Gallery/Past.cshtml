@@ -5,27 +5,94 @@
     var isAdmin = User.IsInRole("admin");
 }
 
-<!-- Gallery Header -->
-<h1 class="text-center my-4">Past Event Gallery</h1>
+<!-- woof and wag banner -->
+<img src="~/images/banners/Gallery.svg" class="banner-full-width img-fluid" alt="Gallery">
+<!-- divider for sections-->
+<hr class="section-divider">
+
+<div class="text-center mb-4">
+    @if (isUserLoggedIn)
+    {
+        <p class="lead">
+            Welcome to the <strong>Past Event Gallery!</strong>
+            Here, you can revisit the cherished moments shared by our community. Feel free to browse through the images,
+            relive the joy, and even add your own contributions to keep these memories alive. Your moments can inspire and
+            connect others—don't hesitate to upload your favorite snapshots and become a part of our shared story!
+        </p>
+    }
+    else
+    {
+        <p class="lead">
+            Welcome to the <strong>Past Event Gallery!</strong>
+            This is where our community comes together to share the joy and memories of past events. While you can browse
+            the gallery and see what makes this space so special, logging in allows you to add your own images and be part
+            of the story. Don't miss the chance to contribute your moments and help grow our collection—log in or register
+            today!
+        </p>
+    }
+</div>
+<!-- divider for sections-->
+<hr class="section-divider">
 
 <!-- Cards -->
 <div class="row">
+    <!-- Add Your Image Card -->
+    <div class="col-md-4 mb-4">
+        <div class="card text-center gallery-card">
+            <img src="~/images/gallery/AddYourImage.jpg" class="card-img-top" alt="Add your own image">
+            <div class="card-body">
+                <h5 class="card-title">Add Your Image!</h5>
+                <p class="card-text">Contribute to the gallery by sharing your moments.</p>
+
+                @if (isUserLoggedIn)
+                {
+                    <button class="btn btn-green" data-bs-toggle="modal" data-bs-target="#addImageModal"><i class="bi bi-plus"></i> Add Image</button>
+                }
+                else
+                {
+                    <a asp-controller="User" asp-action="Login" class="btn btn-green">Login</a>
+                    <a asp-controller="User" asp-action="Register" class="btn btn-light-green">Register</a>
+                }
+            </div>
+        </div>
+    </div>
+
     @foreach (var image in Model)
     {
         <div class="col-md-4 mb-4">
-            <div class="card">
-                <img src="@image.GalleryImageUrl" class="card-img-top" alt="@image.ImageTitle"
-                     style="height: 200px; object-fit: cover;">
+            <div class="card gallery-card">
+                <!-- Bootstrap Carousel for Multiple Images -->
+                <div id="carousel-@image.Id" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        @for (int i = 0; i < image.GalleryImageUrls.Count; i++)
+                        {
+                            <div class="carousel-item @(i == 0 ? "active" : "")">
+                                <img src="@image.GalleryImageUrls[i]" class="d-block w-100" alt="@image.ImageTitle">
+                            </div>
+                        }
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carousel-@image.Id"
+                        data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carousel-@image.Id"
+                        data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+
                 <div class="card-body">
                     <h5 class="card-title">@image.ImageTitle</h5>
                     <p class="card-text">@image.ImageDescription</p>
-                    <p class="card-text"><small>Uploaded by: @image.ImagePostedBy</small></p>
+                    <p class="card-text"><small><i class="bi bi-person-fill"></i> Uploaded by: @image.ImagePostedBy</small></p>
 
                     @if (isAdmin)
                     {
                         <!-- Delete Button -->
-                        <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal-@image.Id">
-                            Delete
+                        <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal-@image.Id">
+                           <i class="bi bi-trash"></i> Delete
                         </button>
                     }
                 </div>
@@ -54,26 +121,6 @@
             </div>
         </div>
     }
-
-    <!-- Add Your Image Card -->
-    <div class="col-md-4 mb-4">
-        <div class="card text-center">
-            <div class="card-body">
-                <h5 class="card-title">Add Your Image!</h5>
-                <p class="card-text">Contribute to the gallery by sharing your moments.</p>
-
-                @if (isUserLoggedIn)
-                {
-                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addImageModal">Add Image</button>
-                }
-                else
-                {
-                    <a href="/Account/Login" class="btn btn-primary">Login</a>
-                    <a href="/Account/Register" class="btn btn-secondary">Register</a>
-                }
-            </div>
-        </div>
-    </div>
 </div>
 
 <!-- Add Image Modal -->
@@ -88,15 +135,23 @@
                 <form asp-action="AddImage" asp-controller="Gallery" method="post" enctype="multipart/form-data">
                     <div class="mb-3">
                         <label for="ImageTitle" class="form-label">Image Title</label>
-                        <input type="text" name="ImageTitle" id="ImageTitle" class="form-control" maxlength="50" required>
+                        <input type="text" name="ImageTitle" id="ImageTitle" class="form-control" maxlength="50"
+                            required>
                     </div>
                     <div class="mb-3">
                         <label for="ImageDescription" class="form-label">Image Description</label>
-                        <textarea name="ImageDescription" id="ImageDescription" class="form-control" maxlength="200" required></textarea>
+                        <textarea name="ImageDescription" id="ImageDescription" class="form-control" maxlength="100"
+                            required></textarea>
                     </div>
                     <div class="mb-3">
-                        <label for="ImageFile" class="form-label">Upload Image</label>
-                        <input type="file" name="ImageFile" id="ImageFile" class="form-control" accept="image/*" required>
+                        <label for="ImageFiles" class="form-label">Upload Images</label>
+                        <input type="file" name="ImageFiles" id="ImageFiles" class="form-control" accept="image/*"
+                            multiple required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="ImagePostedBy" class="form-label">Uploaded By</label>
+                        <input type="text" name="ImagePostedBy" id="ImagePostedBy" class="form-control" maxlength="50"
+                            required>
                     </div>
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </form>

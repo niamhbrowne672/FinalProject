@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 namespace FinalProject.Data.Entities;
 
@@ -11,11 +12,11 @@ public class PastEventImage
     public string ImageTitle { get; set; }
 
     [Required]
-    [MaxLength(200)]
+    [MaxLength(100)]
     public string ImageDescription { get; set; }
+    [Required]
+    public List<string> GalleryImageUrls { get; set; } = new List<string>();
 
     [Required]
-    public string GalleryImageUrl { get; set; } 
-
     public string ImagePostedBy { get; set; } 
 }
