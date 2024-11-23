@@ -103,16 +103,6 @@ h1, h2, h3, h4, h5 {
 }
 
 
-/* Divider for sections
-.section-divider {
-  width: 80%;
-  margin: 2rem auto;
-  border: 0;
-  height: 1px;
-  background-color: rgba(0, 0, 0, 0.2);
-} */
-
-
 /***********************lock image*/
 .bg-green {
   background-color: #004d2a;
@@ -481,13 +471,6 @@ footer .container {
   color: #084c28;
   font-weight: 700;
 }
-
-/* .privacy-policy .section-divider {
-  width: 60%;
-  height: 2px;
-  background-color: #0a5732;
-  margin: 30px auto;
-} */
 
 .privacy-policy .nav {
   background-color: rgba(10, 87, 50, 0.05);
@@ -903,14 +886,14 @@ td.text-end a {
 
 /**********************************Gallery*/
 .gallery-card {
-  height: 650px;
+  height: 500px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
 
 .gallery-card img {
-  height: 400px;
+  height: 250px;
   width: 100%;
   object-fit: cover;
   border-radius: 5px;
@@ -923,4 +906,18 @@ td.text-end a {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+}
+
+@media (min-width: 786px)
+{
+  .gallery-card {
+    max-width: 500px;
+    margin: 0 auto;
+  }
+}
+
+@media (min-width: 1200px) {
+  .gallery-card {
+    max-width: 600px;
+  }
 }

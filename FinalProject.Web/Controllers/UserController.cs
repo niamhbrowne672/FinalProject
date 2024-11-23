@@ -9,6 +9,7 @@ using FinalProject.Data.Entities;
 using FinalProject.Data.Services;
 using FinalProject.Data.Security;
 using FinalProject.Web.Models.User;
+using System.Security.Cryptography;
 
 /**
  *  User Management Controller
@@ -360,4 +361,41 @@ public class UserController : BaseController
             BuildClaimsPrincipal(user)
         );
     }
+
+    // //=================================== Contact Us Page ==========================
+    // //display the contact us page
+    // public IActionResult Contact()
+    // {
+    //     return View(new ContactViewModel());
+    // }
+
+    // //Handle contact us form submissions
+    // [HttpPost]
+    // [ValidateAntiForgeryToken]
+    // public IActionResult Contact([Bind("Name,Email,Message")] ContactViewModel m)
+    // {
+    //     if (!ModelState.IsValid)
+    //     {
+    //         return View(m);
+    //     }
+
+    //     //build the email subject and body
+    //     string subject = "Contact Us From Submission";
+    //     string body = $@"
+    //     <h3>New Contact Us Submission</h3>
+    //     <p><strong>Name:</strong> {m.Name}</p>
+    //     <p><strong>Email:</strong> {m.Email}</p>
+    //     <p><strong>Message:</strong> {m.Message}</p>
+    //     ";
+
+    //     //send the email
+    //     bool emailSent = _mailer.SendMail(subject, body, "admin@mail.com");
+    //     if (!emailSent)
+    //     {
+    //         Alert("There was a problem sending your message. Please try again.", AlertType.warning);
+    //         return View(m);
+    //     }
+    //     Alert("Your message has been sent successfully. We'll get back to you sonn!", AlertType.success);
+    //     return RedirectToAction("Index", "Home");
+    // }
 }

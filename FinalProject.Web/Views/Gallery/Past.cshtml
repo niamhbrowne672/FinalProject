@@ -37,9 +37,9 @@
 <!-- Cards -->
 <div class="row">
     <!-- Add Your Image Card -->
-    <div class="col-md-4 mb-4">
+    <div class="col-12 col-md-6 col-lg-3 mb-4">
         <div class="card text-center gallery-card">
-            <img src="~/images/gallery/AddYourImage.jpg" class="card-img-top" alt="Add your own image">
+            <img src="~/images/gallery/AddYourImage.svg" class="card-img-top" alt="Add your own image">
             <div class="card-body">
                 <h5 class="card-title">Add Your Image!</h5>
                 <p class="card-text">Contribute to the gallery by sharing your moments.</p>
@@ -59,7 +59,7 @@
 
     @foreach (var image in Model)
     {
-        <div class="col-md-4 mb-4">
+        <div class="col-12 col-md-6 col-lg-3 mb-4">
             <div class="card gallery-card">
                 <!-- Bootstrap Carousel for Multiple Images -->
                 <div id="carousel-@image.Id" class="carousel slide" data-bs-ride="carousel">
@@ -140,7 +140,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="ImageDescription" class="form-label">Image Description</label>
-                        <textarea name="ImageDescription" id="ImageDescription" class="form-control" maxlength="100"
+                        <textarea name="ImageDescription" id="ImageDescription" class="form-control" maxlength="90"
                             required></textarea>
                     </div>
                     <div class="mb-3">

@@ -12,7 +12,7 @@ public class PastEventImage
     public string ImageTitle { get; set; }
 
     [Required]
-    [MaxLength(100)]
+    [MaxLength(90)]
     public string ImageDescription { get; set; }
     [Required]
     public List<string> GalleryImageUrls { get; set; } = new List<string>();

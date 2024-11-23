@@ -41,7 +41,7 @@
                 <li><a class="dropdown-item" asp-controller="Gallery" asp-action="Past">Past Events Gallery</a></li>
                 @if (User.Identity.IsAuthenticated)
                     {
-                        <li><a class="dropdown-item" asp-controller="Event" asp-action="Calendar">Calendar</a></li>
+                        <li><a class="dropdown-item" asp-controller="User" asp-action="Calendar">Calendar</a></li>
                     }
             </ul>
         </li>
@@ -69,7 +69,7 @@
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <li><a class="dropdown-item" asp-controller="Home" asp-action="About">About</a></li>
                 <li><a class="dropdown-item" asp-controller="Home" asp-action="Privacy">Privacy</a></li>
-                <li><a class="dropdown-item" asp-controller="Home" asp-action="Contact">Contact Us</a></li>
+                <li><a class="dropdown-item" asp-controller="Contact" asp-action="Contact">Contact Us</a></li>
             </ul>
         </li>
 
