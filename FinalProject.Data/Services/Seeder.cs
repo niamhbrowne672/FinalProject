@@ -1,8 +1,8 @@
 ﻿
+using System.Reflection;
 using Bogus;
 using FinalProject.Data.Entities;
 using FinalProject.Data.Repositories;
-using Microsoft.IdentityModel.Tokens;
 
 namespace FinalProject.Data.Services;
 public static class Seeder
@@ -15,6 +15,7 @@ public static class Seeder
         IPostService psvc = new PostServiceDb(ctx);
         IEventService esvc = new EventServiceDb(ctx);
         IGalleryService galleryService = new GalleryServiceDb(ctx);
+        ICalendarService calendarService = new CalendarServiceDb(ctx);
         // seeder destroys and recreates the database - NOT to be called in production!!!
         svc.Initialise();
 
@@ -22,6 +23,8 @@ public static class Seeder
         SeedPosts(psvc);
         SeedEvents(esvc);
         SeedGalleryImages(galleryService);
+        SeedCounties(calendarService);
+        SeedCalendars(calendarService);
     }
 
     // add users
@@ -45,7 +48,7 @@ public static class Seeder
         }
     }
 
-    // private static void SeedPosts(IPostService psvc, IUserService svc)
+    // private static void SeedPosts(IPostService psvc)
     // {
     //     var faker = new Faker();
     //     // add some fake posts
@@ -432,6 +435,67 @@ public static class Seeder
         //     GalleryImageUrl = "~/images/events/i24",
         //     ImagePostedBy = "Niamh Browne"
         // });
+    }
+
+    private static void SeedCounties(ICalendarService calendarService)
+{
+    // Add counties in Ireland
+    var counties = new List<County>
+    {
+        new County { Name = "Tyrone" },
+        new County { Name = "Antrim" },
+        new County { Name = "Armagh" },
+        new County { Name = "Derry" },
+        new County { Name = "Down" },
+        new County { Name = "Fermanagh" },
+        new County { Name = "Carlow" },
+        new County { Name = "Cavan" },
+        new County { Name = "Clare" },
+        new County { Name = "Cork" },
+        new County { Name = "Donegal" },
+        new County { Name = "Dublin" },
+        new County { Name = "Galway" },
+        new County { Name = "Kerry" },
+        new County { Name = "Kildare" },
+        new County { Name = "Kilkenny" },
+        new County { Name = "Laois" },
+        new County { Name = "Leitrim" },
+        new County { Name = "Limerick" },
+        new County { Name = "Longford" },
+        new County { Name = "Louth" },
+        new County { Name = "Mayo" },
+        new County { Name = "Meath" },
+        new County { Name = "Monaghan" },
+        new County { Name = "Offaly" },
+        new County { Name = "Roscommon" },
+        new County { Name = "Sligo" },
+        new County { Name = "Tipperary" },
+        new County { Name = "Waterford" },
+        new County { Name = "Westmeath" },
+        new County { Name = "Wexford" },
+        new County { Name = "Wicklow" }
+    };
+
+    // Add counties to the service
+    foreach (var county in counties)
+    {
+        calendarService.AddCounty(county);
+    }
+}
+
+
+    private static void SeedCalendars(ICalendarService calendarService)
+    {
+        var calendar1 = new Calendar
+        {
+            Title = "Dog Walk in Belfast",
+            Location = "Belfast",
+            Start = new DateTime(2024, 11, 20, 10, 0, 0),
+            End = new DateTime(2024, 11, 20, 12, 0, 0),
+            CountyId = 1,
+            UserId = 1
+        };
+        calendarService.AddCalendar(calendar1);
     }
 }
 

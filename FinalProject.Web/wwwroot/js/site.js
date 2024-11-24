@@ -87,3 +87,57 @@ document.addEventListener('DOMContentLoaded', function() {
     searchBar.addEventListener('input', handleSearch);
     searchButton.addEventListener('click', handleSearch);
 });
+
+
+// // ================================== Calendar ==================================
+
+// // convert date to string format that can be consumed by .NET
+// function formatDate(date) {
+//     //return new Date(date).toISOString();
+//     const d = new Date(date)
+//     return d.getFullYear() + "-" +
+//         ("0" + (d.getMonth() + 1)).slice(-2) + "-" +
+//         ("0" + d.getDate()).slice(-2) + " " +
+//         d.toLocaleTimeString()
+// }
+
+// function configCalendar(calendarEl) {
+//     // needs wrapped in Html.Raw to stop characters being encoded (or evaluated)
+//     const json = '@Html.Raw(Model.SerializeCalendarsForUser(@Model.UserId, @User.HasOneOfRoles("Admin")))';
+//     const startDate = '@Html.Raw(Model.Start)';
+//     const endDate = '@Html.Raw(Model.End)';
+//     const countyId = '@Html.Raw(Model.CountyId)';
+//     const userId = '@Html.Raw(Model.UserId)';
+//     const minSlotTime = "09:00:00";
+//     const maxSlotTime = "19:00:00";
+
+//     console.log('start', `"${startDate}"`, 'end', endDate, 'events', json);
+
+//     const calendar = new FullCalendar.Calendar(calendarEl, {
+//         events: JSON.parse(json),
+//         initialDate: startDate,
+//         initialView: 'timeGridWeek',
+//         slotMinTime: minSlotTime,
+//         slotMaxTime: maxSlotTime,
+//         nowIndicator: true,
+//         weekends: true,
+//         navLinks: true,
+//         selectable: true,
+//         selectMirror: true,
+//         editable: false,
+//         eventOverlap: false,
+//         dayMaxEvents: true, // allow "more" link when too many events
+//         select: (arg) => window.location = `/Calendar/Add/${countyId}?start=${formatDate(arg.start)}&end=${formatDate(arg.end)}`,
+        
+//         headerToolbar: {
+//             left: 'prev,next today',
+//             center: 'title',
+//             right: 'timeGridWeek,timeGridDay,dayGridMonth'
+//         }
+//     });
+//     return calendar
+// }
+// // @* document.addEventListener('DOMContentLoaded', () => {
+// //     const calendar = configCalendar(document.getElementById('calendar'));
+// //     calendar.render();
+// // }); *@

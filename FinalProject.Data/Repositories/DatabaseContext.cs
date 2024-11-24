@@ -5,6 +5,8 @@ using Microsoft.Extensions.Logging;
 // import the Entities (database models representing structure of tables in database)
 using FinalProject.Data.Entities;
 using Microsoft.Identity.Client;
+using Microsoft.EntityFrameworkCore.Internal;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace FinalProject.Data.Repositories;
 
@@ -20,6 +22,8 @@ public class DatabaseContext : DbContext
     public DbSet<Review> Reviews { get; set; }
     public DbSet<Comment> Comments { get; set; }
     public DbSet<ForgotPassword> ForgotPasswords { get; set; }
+    public DbSet<Calendar> Calendars { get; set; }
+    public DbSet<County> Counties { get; set; }
 
     public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)
     {
@@ -29,8 +33,13 @@ public class DatabaseContext : DbContext
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         // remove in production 
-        // optionsBuilder.LogTo(Console.WriteLine, LogLevel.Information).EnableSensitiveDataLogging();
+        //optionsBuilder.LogTo(Console.WriteLine, LogLevel.Information).EnableSensitiveDataLogging();
         optionsBuilder.UseSqlite("Filename=events.db");
+    }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Calendar>().Property(c => c.Id).ValueGeneratedOnAdd();
     }
 
     //public static DbContextOptionsBuilder<DatabaseContext> OptionsBuilder => new();

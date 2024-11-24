@@ -1,0 +1,26 @@
+@model IList<County>
+
+
+<h1>Counties</h1>
+
+<table class="table county-table">
+    <thead class="thead-light">
+    <tr>
+        @* <th>#</th> *@
+        <th>County Name: </th>
+        <th>Events: </th>
+    </tr>
+    </thead>
+ 
+    <tbody>
+    @foreach (var county in Model) {
+        <tr>
+            @* <td>@county.Id</td> *@
+            <td><i class="bi bi-geo-alt icon"></i> Co. @county.Name</td>
+            <td>
+                <a asp-controller="Calendar" asp-action="County" asp-route-id="@county.Id"><i class="bi bi-calendar-date calendar-icon"></i></a>     
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>

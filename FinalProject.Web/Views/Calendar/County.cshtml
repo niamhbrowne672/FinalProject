@@ -1,0 +1,10 @@
+@model CalendarViewModel
+
+<partial name="_Calendar" model=@Model />
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+       const calendar = configCalendar(document.getElementById('calendar'))
+       calendar.render()
+    });
+</script>

@@ -921,3 +921,19 @@ td.text-end a {
     max-width: 600px;
   }
 }
+
+#calendar {
+  text-decoration: #004d2a;
+}
+
+/************************************County section*/
+
+.county-table {
+  color: #004d2a;
+}
+
+.calendar-icon {
+  color: #004d2a;
+  font-size: 2.5rem;
+  padding: 0.5rem;
+}
