@@ -4,14 +4,14 @@
     ViewData["Title"] = "Post Details";
 }
 
-<div class="card rounded shadow p-4">
+<div class="card rounded shadow p-4 community-details">
     <!-- Title bar -->
     <div class="border-bottom d-flex align-items-center justify-content-between mb-3">
-        <h3 class="text-primary">@Model.Title</h3>
+        <h3>@Model.Title</h3>
 
-        <a asp-action="Index" class="btn btn-sm btn-primary" aria-label="post list">
+        <a asp-action="Index" class="btn btn-sm btn-green" aria-label="post list">
             <i class="bi bi-list"></i>
-            <span>Posts</span>
+            <span>Community Posts</span>
         </a>
     </div>
 

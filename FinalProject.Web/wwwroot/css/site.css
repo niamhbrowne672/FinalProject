@@ -728,6 +728,10 @@ footer .container {
 }
 
 /***************************************************Community Posts*/
+.community-details {
+  color: #004d2a;
+}
+
 .hero-section-post {
   position: relative;
   height: 300px;
