@@ -28,14 +28,14 @@
                 <td>@u.Name</td>
                 <td>@u.Email</td>
                 <td>@u.Role</td>  
-                <td class="user-icon">
+                <td>
                     <a asp-action="Update" asp-route-id="@u.Id" title="Edit User">
-                        <i class="bi bi-pencil-fill user-icon"></i>
+                        <i class="bi bi-pencil-fill click-icon"></i>
                     </a>
 
                     <!-- Link to profile page -->  
-                    <a asp-action="Profile" asp-route-id="@u.Id" title="View Profile" class="ms-2">
-                        <i class="bi bi-person-circle user-icon"></i>
+                    <a asp-action="Profile" asp-route-id="@u.Id" title="View Profile">
+                        <i class="bi bi-person-circle click-icon"></i>
                     </a>                  
                 </td>                
             </tr>
