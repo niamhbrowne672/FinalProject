@@ -16,5 +16,11 @@ public class ProfileViewModel
     public string Email { get; set; }
 
     public Role Role { get; set; }
+    [Required]
+    [Display(Name = "Dog Breed")]
+    public string DogBreed { get; set; }
+    [Display(Name = "Profile Image")]
+    public IFormFile ProfileImage { get; set; }
+    public string ProfileImageUrl { get; set; }
 
 }

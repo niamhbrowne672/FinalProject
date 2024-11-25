@@ -20,6 +20,11 @@ public class RegisterViewModel
 
     [Compare("Password", ErrorMessage = "Confirm password doesn't match, Type again !")]
     public string PasswordConfirm  { get; set; }
+    [Display(Name = "Dog Breed")]
+    public string DogBreed { get; set; }
+    [Display(Name = "Profile Image")]
+    public IFormFile ProfileImage { get; set; }
+
 
 
 }

@@ -17,7 +17,7 @@ namespace FinalProject.Data.Services
         User GetUser(int id);
         User GetUserByEmail(string email);
         bool IsEmailAvailable(string email, int userId);
-        User AddUser(string name, string email, string password, Role role);
+        User AddUser(string name, string email, string password, Role role, string dogBreed, string profileImageUrl);
         User UpdateUser(User user);
         bool DeleteUser(int id);
         User Authenticate(string email, string password);

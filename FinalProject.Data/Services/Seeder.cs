@@ -30,9 +30,9 @@ public static class Seeder
     // add users
     private static void SeedUsers(IUserService svc)
     {
-        svc.AddUser("Administrator", "admin@mail.com", "admin", Role.admin);
-        svc.AddUser("Manager", "manager@mail.com", "manager", Role.manager);
-        svc.AddUser("Guest", "guest@mail.com", "guest", Role.guest);
+        svc.AddUser("Administrator", "admin@mail.com", "admin", Role.admin, "N/A", null);
+        svc.AddUser("Manager", "manager@mail.com", "manager", Role.manager, "N/A", null);
+        svc.AddUser("Guest", "guest@mail.com", "guest", Role.guest, "Golden Retriever", null);
 
 
         // // optionally add some fake users
@@ -43,7 +43,9 @@ public static class Seeder
                 faker.Name.FullName(),
                 faker.Internet.Email(),
                 "password",
-                Role.guest
+                Role.guest,
+                faker.Random.Word(),
+                null //Default profile image
             );
         }
     }

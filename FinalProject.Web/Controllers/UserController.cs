@@ -77,14 +77,14 @@ public class UserController : BaseController
     // HTTP POST - Register action
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public IActionResult Register([Bind("Name,Email,Password,PasswordConfirm")] RegisterViewModel m)       
+    public IActionResult Register([Bind("Name,Email,Password,PasswordConfirm,DogBreed")] RegisterViewModel m)       
     {
         if (!ModelState.IsValid)
         {
             return View(m);
         }
         // add user via service
-        var user = _svc.AddUser(m.Name, m.Email,m.Password, Role.guest);
+        var user = _svc.AddUser(m.Name, m.Email,m.Password, Role.guest, m.DogBreed, null);
         
         // check if error adding user and display warning
         if (user == null) {
@@ -94,6 +94,17 @@ public class UserController : BaseController
 
         Alert("Successfully Registered. Now login", AlertType.info);
         return RedirectToAction(nameof(Login));
+    }
+
+    [HttpGet("Profile/{id}")]
+    public IActionResult Profile(int id)
+    {
+        var user = _svc.GetUser(id);
+        if (user == null) 
+        {
+            return NotFound();
+        }
+        return View(user);
     }
 
     // HTTP GET - Display Update profile page
@@ -361,41 +372,4 @@ public class UserController : BaseController
             BuildClaimsPrincipal(user)
         );
     }
-
-    // //=================================== Contact Us Page ==========================
-    // //display the contact us page
-    // public IActionResult Contact()
-    // {
-    //     return View(new ContactViewModel());
-    // }
-
-    // //Handle contact us form submissions
-    // [HttpPost]
-    // [ValidateAntiForgeryToken]
-    // public IActionResult Contact([Bind("Name,Email,Message")] ContactViewModel m)
-    // {
-    //     if (!ModelState.IsValid)
-    //     {
-    //         return View(m);
-    //     }
-
-    //     //build the email subject and body
-    //     string subject = "Contact Us From Submission";
-    //     string body = $@"
-    //     <h3>New Contact Us Submission</h3>
-    //     <p><strong>Name:</strong> {m.Name}</p>
-    //     <p><strong>Email:</strong> {m.Email}</p>
-    //     <p><strong>Message:</strong> {m.Message}</p>
-    //     ";
-
-    //     //send the email
-    //     bool emailSent = _mailer.SendMail(subject, body, "admin@mail.com");
-    //     if (!emailSent)
-    //     {
-    //         Alert("There was a problem sending your message. Please try again.", AlertType.warning);
-    //         return View(m);
-    //     }
-    //     Alert("Your message has been sent successfully. We'll get back to you sonn!", AlertType.success);
-    //     return RedirectToAction("Index", "Home");
-    // }
 }

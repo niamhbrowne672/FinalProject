@@ -54,7 +54,7 @@ namespace FinalProject.Data.Services
         }
 
         // Add a new User checking a User with same email does not exist
-        public User AddUser(string name, string email, string password, Role role)
+        public User AddUser(string name, string email, string password, Role role, string dogBreed, string profileImageUrl)
         {     
             var existing = GetUserByEmail(email);
             if (existing != null)
@@ -67,7 +67,9 @@ namespace FinalProject.Data.Services
                 Name = name,
                 Email = email,
                 Password = Hasher.CalculateHash(password), // can hash if required 
-                Role = role              
+                Role = role,     
+                DogBreed = dogBreed,
+                ProfileImageUrl = profileImageUrl ?? "/images/users/NoProfileImage.jpg"         
             };
             ctx.Users.Add(user);
             ctx.SaveChanges();

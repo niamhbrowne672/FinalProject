@@ -112,6 +112,20 @@ h1, h2, h3, h4, h5 {
   color: white;
 }
 
+/******************************User Profile*/
+.rounded-circle {
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.user-icon {
+  color: #004d2a;
+}
+
+.user {
+  color: #004d2a;
+}
+
 /***************************Footer styling *********************/
 /* Footer container*/
 footer {

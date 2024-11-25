@@ -10,9 +10,13 @@ public class User
     public string Name { get; set; }
     public string Email { get; set; }
     public string Password { get; set; }
+    public string DogBreed { get; set; }
 
     // User role within application
     public Role Role { get; set; }
+
+    //Default to "NoProfileImage.jpg" if no image is provided
+    public string ProfileImageUrl { get; set; } = "/images/users/NoProfileImage.jpg";
 
 }
 
