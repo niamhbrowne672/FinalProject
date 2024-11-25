@@ -69,7 +69,7 @@ namespace FinalProject.Data.Services
                 Password = Hasher.CalculateHash(password), // can hash if required 
                 Role = role,     
                 DogBreed = dogBreed,
-                ProfileImageUrl = profileImageUrl ?? "/images/users/NoProfileImage.jpg"         
+                ProfileImageUrl = profileImageUrl ?? "/images/users/NoProfileImageNew.svg"         
             };
             ctx.Users.Add(user);
             ctx.SaveChanges();

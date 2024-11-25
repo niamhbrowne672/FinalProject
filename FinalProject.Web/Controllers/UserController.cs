@@ -10,6 +10,7 @@ using FinalProject.Data.Services;
 using FinalProject.Data.Security;
 using FinalProject.Web.Models.User;
 using System.Security.Cryptography;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 /**
  *  User Management Controller
@@ -77,12 +78,13 @@ public class UserController : BaseController
     // HTTP POST - Register action
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public IActionResult Register([Bind("Name,Email,Password,PasswordConfirm,DogBreed")] RegisterViewModel m)       
+    public IActionResult Register([Bind("Name,Email,Password,PasswordConfirm,DogBreed,ProfileImage")] RegisterViewModel m)       
     {
         if (!ModelState.IsValid)
         {
             return View(m);
         }
+        
         // add user via service
         var user = _svc.AddUser(m.Name, m.Email,m.Password, Role.guest, m.DogBreed, null);
         

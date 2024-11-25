@@ -16,7 +16,7 @@ public class User
     public Role Role { get; set; }
 
     //Default to "NoProfileImage.jpg" if no image is provided
-    public string ProfileImageUrl { get; set; } = "/images/users/NoProfileImage.jpg";
+    public string ProfileImageUrl { get; set; } = "/images/users/NoProfileImageNew.svg";
 
 }
 

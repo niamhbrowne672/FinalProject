@@ -21,6 +21,7 @@ public static class Seeder
 
         SeedUsers(svc);
         SeedPosts(psvc);
+        SeedComments(psvc);
         SeedEvents(esvc);
         SeedGalleryImages(galleryService);
         SeedCounties(calendarService);
@@ -50,46 +51,317 @@ public static class Seeder
         }
     }
 
-    // private static void SeedPosts(IPostService psvc)
-    // {
-    //     var faker = new Faker();
-    //     // add some fake posts
-    //     var userIdArray = svc.GetUsers().Data.Select(u => u.Id).ToArray();
-    //     //add some fake posts
-    //     for (int i = 1; i <= 200; i++)
-    //     {
-    //         var p = new Post
-    //         {
-    //             Title = faker.Lorem.Sentence(),
-    //             Body = faker.Lorem.Paragraph(),
-    //             UserId = faker.Random.ArrayElement([1, 2, 3]) //faker.Random.ArrayElement(userIdArray)
-    //         };
-
-    //         psvc.AddPost(p);
-    //     }
-    // }
-
     //data for posts
     private static void SeedPosts(IPostService psvc)
     {
-        // var p1 = psvc.AddPost(new Post
-        // {
-        //     Title = "Hungarian Vizsla Meet-Up",
-        //     Content = "Join us for a great event play with other vizslas",
-        //     PostedOn = new DateTime(2024, 11, 20, 14, 0, 0),
-        //     ImagePath = "/images/events/e1.jpg",
-        //     CreatedBy = "Niamh Browne"
-        // });
+        var post1 = psvc.AddPost(new Post
+        {
+            Title = "Welcome to the Community!",
+            Content = "This is the first post in our community forum. Feel free to engage!",
+            PostedOn = DateTime.Now,
+            CreatedBy = "Woof & Wander",
+            ImagePath = "/images/logo/2.jpg",
+            UserId = 1
+        });
 
-        // var p2 = psvc.AddPost(new Post
-        // {
-        //     Title = "Sample Title",
-        //     Content = "Sample content",  // No need to set Body anymore
-        //     CreatedAt = DateTime.Now,
-        //     ModifiedAt = DateTime.Now,
-        //     PostedOn = DateTime.Now,
-        //     UserId = 1
-        // });
+        var post2 = psvc.AddPost(new Post
+        {
+            Title = "My dog won't eat his dinner!",
+            Content = "My dog stopped eating his dinner about a week ago, eats snacks during the day. Is anyone able to give some tips and tricks that we could use to try and get him to eat his dinner again?",
+            PostedOn = DateTime.Now,
+            CreatedBy = "Niamh Browne",
+            ImagePath = "/images/posts/post2.jpg",
+            UserId = 2
+        });
+
+        var post3 = psvc.AddPost(new Post
+        {
+            Title = "Safe places to take my new puppy",
+            Content = "We just got a new puppy, and we want to take him out to socialise. Does anyone know any safe and dog-friendly parks in Belfast?",
+            PostedOn = DateTime.Now.AddDays(-3),
+            CreatedBy = "John Smith",
+            ImagePath = "/images/posts/post3.jpg",
+            UserId = 3
+        });
+
+        var post4 = psvc.AddPost(new Post
+        {
+            Title = "Best recipes for homemade dog treats",
+            Content = "I'm looking for some easy and healthy homemade dog treat recipes. Any recommendations?",
+            PostedOn = DateTime.Now.AddDays(-7),
+            CreatedBy = "Emily White",
+            ImagePath = "/images/posts/post4.jpg",
+            UserId = 4
+        });
+
+        var post5 = psvc.AddPost(new Post
+        {
+            Title = "Advice needed: Rash on my dog's belly",
+            Content = "My dog developed a red rash on his belly after our walk yesterday. Has anyone experienced something similar? Any suggestions on what to do?",
+            PostedOn = DateTime.Now.AddDays(-2),
+            CreatedBy = "Alex Johnson",
+            ImagePath = "/images/posts/post5.jpg",
+            UserId = 5
+        });
+
+        var post6 = psvc.AddPost(new Post
+        {
+            Title = "How to clean my dog's teeth?",
+            Content = "I'm new to dog ownership and wondering what the best methods or products are for cleaning my dog's teeth.",
+            PostedOn = DateTime.Now.AddDays(-10),
+            CreatedBy = "Sarah Black",
+            ImagePath = "/images/posts/post6.jpg",
+            UserId = 6
+        });
+
+        var post7 = psvc.AddPost(new Post
+        {
+            Title = "Dog-friendly cafes in Dublin?",
+            Content = "I want to take my dog out to a cafe this weekend. Does anyone know any good dog-friendly cafes in Dublin?",
+            PostedOn = DateTime.Now.AddDays(-5),
+            CreatedBy = "Sheila McElroy",
+            ImagePath = "/images/posts/post7.jpg",
+            UserId = 7
+        });
+
+        var post8 = psvc.AddPost(new Post
+        {
+            Title = "Puppy training tips?",
+            Content = "I have a 10-week-old Labrador puppy who is very energetic. Any tips for training or managing his energy levels?",
+            PostedOn = DateTime.Now.AddDays(-1),
+            CreatedBy = "Edel Browne",
+            ImagePath = "/images/posts/post8.jpg",
+            UserId = 8
+        });
+
+        var post9 = psvc.AddPost(new Post
+        {
+            Title = "Best places for dog swimming",
+            Content = "Looking for lakes or beaches in Northern Ireland where dogs are allowed to swim. Any suggestions?",
+            PostedOn = DateTime.Now.AddDays(-15),
+            CreatedBy = "Anna Grey",
+            ImagePath = "/images/posts/post9.jpg",
+            UserId = 9
+        });
+
+        var post10 = psvc.AddPost(new Post
+        {
+            Title = "Best toys for destructive chewers",
+            Content = "My German Shepherd chews through every toy I buy him. Can anyone recommend durable dog toys that will last?",
+            PostedOn = DateTime.Now.AddDays(-20),
+            CreatedBy = "Liam Carter",
+            ImagePath = "/images/posts/post10.jpg",
+            UserId = 10
+        });
+
+        var post11 = psvc.AddPost(new Post
+        {
+            Title = "How to stop my dog from barking at the doorbell?",
+            Content = "Every time the doorbell rings, my dog goes crazy barking. Any training advice to help with this?",
+            PostedOn = DateTime.Now.AddDays(-9),
+            CreatedBy = "Emily Adams",
+            ImagePath = "/images/posts/post11.jpg",
+            UserId = 11
+        });
+
+        var post12 = psvc.AddPost(new Post
+        {
+            Title = "Best dog harness for hiking?",
+            Content = "Planning some hikes with my Border Collie. Looking for a reliable and comfortable harness for him.",
+            PostedOn = DateTime.Now.AddDays(-12),
+            CreatedBy = "Chris Walker",
+            ImagePath = "/images/posts/post12.jpg",
+            UserId = 12
+        });
+
+        var post13 = psvc.AddPost(new Post
+        {
+            Title = "Best food for senior dogs",
+            Content = "My 10-year-old Golden Retriever has been slowing down lately. Any suggestions for the best senior dog food?",
+            PostedOn = DateTime.Now.AddDays(-14),
+            CreatedBy = "Sophie Brown",
+            ImagePath = "/images/posts/post13.jpg",
+            UserId = 13
+        });
+
+        var post14 = psvc.AddPost(new Post
+        {
+            Title = "Dealing with separation anxiety",
+            Content = "My dog whines and barks every time I leave the house. How do I help him feel more comfortable being alone?",
+            PostedOn = DateTime.Now.AddDays(-18),
+            CreatedBy = "Jack Evans",
+            ImagePath = "/images/posts/post14.jpg",
+            UserId = 14
+        });
+
+        var post15 = psvc.AddPost(new Post
+        {
+            Title = "How to introduce a new dog to my cat?",
+            Content = "We just adopted a rescue dog, but our cat is very nervous around him. Any tips on how to introduce them safely?",
+            PostedOn = DateTime.Now.AddDays(-4),
+            CreatedBy = "Hannah Lee",
+            ImagePath = "/images/posts/post15.jpg",
+            UserId = 15
+        });
+
+        var post16 = psvc.AddPost(new Post
+        {
+            Title = "Best travel carriers for small dogs",
+            Content = "We're planning a trip and need a comfortable and airline-approved travel carrier for our Chihuahua. Any suggestions?",
+            PostedOn = DateTime.Now.AddDays(-8),
+            CreatedBy = "Jane Miller",
+            ImagePath = "/images/posts/post16.jpg",
+            UserId = 16
+        });
+
+        var post17 = psvc.AddPost(new Post
+        {
+            Title = "Dog-friendly camping sites",
+            Content = "Does anyone know of good camping sites in Ireland where dogs are allowed?",
+            PostedOn = DateTime.Now.AddDays(-11),
+            CreatedBy = "Laura White",
+            ImagePath = "/images/posts/post17.jpg",
+            UserId = 17
+        });
+
+        var post18 = psvc.AddPost(new Post
+        {
+            Title = "Fleas! Help needed!",
+            Content = "Just discovered my dog has fleas. What's the best treatment to get rid of them quickly?",
+            PostedOn = DateTime.Now.AddDays(-3),
+            CreatedBy = "Paul Jones",
+            ImagePath = "/images/posts/post18.jpg",
+            UserId = 18
+        });
+
+        var post19 = psvc.AddPost(new Post
+        {
+            Title = "Are there any doggy daycare recommendations?",
+            Content = "Looking for a good doggy daycare in the Dublin area for my energetic Labrador. Any recommendations?",
+            PostedOn = DateTime.Now.AddDays(-6),
+            CreatedBy = "Emma Taylor",
+            ImagePath = "/images/posts/post19.jpg",
+            UserId = 19
+        });
+
+        var post20 = psvc.AddPost(new Post
+        {
+            Title = "Best winter coats for small dogs",
+            Content = "Winter is coming, and my small dog gets cold easily. Can anyone recommend a good dog coat for the cold weather?",
+            PostedOn = DateTime.Now.AddDays(-7),
+            CreatedBy = "Olivia Harris",
+            ImagePath = "/images/posts/post20.jpg",
+            UserId = 20
+        });
+
+        var post21 = psvc.AddPost(new Post
+        {
+            Title = "Dog-friendly beaches in Ireland?",
+            Content = "Looking for nice beaches in Ireland where dogs are welcome. Any hidden gems?",
+            PostedOn = DateTime.Now.AddDays(-5),
+            CreatedBy = "Noah Thompson",
+            ImagePath = "/images/posts/post21.jpg",
+            UserId = 21
+        });
+
+        var post22 = psvc.AddPost(new Post
+        {
+            Title = "How to stop my dog from jumping on guests?",
+            Content = "My dog loves people and always jumps on guests when they arrive. How do I train him to stop?",
+            PostedOn = DateTime.Now.AddDays(-13),
+            CreatedBy = "Ava Davis",
+            ImagePath = "/images/posts/post22.jpg",
+            UserId = 22
+        });
+
+        var post23 = psvc.AddPost(new Post
+        {
+            Title = "Dog agility classes near Belfast?",
+            Content = "Does anyone know of any good agility training classes for dogs in the Belfast area?",
+            PostedOn = DateTime.Now.AddDays(-19),
+            CreatedBy = "Isabella Moore",
+            ImagePath = "/images/posts/post23.jpg",
+            UserId = 23
+        });
+
+        var post24 = psvc.AddPost(new Post
+        {
+            Title = "How to help my dog lose weight?",
+            Content = "My vet says my dog is overweight. What are some good ways to help him lose weight safely?",
+            PostedOn = DateTime.Now.AddDays(-14),
+            CreatedBy = "Mason Wilson",
+            ImagePath = "/images/posts/post24.jpg",
+            UserId = 24
+        });
+
+        var post25 = psvc.AddPost(new Post
+        {
+            Title = "Is raw food diet safe for dogs?",
+            Content = "I've been reading about raw food diets for dogs. Does anyone have experience with this? Pros and cons?",
+            PostedOn = DateTime.Now.AddDays(-17),
+            CreatedBy = "Lucas Hall",
+            ImagePath = "/images/posts/post25.jpg",
+            UserId = 25
+        });
+    }
+
+    private static void SeedComments(IPostService psvc)
+    {
+        var comment1 = psvc.CreateComment(new Comment
+        {
+            PostId = 2,
+            Comments = "Try adding a little warm chicjen broth to your dog's dinner. It worked for mine when he stopped eating!",
+            CreatedBy = "Kevin Coyle",
+            CreatedAt = DateTime.Now
+        });
+
+        var comment2 = psvc.CreateComment(new Comment
+        {
+            PostId = 3,
+            Comments = "Botanic Gardens in Belfast is great for puppies! It's spacious and safe.",
+            CreatedBy = "Liam Carter",
+            CreatedAt = DateTime.Now.AddHours(-5)
+        });
+
+        var comment3 = psvc.CreateComment(new Comment
+        {
+            PostId = 4,
+            Comments = "I recommend mixing peanut butter, oats, and a little honey for easy no-bake dog treats!",
+            CreatedBy = "Emily Brown",
+            CreatedAt = DateTime.Now.AddHours(-3)
+        });
+
+        var comment4 = psvc.CreateComment(new Comment
+        {
+            PostId = 5,
+            Comments = "It could be an allergic reaction. Try wiping the area with a damp cloth and applying some coconut oil.",
+            CreatedBy = "Paul Walker",
+            CreatedAt = DateTime.Now.AddHours(-1)
+        });
+
+        var comment5 = psvc.CreateComment(new Comment
+        {
+            PostId = 6,
+            Comments = "You can use a dog toothbrush and toothpaste. Start slow and reward your dog with treats.",
+            CreatedBy = "Sophie Adams",
+            CreatedAt = DateTime.Now.AddMinutes(-30)
+        });
+
+        var comment6 = psvc.CreateComment(new Comment
+        {
+            PostId = 7,
+            Comments = "Check out 'The Barking Dog' in Dublin. It's super dog-friendly and has a great menu!",
+            CreatedBy = "Hannah Lee",
+            CreatedAt = DateTime.Now
+        });
+
+        var comment7 = psvc.CreateComment(new Comment
+        {
+            PostId = 8,
+            Comments = "Consistency is key! Short, regular training sessions work wonders. Reward with treats and praise.",
+            CreatedBy = "Sam Evans",
+            CreatedAt = DateTime.Now
+        });
     }
 
     //data for events
@@ -440,9 +712,9 @@ public static class Seeder
     }
 
     private static void SeedCounties(ICalendarService calendarService)
-{
-    // Add counties in Ireland
-    var counties = new List<County>
+    {
+        // Add counties in Ireland
+        var counties = new List<County>
     {
         new County { Name = "Tyrone" },
         new County { Name = "Antrim" },
@@ -478,12 +750,12 @@ public static class Seeder
         new County { Name = "Wicklow" }
     };
 
-    // Add counties to the service
-    foreach (var county in counties)
-    {
-        calendarService.AddCounty(county);
+        // Add counties to the service
+        foreach (var county in counties)
+        {
+            calendarService.AddCounty(county);
+        }
     }
-}
 
 
     private static void SeedCalendars(ICalendarService calendarService)

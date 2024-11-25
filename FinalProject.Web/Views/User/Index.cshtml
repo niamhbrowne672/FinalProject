@@ -17,8 +17,8 @@
                 Email
                 <vc:sort-link column="email" />     
             </th>
-            <th>Role</th>   
-            <th>Action</th>           
+            <th>Role</th>
+            <th></th>             
         </tr>
     </thead>
     <tbody>
@@ -28,11 +28,10 @@
                 <td>@u.Name</td>
                 <td>@u.Email</td>
                 <td>@u.Role</td>  
-                <td>
+                <td class="text-end">
                     <a asp-action="Update" asp-route-id="@u.Id" title="Edit User">
                         <i class="bi bi-pencil-fill click-icon"></i>
                     </a>
-
                     <!-- Link to profile page -->  
                     <a asp-action="Profile" asp-route-id="@u.Id" title="View Profile">
                         <i class="bi bi-person-circle click-icon"></i>
