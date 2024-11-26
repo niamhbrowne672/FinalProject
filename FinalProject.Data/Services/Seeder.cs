@@ -80,7 +80,7 @@ public static class Seeder
             Content = "We just got a new puppy, and we want to take him out to socialise. Does anyone know any safe and dog-friendly parks in Belfast?",
             PostedOn = DateTime.Now.AddDays(-3),
             CreatedBy = "John Smith",
-            ImagePath = "/images/posts/post3.jpg",
+            ImagePath = "/images/posts/post3.jpeg",
             UserId = 3
         });
 
@@ -100,7 +100,7 @@ public static class Seeder
             Content = "My dog developed a red rash on his belly after our walk yesterday. Has anyone experienced something similar? Any suggestions on what to do?",
             PostedOn = DateTime.Now.AddDays(-2),
             CreatedBy = "Alex Johnson",
-            ImagePath = "/images/posts/post5.jpg",
+            ImagePath = "/images/posts/post5.jpeg",
             UserId = 5
         });
 
@@ -150,7 +150,7 @@ public static class Seeder
             Content = "My German Shepherd chews through every toy I buy him. Can anyone recommend durable dog toys that will last?",
             PostedOn = DateTime.Now.AddDays(-20),
             CreatedBy = "Liam Carter",
-            ImagePath = "/images/posts/post10.jpg",
+            ImagePath = "/images/posts/post10.jpeg",
             UserId = 10
         });
 
@@ -160,7 +160,7 @@ public static class Seeder
             Content = "Every time the doorbell rings, my dog goes crazy barking. Any training advice to help with this?",
             PostedOn = DateTime.Now.AddDays(-9),
             CreatedBy = "Emily Adams",
-            ImagePath = "/images/posts/post11.jpg",
+            ImagePath = "/images/posts/post11.png",
             UserId = 11
         });
 
@@ -190,7 +190,7 @@ public static class Seeder
             Content = "My dog whines and barks every time I leave the house. How do I help him feel more comfortable being alone?",
             PostedOn = DateTime.Now.AddDays(-18),
             CreatedBy = "Jack Evans",
-            ImagePath = "/images/posts/post14.jpg",
+            ImagePath = "/images/posts/post14.png",
             UserId = 14
         });
 
@@ -200,7 +200,7 @@ public static class Seeder
             Content = "We just adopted a rescue dog, but our cat is very nervous around him. Any tips on how to introduce them safely?",
             PostedOn = DateTime.Now.AddDays(-4),
             CreatedBy = "Hannah Lee",
-            ImagePath = "/images/posts/post15.jpg",
+            ImagePath = "/images/posts/post15.png",
             UserId = 15
         });
 
@@ -210,7 +210,7 @@ public static class Seeder
             Content = "We're planning a trip and need a comfortable and airline-approved travel carrier for our Chihuahua. Any suggestions?",
             PostedOn = DateTime.Now.AddDays(-8),
             CreatedBy = "Jane Miller",
-            ImagePath = "/images/posts/post16.jpg",
+            ImagePath = "/images/posts/post16.jpeg",
             UserId = 16
         });
 
@@ -702,13 +702,128 @@ public static class Seeder
 
     private static void SeedGalleryImages(IGalleryService galleryService)
     {
-        // var i1 = galleryService.AddImage(new PastEventImage
-        // {
-        //     ImageTitle = "Splash Time",
-        //     ImageDescription = "Dogs playing in a shallow stream to beat the heat.",
-        //     GalleryImageUrl = "~/images/events/i24",
-        //     ImagePostedBy = "Niamh Browne"
-        // });
+        var images = new List<PastEventImage>
+        {
+            new PastEventImage
+            {
+                ImageTitle = "Hungarian Vizsla Meetup Highlights",
+                ImageDescription = "Playful Vizslas enjoying the open spaces at Belfast City Hall.",
+                GalleryImageUrls = new List<string>
+                {
+                    "/images/gallery/vizsla1.jpg",
+                    "/images/gallery/vizsla2.jpg",
+                    "/images/gallery/vizsla3.png",
+                    "/images/gallery/vizsla4.jpg"
+                },
+                ImagePostedBy = "Niamh Browne"
+            },
+
+            new PastEventImage
+        {
+            ImageTitle = "Golden Retriever Festivities",
+            ImageDescription = "Golden Retrievers taking a scenic walk along the Lagan Towpath.",
+            GalleryImageUrls = new List<string>
+            {
+                "/images/gallery/golden1.jpeg",
+                "/images/gallery/golden2.jpg",
+                "/images/gallery/golden3.jpg"
+            },
+            ImagePostedBy = "Emily White"
+        },
+        new PastEventImage
+        {
+            ImageTitle = "Dachshunds on the Gobbins",
+            ImageDescription = "Adventurous Dachshunds exploring the Gobbins Cliff Path.",
+            GalleryImageUrls = new List<string>
+            {
+                "/images/gallery/dachshund1.jpg",
+                "/images/gallery/dachshund2.png"
+            },
+            ImagePostedBy = "Alex Johnson"
+        },
+        new PastEventImage
+        {
+            ImageTitle = "Labrador Splash Time",
+            ImageDescription = "Labradors playing fetch and swimming at Lough Neagh.",
+            GalleryImageUrls = new List<string>
+            {
+                "/images/gallery/labrador1.jpg",
+                "/images/gallery/labrador2.jpg"
+            },
+            ImagePostedBy = "Sarah Black"
+        },
+        new PastEventImage
+        {
+            ImageTitle = "Shih Tzu Afternoon Stroll",
+            ImageDescription = "Shih Tzus mingling and relaxing at Armagh Palace Demesne Park.",
+            GalleryImageUrls = new List<string>
+            {
+                "/images/gallery/shihtzu1.jpg",
+                "/images/gallery/shihtzu2.jpg"
+            },
+            ImagePostedBy = "John Smith"
+        },
+        new PastEventImage
+        {
+            ImageTitle = "Cocker Spaniels in Action",
+            ImageDescription = "Cocker Spaniels enjoying the green spaces of Fota Gardens.",
+            GalleryImageUrls = new List<string>
+            {
+                "/images/gallery/cocker1.jpg",
+                "/images/gallery/cocker2.jpg"
+            },
+            ImagePostedBy = "Hannah Lee"
+        },
+        new PastEventImage
+        {
+            ImageTitle = "Pug Parade",
+            ImageDescription = "Pugs taking over Elizabeth Fort for a fun day out.",
+            GalleryImageUrls = new List<string>
+            {
+                "/images/gallery/pug1.jpg",
+                "/images/gallery/pug2.jpg",
+                "/images/gallery/pug3.jpg"
+            },
+            ImagePostedBy = "Liam Carter"
+        },
+        new PastEventImage
+        {
+            ImageTitle = "Border Collie Agility",
+            ImageDescription = "Border Collies showcasing their agility skills at Phoenix Park.",
+            GalleryImageUrls = new List<string>
+            {
+                "/images/gallery/collie1.jpg",
+                "/images/gallery/collie2.jpg"
+            },
+            ImagePostedBy = "Emily Adams"
+        },
+        new PastEventImage
+        {
+            ImageTitle = "French Bulldogs at the Beach",
+            ImageDescription = "French Bulldogs enjoying the sand and waves at Sandymount Strand.",
+            GalleryImageUrls = new List<string>
+            {
+                "/images/gallery/frenchie1.jpg",
+                "/images/gallery/fenchie2.jpg"
+            },
+            ImagePostedBy = "Chris Walker"
+        },
+        new PastEventImage
+        {
+            ImageTitle = "German Shepherd Gathering",
+            ImageDescription = "German Shepherds socialising at Eyre Square in Galway City.",
+            GalleryImageUrls = new List<string>
+            {
+                "/images/gallery/germanshepherd1.jpg",
+                "/images/gallery/germanshepherd2.jpg"
+            },
+            ImagePostedBy = "Sophia Brown"
+        }
+        };
+        foreach (var image in images)
+        {
+            galleryService.AddImage(image);
+        }
     }
 
     private static void SeedCounties(ICalendarService calendarService)

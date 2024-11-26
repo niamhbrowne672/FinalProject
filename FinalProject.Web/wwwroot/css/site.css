@@ -127,49 +127,49 @@ h1, h2, h3, h4, h5 {
 }
 
 /***************************Footer styling *********************/
-/* Footer container*/
+/*************************** Footer Styling ***************************/
+/* Footer container */
 footer {
   background-color: #004d2a;
   color: white;
-  padding: 20px;
+  padding: 30px 15px;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+  gap: 20px;
 }
 
-/* footer left section - logo, slogan, social media, store links*/
+/* Footer left section */
 .footer-left {
+  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
-  max-width: 250px;
-  margin-bottom: 20px;
-}
-
-.footer-logo img{
-  width: 150px;
-  margin-bottom: 10px;
-  align-items: center;
-}
-
-.footer-logo p {
-  margin: 0;
-  font-size: 14px;
-  color: #ffffff;
-  font-style: italic;
   text-align: center;
 }
 
-/*Social Media Links*/
+.footer-logo img {
+  width: 150px;
+  margin-bottom: 10px;
+}
+
+.footer-logo p {
+  font-size: 14px;
+  font-style: italic;
+  margin: 10px 0;
+  color: #ffffff;
+}
+
+/* Social Media Links */
 .social-media-links {
   display: flex;
-  gap: 15px;
+  gap: 20px; /* Space between icons */
   margin: 15px 0;
 }
 
 .social-media-links a {
   color: white;
-  font-size: 20px;
+  font-size: 24px; /* Bigger icons for better visibility */
   text-decoration: none;
 }
 
@@ -177,34 +177,34 @@ footer {
   color: #dddddd;
 }
 
-/*Store Links*/
+/* Store Links */
 .footer-store-links {
   display: flex;
   flex-direction: column;
-  gap: 15px;
-  margin-top: 10px;
+  gap: 10px;
+  margin-top: 15px;
 }
 
 .footer-store-links img {
   width: 140px;
 }
 
-/* Main Footer Section*/
+/* Footer Main Links Section */
 .footer-section {
+  flex: 2;
   display: flex;
-  gap: 50px;
+  gap: 40px; /* Space between columns */
   flex-wrap: wrap;
-  align-items: center;
+  justify-content: space-around;
 }
 
 .footer-column {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  text-align: center;
 }
 
 .footer-column h3 {
-  color: white;
   font-size: 16px;
   margin-bottom: 10px;
 }
@@ -212,65 +212,58 @@ footer {
 .footer-column a {
   color: white;
   text-decoration: none;
-  margin: 5px 0;
-  text-align: center;
+  font-size: 14px;
+  margin-bottom: 5px;
 }
 
 .footer-column a:hover {
   text-decoration: underline;
 }
 
-/* Seperate Recommendations and Events sections*/
+/* Footer Recommendations and Events Sections */
 .footer-recommendations, .footer-events {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-bottom: 20px;
+  flex: 1;
+  text-align: center;
 }
 
-
 .footer-recommendations h3, .footer-events h3 {
-  color: white;
   font-size: 16px;
   margin-bottom: 10px;
-  text-align: center;
 }
 
 .footer-recommendations a, .footer-events a {
   color: white;
   text-decoration: none;
+  font-size: 14px;
   margin: 5px 0;
-  text-align: center;
 }
 
 .footer-recommendations a:hover, .footer-events a:hover {
   text-decoration: underline;
 }
 
-/*Footer Bottom - copyright*/
+/* Footer Bottom Section */
 footer .container {
-  width: 100%;
   text-align: center;
   margin-top: 20px;
-  color: #dddddd;
   font-size: 14px;
+  color: #dddddd;
 }
 
-/* Responsive Design*/
+/* Responsive Design */
 @media (max-width: 768px) {
   footer {
     flex-direction: column;
     align-items: center;
+    gap: 30px;
   }
 
   .footer-section {
-    justify-content: center;
+    flex-direction: column;
+    gap: 20px;
   }
 
-  .footer-left,
-  .footer-section,
-  .footer-recommendations,
-  .footer-events {
+  .footer-left {
     align-items: center;
   }
 }
@@ -728,6 +721,9 @@ footer .container {
 }
 
 /***************************************************Community Posts*/
+.post-section {
+  color: #004d2a;
+}
 .community-details {
   color: #004d2a;
 }
@@ -938,6 +934,35 @@ td.text-end a {
   .gallery-card {
     max-width: 600px;
   }
+}
+
+.social-media-section {
+  margin-top: 2rem;
+}
+
+.social-media-section .lead {
+  margin-bottom: 1.5rem;
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+.social-media-section .social-icons i {
+  font-size: 3rem;
+  color: #004d2a;
+  transition: color 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+.social-media-section .social-link i:hover {
+  color: #007a50;
+  transform: scale(1.2);
+}
+
+.social-icons a {
+  margin-right: 30px;
+}
+
+.social-icons a:last-child {
+  margin-right: 0;
 }
 
 #calendar {
