@@ -288,8 +288,16 @@ footer .container {
 .btn-green:hover,
 .btn-green:focus,
 .btn-green:active {
-  background-color: #084c28;
-  border-color: #084c28;
+  background-color: #007a50;
+  border-color: #007a50;
+  color: #fff;
+}
+
+.btn-link {
+  color: #004d2a;
+}
+.btn-link:hover{
+  color: #007a50;
 }
 
 /* Review card style*/
@@ -767,6 +775,22 @@ footer .container {
   border-color: #084c28;
 }
 
+.community-details img {
+  height: 100%;
+  width: auto;
+  max-height: 300px;
+  border-radius: 10px;
+  object-fit: cover;
+  display: block;
+  margin: 0 auto;
+}
+
+.community-details .col-4 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 /*Create form cancel button*/
 .cancel-link {
   color: #007a50;
@@ -896,6 +920,22 @@ td.text-end a {
 
 .reviews-table {
   color: #004d2a;
+}
+
+.event-details img {
+  height: 100%;
+  width: auto;
+  max-height: 300px;
+  border-radius: 10px;
+  object-fit: cover;
+  display: block;
+  margin: 0 auto;
+}
+
+.event-details .col-4 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /**********************************Gallery*/

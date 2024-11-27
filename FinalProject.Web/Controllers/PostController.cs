@@ -58,12 +58,35 @@ public class PostController : BaseController
     //HTTP POST - Create a new Post
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public IActionResult Create(Post p)
+    public IActionResult Create(Post p, IFormFile PostImage)
     {
         //validate title as unique
         if (_postService.GetPostByTitle(p.Title) != null)
         {
             ModelState.AddModelError(nameof(p.Title), "Post already exists.");
+        }
+
+        //handle image upload
+        if (PostImage != null && PostImage.Length >0)
+        {
+            var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/uploads");
+            if (!Directory.Exists(uploadsFolder))
+            {
+                Directory.CreateDirectory(uploadsFolder);
+            }
+
+            //create a unique file name to prevent overwriting
+            var uniqueFileName = Guid.NewGuid().ToString() + Path.GetExtension(PostImage.FileName);
+            var filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+            //save the uploaded file
+            using (var fileStream = new FileStream(filePath, FileMode.Create))
+            {
+                PostImage.CopyTo(fileStream);
+            }
+
+            //set the ImagePath property to the relative URL
+            p.ImagePath = $"/uploads/{uniqueFileName}";
         }
 
         //complete POST action to add post
@@ -97,7 +120,7 @@ public class PostController : BaseController
     [HttpPost]
     [ValidateAntiForgeryToken]
     [Authorize(Roles = "admin")]
-    public IActionResult Edit(int id, Post updatedPost)
+    public IActionResult Edit(int id, Post updatedPost, IFormFile PostImage)
     {
         //check if the provided even ID matches the ID of the updated post
         if (id != updatedPost.Id)
@@ -114,6 +137,29 @@ public class PostController : BaseController
             {
                 Alert($"Post {id} not found.", AlertType.warning);
                 return RedirectToAction(nameof(Index));
+            }
+
+            //handle image upload if a new file is provided
+            if (PostImage != null && PostImage.Length > 0)
+            {
+                var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/uploads");
+                if (!Directory.Exists(uploadsFolder))
+                {
+                    Directory.CreateDirectory(uploadsFolder);
+                }
+
+                //create a unique file name to prevent overwritting
+                var uniqueFileName = Guid.NewGuid().ToString() + Path.GetExtension(PostImage.FileName);
+                var filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+                //save the uploaded file
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    PostImage.CopyTo(fileStream);
+                }
+
+                //update the ImagePath with the new image path
+                updatedPost.ImagePath = existingPost.ImagePath;
             }
 
             existingPost.Title = updatedPost.Title;
