@@ -9,8 +9,7 @@ using FinalProject.Data.Entities;
 using FinalProject.Data.Services;
 using FinalProject.Data.Security;
 using FinalProject.Web.Models.User;
-using System.Security.Cryptography;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using FinalProject.Data.Extensions;
 
 /**
  *  User Management Controller
@@ -24,18 +23,32 @@ public class UserController : BaseController
     private readonly IUserService _svc;
 
     public UserController(IUserService svc, IConfiguration config, IMailService mailer)
-    {        
+    {
         _config = config;
         _mailer = mailer;
         _svc = svc;
     }
 
     // HTTP GET - Display Paged List of Users
-    [Authorize(Roles="admin")]
-    public ActionResult Index(int page=1, int size=20, string order="id", string direction="asc")
+    [Authorize(Roles = "admin")]
+    public ActionResult Index(string searchQuery, int page = 1, int size = 20, string order = "id", string direction = "asc")
     {
-        var paged = _svc.GetUsers(page,size,order,direction);      
-        return View(paged);
+        
+        var query = string.IsNullOrWhiteSpace(searchQuery) 
+            ? _svc.GetUsers(page, size, order, direction).Data.AsQueryable()
+            : _svc.SearchUsers(searchQuery);
+
+        var pagedUsers = query.ToPaged(page, size, order);
+
+        //if no users are found, set a flag to show a message in the view
+        ViewBag.SearchQuery = searchQuery;
+
+        if (!pagedUsers.Data.Any() && !string.IsNullOrWhiteSpace(searchQuery))
+        {
+            Alert($"No users found matching '{searchQuery}'. Please check the spelling or try again.", AlertType.warning);
+        }
+
+        return View(pagedUsers);
     }
 
     // HTTP GET - Display Login page
@@ -78,18 +91,19 @@ public class UserController : BaseController
     // HTTP POST - Register action
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public IActionResult Register([Bind("Name,Email,Password,PasswordConfirm,DogBreed,ProfileImage")] RegisterViewModel m)       
+    public IActionResult Register([Bind("Name,Email,Password,PasswordConfirm,DogBreed,ProfileImage")] RegisterViewModel m)
     {
         if (!ModelState.IsValid)
         {
             return View(m);
         }
-        
+
         // add user via service
-        var user = _svc.AddUser(m.Name, m.Email,m.Password, Role.guest, m.DogBreed, null);
-        
+        var user = _svc.AddUser(m.Name, m.Email, m.Password, Role.guest, m.DogBreed, null);
+
         // check if error adding user and display warning
-        if (user == null) {
+        if (user == null)
+        {
             Alert("There was a problem Registering. Please try again", AlertType.warning);
             return View(m);
         }
@@ -102,7 +116,7 @@ public class UserController : BaseController
     public IActionResult Profile(int id)
     {
         var user = _svc.GetUser(id);
-        if (user == null) 
+        if (user == null)
         {
             return NotFound();
         }
@@ -115,10 +129,11 @@ public class UserController : BaseController
     {
         // use BaseClass helper method to retrieve Id of signed in user 
         var user = _svc.GetUser(User.GetSignedInUserId());
-        var profileViewModel = new ProfileViewModel { 
-            Id = user.Id, 
-            Name = user.Name, 
-            Email = user.Email,                 
+        var profileViewModel = new ProfileViewModel
+        {
+            Id = user.Id,
+            Name = user.Name,
+            Email = user.Email,
             Role = user.Role
         };
         return View(profileViewModel);
@@ -128,89 +143,93 @@ public class UserController : BaseController
     [Authorize]
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> UpdateProfile([Bind("Id,Name,Email")] ProfileViewModel m)       
+    public async Task<IActionResult> UpdateProfile([Bind("Id,Name,Email")] ProfileViewModel m)
     {
         var user = _svc.GetUser(m.Id);
         // check if form is invalid and redisplay
         if (!ModelState.IsValid || user == null)
         {
             return View(m);
-        } 
+        }
 
         // update user details and call service
         user.Name = m.Name;
-        user.Email = m.Email; 
+        user.Email = m.Email;
         var updated = _svc.UpdateUser(user);
 
         // check if error updating service
-        if (updated == null) {
+        if (updated == null)
+        {
             Alert("There was a problem Updating. Please try again", AlertType.warning);
             return View(m);
         }
 
         Alert("Successfully Updated Account Details", AlertType.info);
-        
+
         // sign the user in with updated details)
         await SignInCookie(user);
 
-        return RedirectToAction("Index","Home");
+        return RedirectToAction("Index", "Home");
     }
 
     // HTTP GET - Allow admin to update a User
-    [Authorize(Roles="admin")]
+    [Authorize(Roles = "admin")]
     public IActionResult Update(int id)
     {
         // retrieve user 
         var user = _svc.GetUser(id);
-        var profileViewModel = new ProfileViewModel { 
-            Id = user.Id, 
-            Name = user.Name, 
-            Email = user.Email,                 
+        var profileViewModel = new ProfileViewModel
+        {
+            Id = user.Id,
+            Name = user.Name,
+            Email = user.Email,
             Role = user.Role
         };
         return View(profileViewModel);
     }
 
     // HTTP POST - Update User action
-    [Authorize(Roles="admin")]
+    [Authorize(Roles = "admin")]
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public IActionResult Update([Bind("Id,Name,Email,Role")] ProfileViewModel m)       
+    public IActionResult Update([Bind("Id,Name,Email,Role")] ProfileViewModel m)
     {
         var user = _svc.GetUser(m.Id);
         // check if form is invalid and redisplay
         if (!ModelState.IsValid || user == null)
         {
             return View(m);
-        } 
+        }
 
         // update user details and call service
         user.Name = m.Name;
         user.Email = m.Email;
-        user.Role = m.Role;        
+        user.Role = m.Role;
         var updated = _svc.UpdateUser(user);
 
         // check if error updating service
-        if (updated == null) {
+        if (updated == null)
+        {
             Alert("There was a problem Updating. Please try again", AlertType.warning);
             return View(m);
         }
 
-        Alert("Successfully Updated User Account Details", AlertType.info);                       
+        Alert("Successfully Updated User Account Details", AlertType.info);
 
-        return RedirectToAction("Index","User");
+        return RedirectToAction("Index", "User");
     }
-    
+
     // HTTP GET - Display update password page
     [Authorize]
     public IActionResult UpdatePassword()
     {
         // use BaseClass helper method to retrieve Id of signed in user 
         var user = _svc.GetUser(User.GetSignedInUserId());
-        var passwordViewModel = new PasswordViewModel { 
-            Id = user.Id, 
-            Password = user.Password, 
-            PasswordConfirm = user.Password, 
+        var passwordViewModel = new PasswordViewModel
+        {
+            Id = user.Id,
+            Password = user.Password,
+            PasswordConfirm = user.Password,
         };
         return View(passwordViewModel);
     }
@@ -219,18 +238,19 @@ public class UserController : BaseController
     [Authorize]
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> UpdatePassword([Bind("Id,OldPassword,Password,PasswordConfirm")] PasswordViewModel m)       
+    public async Task<IActionResult> UpdatePassword([Bind("Id,OldPassword,Password,PasswordConfirm")] PasswordViewModel m)
     {
         var user = _svc.GetUser(m.Id);
         if (!ModelState.IsValid || user == null)
         {
             return View(m);
-        }  
+        }
         // update the password
-        user.Password = m.Password; 
+        user.Password = m.Password;
         // save changes      
         var updated = _svc.UpdateUser(user);
-        if (updated == null) {
+        if (updated == null)
+        {
             Alert("There was a problem Updating the password. Please try again", AlertType.warning);
             return View(m);
         }
@@ -239,7 +259,7 @@ public class UserController : BaseController
         // sign the user in with updated details
         await SignInCookie(user);
 
-        return RedirectToAction("Index","Home");
+        return RedirectToAction("Index", "Home");
     }
 
     // HTTP POST - Logout action
@@ -255,14 +275,14 @@ public class UserController : BaseController
     // HTTP GET - Display Forgot password page
     public IActionResult ForgotPassword()
     {
-        return View();            
+        return View();
     }
 
     // HTTP POST - Forgot password action
     [HttpPost]
     [ValidateAntiForgeryToken]
     public IActionResult ForgotPassword([Bind("Email")] ForgotPasswordViewModel m)
-    {           
+    {
         var token = _svc.ForgotPassword(m.Email);
         if (token == null)
         {
@@ -270,7 +290,7 @@ public class UserController : BaseController
             Alert("No account found", AlertType.warning);
             return RedirectToAction(nameof(Login));
         }
-        
+
         // build reset password url and email html message
         var url = $"{Request.Scheme}://{Request.Host}/User/ResetPassword?token={token}&email={m.Email}";
         var message = @$" 
@@ -279,14 +299,14 @@ public class UserController : BaseController
                 {url}
             </a>
         ";
-        
+
         // send email containing reset token
-        if (!_mailer.SendMail( "Password Reset Request", message, m.Email ))
+        if (!_mailer.SendMail("Password Reset Request", message, m.Email))
         {
             Alert("There was a problem sending a password reset email", AlertType.warning);
-            return RedirectToAction(nameof(ForgotPassword));    
+            return RedirectToAction(nameof(ForgotPassword));
         }
-        
+
         Alert("Password Reset Token sent to your registered email account", AlertType.info);
         return RedirectToAction(nameof(ResetPassword));
     }
@@ -294,9 +314,9 @@ public class UserController : BaseController
     // HTTP GET - Display Reset password page
     public IActionResult ResetPassword(string email, string token)
     {
-        return View(new ResetPasswordViewModel { Email = email, Token = token });            
+        return View(new ResetPasswordViewModel { Email = email, Token = token });
     }
-    
+
 
     // HTTP POST - ResetPassword action
     [HttpPost]
@@ -308,13 +328,13 @@ public class UserController : BaseController
         if (user == null)
         {
             Alert("Invalid Password Reset Request", AlertType.warning);
-            return RedirectToAction(nameof(ResetPassword));         
+            return RedirectToAction(nameof(ResetPassword));
         }
 
         Alert("Password reset successfully", AlertType.success);
-        return RedirectToAction(nameof(Login));          
+        return RedirectToAction(nameof(Login));
     }
-    
+
     // HTTP GET - Display not authorised and not authenticated pages
     public IActionResult ErrorNotAuthorised() => View();
     public IActionResult ErrorNotAuthenticated() => View();
@@ -326,11 +346,11 @@ public class UserController : BaseController
     public IActionResult VerifyEmailAvailable(string email, int id)
     {
         // check if email is available, or owned by user with id 
-        if (!_svc.IsEmailAvailable(email,id))
+        if (!_svc.IsEmailAvailable(email, id))
         {
             return Json($"A user with this email address {email} already exists.");
         }
-        return Json(true);                  
+        return Json(true);
     }
 
     // Called by Remote Validation attribute on ChangePassword to verify old password
@@ -338,33 +358,33 @@ public class UserController : BaseController
     public IActionResult VerifyPassword(string oldPassword)
     {
         // use BaseClass helper method to retrieve Id of signed in user 
-        var id = User.GetSignedInUserId();            
+        var id = User.GetSignedInUserId();
         // check if email is available, unless already owned by user with id
         var user = _svc.GetUser(id);
         if (user == null || !Hasher.ValidateHash(user.Password, oldPassword))
         {
             return Json($"Please enter current password.");
         }
-        return Json(true);                  
+        return Json(true);
     }
 
     // =========================== PRIVATE UTILITY METHODS ==============================
 
     // return a claims principle using the info from the user parameter
     private ClaimsPrincipal BuildClaimsPrincipal(User user)
-    { 
+    {
         // define user claims
         var claims = new ClaimsIdentity(new[]
         {
             new Claim(ClaimTypes.Sid, user.Id.ToString()),
             new Claim(ClaimTypes.Email, user.Email),
             new Claim(ClaimTypes.Name, user.Name),
-            new Claim(ClaimTypes.Role, user.Role.ToString())                              
+            new Claim(ClaimTypes.Role, user.Role.ToString())
         }, CookieAuthenticationDefaults.AuthenticationScheme);
 
         // build principal using claims
-        return  new ClaimsPrincipal(claims);
-    } 
+        return new ClaimsPrincipal(claims);
+    }
 
     // Sign user in using Cookie authentication scheme
     private async Task SignInCookie(User user)

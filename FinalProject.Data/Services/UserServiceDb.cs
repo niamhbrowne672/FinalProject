@@ -1,10 +1,10 @@
 
 using FinalProject.Data.Entities;
-using FinalProject.Data.Services;
+//using FinalProject.Data.Services;
 using FinalProject.Data.Security;
 using FinalProject.Data.Repositories;
 using FinalProject.Data.Extensions;
-using Microsoft.Extensions.Logging;
+//using Microsoft.Extensions.Logging;
 
 namespace FinalProject.Data.Services
 {
@@ -52,6 +52,15 @@ namespace FinalProject.Data.Services
         {
             return ctx.Users.FirstOrDefault(s => s.Id == id);
         }
+
+        //search users by name or email
+        public IQueryable<User> SearchUsers(string searchQuery)
+        {
+            var lowerQuery = searchQuery.ToLower();
+            return ctx.Users
+                .Where(u => u.Name.ToLower().Contains(searchQuery) || u.Email.ToLower().Contains(searchQuery));
+        }
+
 
         // Add a new User checking a User with same email does not exist
         public User AddUser(string name, string email, string password, Role role, string dogBreed, string profileImageUrl)

@@ -29,11 +29,12 @@ public class EventController : BaseController
         //pass the search query back to the view for display in the search bar
         ViewBag.SearchQuery = searchQuery;
 
+        if (!pagedEvents.Data.Any() && !string.IsNullOrWhiteSpace(searchQuery))
+        {
+            Alert($"No events found matching '{searchQuery}'. Please check the spelling or try again.", AlertType.warning);
+        }
+
         return View(pagedEvents);
-        
-        // var query = _eventService.GetAllEvents();
-        // var pagedEvents = query.ToPaged(page, size, order);
-        // return View(pagedEvents);
     }
 
     public IActionResult Details(int id)

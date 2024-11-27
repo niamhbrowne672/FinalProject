@@ -22,8 +22,11 @@
 
 @if (!Model.Data.Any())
 {
-    <p class="text-center">No events found. <a asp-contoller="Home" asp-action="Contact">Contact Us</a> for enquiries or post on our <a href="/Post">community page</a> to
+    <div class="text-center">
+    <p class="text-center">No events found. <a asp-controller="Contact" asp-action="Contact" class="btn-link">Contact Us</a> for enquiries or post on our <a href="/Post" class="btn-link">community page</a> to
         organise an event suited for you and your furry friend!</p>
+        <a asp-action="Index" class="btn-link">Return to the full list of events!</a>
+    </div>
 }
 else
 {

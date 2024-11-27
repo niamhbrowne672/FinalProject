@@ -4,48 +4,66 @@
 <img src="~/images/banners/users.svg" class="banner-full-width img-fluid" alt="Users banner">
 <!-- divider for sections-->
 <hr class="section-divider">
-  
-<table class="table table-hover user">
-    <thead>
-        <tr>
-            <th>
-                Id
-                <vc:sort-link column="id" />
-            </th>
-            <th>
-                Name
-                <vc:sort-link column="name" />
-            </th>
-            <th>
-                Email
-                <vc:sort-link column="email" />     
-            </th>
-            <th>Role</th>
-            <th></th>             
-        </tr>
-    </thead>
-    <tbody>
-        @foreach(var u in Model.Data) {
+
+<!-------- Search Bar ----------->
+<form method="get" asp-action="Index">
+    <div class="input-group mb-3">
+        <input type="text" class="form-control" name="searchQuery" value="@ViewBag.SearchQuery"
+            placeholder="Search by name or email" aria-label="Search">
+        <button type="submit" class="btn btn-green">
+            <i class="bi bi-search"></i> Search
+        </button>
+    </div>
+</form>
+
+@if (!Model.Data.Any())
+{
+    <p class="text-center">
+        No user found. Please check the spelling or return to the <a asp-action="Index" class="btn-link">full list of users</a>.
+    </p>
+}
+else
+{
+    <table class="table table-hover user">
+        <thead>
             <tr>
-                <td>@u.Id</td>
-                <td>@u.Name</td>
-                <td>@u.Email</td>
-                <td>@u.Role</td>  
-                <td class="text-end">
-                    <a asp-action="Update" asp-route-id="@u.Id" title="Edit User">
-                        <i class="bi bi-pencil-fill click-icon"></i>
-                    </a>
-                    <!-- Link to profile page -->  
-                    <a asp-action="Profile" asp-route-id="@u.Id" title="View Profile">
-                        <i class="bi bi-person-circle click-icon"></i>
-                    </a>                  
-                </td>                
+                <th>
+                    Id
+                    <vc:sort-link column="id" />
+                </th>
+                <th>
+                    Name
+                    <vc:sort-link column="name" />
+                </th>
+                <th>
+                    Email
+                    <vc:sort-link column="email" />
+                </th>
+                <th>Role</th>
+                <th></th>
             </tr>
-        }        
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var u in Model.Data)
+            {
+                <tr>
+                    <td>@u.Id</td>
+                    <td>@u.Name</td>
+                    <td>@u.Email</td>
+                    <td>@u.Role</td>
+                    <td class="text-end">
+                        <a asp-action="Update" asp-route-id="@u.Id" title="Edit User">
+                            <i class="bi bi-pencil-fill click-icon"></i>
+                        </a>
+                        <!-- Link to profile page -->
+                        <a asp-action="Profile" asp-route-id="@u.Id" title="View Profile">
+                            <i class="bi bi-person-circle click-icon"></i>
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 
-<vc:paginator pages="Model.Pages" links="10"/>
-
-
-
+    <vc:paginator pages="Model.Pages" links="10" />
+}

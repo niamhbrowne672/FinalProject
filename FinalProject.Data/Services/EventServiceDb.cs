@@ -42,7 +42,8 @@ public class EventServiceDb : IEventService
 
     public IQueryable<Event> SearchEvents(string searchQuery)
     {
-        return ctx.Events.Where(e => e.Title.Contains(searchQuery) || e.Location.Contains(searchQuery));
+        var lowerQuery = searchQuery.ToLower();
+        return ctx.Events.Where(e => e.Title.ToLower().Contains(searchQuery) || e.Location.ToLower().Contains(searchQuery));
     }
 
     public IQueryable<Event> GetAllEvents()
