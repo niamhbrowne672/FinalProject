@@ -19,7 +19,8 @@
 @if (!Model.Data.Any())
 {
     <p class="text-center">
-        No user found. Please check the spelling or return to the <a asp-action="Index" class="btn-link">full list of users</a>.
+        No user found. Please check the spelling or return to the <a asp-action="Index" class="btn-link">full list of
+            users</a>.
     </p>
 }
 else
@@ -59,8 +60,40 @@ else
                         <a asp-action="Profile" asp-route-id="@u.Id" title="View Profile">
                             <i class="bi bi-person-circle click-icon"></i>
                         </a>
+                        <!-- Delete user -->
+                        <a data-bs-toggle="modal" data-bs-target="#deleteUserModal-@u.Id">
+                            <i class="bi bi-trash click-icon"></i>
+                        </a>
                     </td>
                 </tr>
+
+
+                <!-- Delete confirmation Modal -->
+                <div class="modal fade" id="deleteUserModal-@u.Id" tabindex="-1" aria-labelledby="deleteUserModalLabel-@u.Id"
+                    aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header bg-danger text-white">
+                                <h5 class="modal-title" id="deleteUserModalLabel-@u.Id">Confirm Delete</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <p>Are you sure you want to delete this user?</p>
+                                <ul>
+                                    <li><strong>Name:</strong> @u.Name</li>
+                                    <li><strong>Email:</strong> @u.Email</li>
+                                </ul>
+                            </div>
+                            <div class="modal-footer">
+                                <form asp-action="DeleteConfirmed" method="post" asp-route-id="@u.Id">
+                                    @Html.AntiForgeryToken()
+                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             }
         </tbody>
     </table>

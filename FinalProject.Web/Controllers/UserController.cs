@@ -139,6 +139,23 @@ public class UserController : BaseController
         return View(profileViewModel);
     }
 
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    [Authorize(Roles = "admin")]
+    public IActionResult DeleteConfirmed(int id)
+    {
+        var deleted =_svc.DeleteUser(id);
+        if (deleted)
+        {
+            Alert("User successfully deleted.", AlertType.success);
+        }
+        else
+        {
+            Alert("User could not be deleted. Please try again.", AlertType.warning);
+        }
+        return RedirectToAction(nameof(Index));
+    }
+
     // HTTP POST - Update profile action
     [Authorize]
     [HttpPost]
