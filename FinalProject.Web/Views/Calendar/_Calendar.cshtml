@@ -1,6 +1,10 @@
 @model CalendarViewModel
 
 <h1 class="text-center">County @Model.CountyName Event Dates</h1>
+<a href="/County" class="btn btn-green center-button">Back to Counties</a>
+
+<!-- divider for sections-->
+    <hr class="section-divider">
 
 <!-- calendar mounted here -->
 <div id='calendar'></div>
@@ -44,7 +48,7 @@
         const calendar = new FullCalendar.Calendar(calendarEl, {
             events: JSON.parse(json),
             initialDate: startDate,
-            initialView: 'timeGridWeek',
+            initialView: 'dayGridMonth',
             slotMinTime: minSlotTime,
             slotMaxTime: maxSlotTime,
             nowIndicator: true,
@@ -60,13 +64,9 @@
             headerToolbar: {
                 left: 'prev,next today',
                 center: 'title',
-                right: 'timeGridWeek,timeGridDay,dayGridMonth'
+                right: 'dayGridMonth,timeGridWeek,timeGridDay'
             }
         });
         return calendar
     }
-    @* document.addEventListener('DOMContentLoaded', () => {
-        const calendar = configCalendar(document.getElementById('calendar'));
-        calendar.render();
-    }); *@
 </script>

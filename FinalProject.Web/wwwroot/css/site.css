@@ -1042,6 +1042,11 @@ td.text-end a {
   text-decoration: #004d2a;
 }
 
+.center-button {
+  display: flex;
+  justify-content: center;
+}
+
 /************************************County section*/
 
 .county-table {
