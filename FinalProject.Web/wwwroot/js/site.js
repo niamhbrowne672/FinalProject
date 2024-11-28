@@ -50,40 +50,38 @@ document.addEventListener("DOMContentLoaded", function () {
 
 });
 
-// // Search bar
-// document.addEventListener('DOMContentLoaded', function() {
-//     const searchBar = document.getElementById('search-bar');
-//     const searchButton = document.getElementById('search-button');
-//     const breedCardsContainer = document.querySelector('.breed-cards-container');
-//     const breedCards = document.querySelectorAll('.card');
-//     const noResultsMessage = document.createElement('div');
-//     noResultsMessage.classList.add('no-results');
-//     noResultsMessage.innerText = "Sorry, we don't have that breed! Try searching another one.";
-//     breedCardsContainer.appendChild(noResultsMessage);
+//like button on events index - don't have to refresh for it to update how many are going
+document.querySelectorAll('.like-btn').forEach(button => {
+    button.addEventListener('click', function (e) {
+        e.preventDefault();
+        const eventId = this.dataset.id;
 
-//     function handleSearch() {
-//         const searchQuery = searchBar.value.toLowerCase();
-//         let hasResults = false;
+        fetch(`/Event/ToggleLike/${eventId}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('input[name="__RequestVerificationToken"]').value
+            }
+        })
+        .then(response => response.json()
+            .then(data => {
+                if (data.success) {
+                    const likeCount = this.querySelector('.like-count');
+                    likeCount.textContent = data.likes;
 
-//         breedCards.forEach(function(card) {
-//             const breedTitle = card.querySelector('.card-title').textContent.toLowerCase();
-//             if (breedTitle.includes(searchQuery)) {
-//                 card.style.display = 'block';
-//                 hasResults = true;
-//             } else {
-//                 card.style.display = 'none';
-//             }
-//         });
-
-//         if (searchQuery && !hasResults) {
-//             noResultsMessage.style.display = 'block';
-//             breedCardsContainer.classList.add('search-active');
-//         } else {
-//             noResultsMessage.style.display = 'none';
-//             breedCardsContainer.classList.toggle('search-active', Boolean(searchQuery));
-//         }
-//     }
-
-//     searchBar.addEventListener('input', handleSearch);
-//     searchButton.addEventListener('click', handleSearch);
-// });
+                    // Toggle icon based on like status
+                    const icon = this.querySelector('i');
+                    if (data.liked) {
+                        icon.classList.remove('bi-hand-thumbs-up');
+                        icon.classList.add('bi-hand-thumbs-up-fill');
+                    } else {
+                        icon.classList.remove('bi-hand-thumbs-up-fill');
+                        icon.classList.add('bi-hand-thumbs-up');
+                    }
+                } else {
+                    console.error('Error', data.message);
+                }
+            }))
+        .catch(error => console.error('Error:', error));
+    });
+});

@@ -24,6 +24,7 @@ public class DatabaseContext : DbContext
     public DbSet<ForgotPassword> ForgotPasswords { get; set; }
     public DbSet<Calendar> Calendars { get; set; }
     public DbSet<County> Counties { get; set; }
+    public DbSet<EventLike> EventLikes { get; set; }
 
     public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)
     {

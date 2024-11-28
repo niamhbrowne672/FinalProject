@@ -19,8 +19,10 @@ public class EventController : BaseController
 
     public IActionResult Index(string searchQuery, int page = 1, int size = 20, string order = "id", string direction = "asc")
     {
+        var userId = User.Identity.Name;
+        
         var query = string.IsNullOrWhiteSpace(searchQuery) 
-            ? _eventService.GetAllEvents()
+            ? _eventService.GetAllEvents(userId)
             : _eventService.SearchEvents(searchQuery);
 
         //apply pagination, sorting etc
@@ -242,5 +244,26 @@ public class EventController : BaseController
 
         // redirect to the event details view
         return RedirectToAction(nameof(Details), new { Id = eventId });
+    }
+
+    //like button
+    [HttpPost]
+    [Authorize]
+    public IActionResult ToggleLike(int id)
+    {
+        var userId = User.Identity.Name;
+        var result = _eventService.ToggleLike(id, userId);
+
+        if (!result.Success)
+        {
+            return BadRequest(new { success = false, message = result.Message});
+        }
+
+        return Ok(new
+        {
+            success = true,
+            liked = result.Liked,
+            likes = result.Likes
+        });
     }
 }

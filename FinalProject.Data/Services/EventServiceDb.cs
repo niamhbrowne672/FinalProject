@@ -3,6 +3,9 @@ using FinalProject.Data.Repositories;
 using Microsoft.EntityFrameworkCore;
 using FinalProject.Data.Extensions;
 using Microsoft.EntityFrameworkCore.Migrations;
+using Microsoft.Extensions.Logging;
+using System.Data.Common;
+using System.Collections.Immutable;
 
 namespace FinalProject.Data.Services;
 
@@ -48,7 +51,29 @@ public class EventServiceDb : IEventService
 
     public IQueryable<Event> GetAllEvents()
     {
-        return ctx.Events;
+        return ctx.Events.Include(e => e.Reviews);
+    }
+
+    public IQueryable<Event> GetAllEvents(string userId)
+    {
+        var eventsQuery = ctx.Events.Include(e => e.Reviews);
+        if (!string.IsNullOrEmpty(userId))
+        {
+            var eventsWithUserLikes = eventsQuery.Select(e => new Event
+            {
+                Id = e.Id,
+                Title = e.Title,
+                EventTime = e.EventTime,
+                Location = e.Location,
+                Description = e.Description,
+                ImageUrl = e.ImageUrl,
+                Likes = e.Likes,
+                Reviews = e.Reviews,
+                UserHasLiked = ctx.EventLikes.Any(like => like.EventId == e.Id && like.UserId == userId)
+            });
+            return eventsWithUserLikes;
+        }
+        return eventsQuery;
     }
 
     public Paged<Event> GetEvents()
@@ -206,66 +231,48 @@ public class EventServiceDb : IEventService
         return existingReview;
     }
 
-    // // Past Event Images/ Gallery
+    //likes to show how many people are going to an event
+    public bool LikeEvent(int eventId)
+    {
+        var eventToLike = GetEventById(eventId);
+        if (eventToLike == null) return false;
 
-    // public IQueryable<Event> GetPastEvents()
-    // {
-    //     var currentDate = DateTime.Now;
-    //     return ctx.Events.Where(e => e.EventTime < currentDate);
-    // }
-    // public IList<PastEventImage> GetPastEventImages(int eventId)
-    // {
-    //     //get all images associated with a specific event
-    //     return ctx.PastEventImages.Where(img => img.EventId == eventId).ToList();
-    // }
+        eventToLike.Likes++;
+        ctx.SaveChanges();
+        return true;
+    }
+    
+    public ToggleLikeResult ToggleLike(int eventId, string userId)
+    {
+        var eventToLike = GetEventById(eventId);
+        if (eventToLike == null)
+        {
+            return new ToggleLikeResult { Success = false, Message = "Event not found."};
+        }
 
-    // public PastEventImage AddPastEventImage(int eventId, PastEventImage newImage)
-    // {
-    //     //validate event existence
-    //     var eventExists = ctx.Events.Any(e => e.Id == eventId);
-    //     if (!eventExists)
-    //     {
-    //         return null; // return null if the event doesn't exist
-    //     }
+        //check if user has already liked the event
+        var userLike = ctx.EventLikes.FirstOrDefault(like => like.EventId == eventId && like.UserId == userId);
 
-    //     // set the event ID for the image and add it to the database
-    //     newImage.EventId = eventId;
-    //     ctx.PastEventImages.Add(newImage);
-    //     ctx.SaveChanges();
+        if (userLike != null)
+        {
+            //unlike the event
+            ctx.EventLikes.Remove(userLike);
+            eventToLike.Likes--;
+        }
+        else
+        {
+            //like the event
+            ctx.EventLikes.Add(new EventLike { EventId = eventId, UserId = userId });
+            eventToLike.Likes++;
+        }
 
-    //     return newImage;
-    // }
+        ctx.SaveChanges();
 
-    // public bool DeletePastEventImage(int ImageId)
-    // {
-    //     //find the image by ID
-    //     var imageToDelete = ctx.PastEventImages.FirstOrDefault(img => img.Id == ImageId);
-    //     if (imageToDelete == null)
-    //     {
-    //         return false; // return false if the image doesn't exist
-    //     }
-
-    //     //delete the image from the database
-    //     ctx.PastEventImages.Remove(imageToDelete);
-    //     ctx.SaveChanges();
-    //     return true;
-    // }
-
-    // public Paged<Event> GetPastEvents(int page, int pageSize, string orderBy = "id", string direction = "asc")
-    // {
-    //     var currentDate = DateTime.Now;
-
-    //     var query = ctx.Events.Where(e => e.EventTime < currentDate);
-
-    //     query = (orderBy.ToLower(), direction.ToLower()) switch
-    //     {
-    //         ("id", "asc") => query.OrderBy(r => r.Id),
-    //         ("id", "desc") => query.OrderByDescending(r => r.Id),
-    //         ("title", "asc") => query.OrderBy(r => r.Title),
-    //         ("title", "desc") => query.OrderByDescending(r => r.Title),
-    //         _ => query.OrderBy(r => r.Id)
-    //     };
-
-    //     return query.ToPaged(page, pageSize, orderBy, direction);
-    // }
+        return new ToggleLikeResult
+        {
+            Success = true,
+            Liked = userLike == null,
+            Likes = eventToLike.Likes
+        };
+    }
 }

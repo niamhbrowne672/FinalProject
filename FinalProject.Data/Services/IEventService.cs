@@ -21,6 +21,7 @@ namespace FinalProject.Data.Services
 
         //get all events
         IQueryable<Event> GetAllEvents();
+        IQueryable<Event> GetAllEvents(string userId);
 
         // Update an event 
         Event UpdateEvent(Event updated);
@@ -38,11 +39,8 @@ namespace FinalProject.Data.Services
         bool DeleteReview(int id);
         IList<Review> GetAllReviews();
 
-        // //Past Event Gallery
-        // IList<PastEventImage> GetPastEventImages(int eventId);
-        // PastEventImage AddPastEventImage(int eventId, PastEventImage newImage);
-        // bool DeletePastEventImage(int imageId);
-        // IQueryable<Event> GetPastEvents();
-        // //IEnumerable<Event> GetAllEvnets();
+        //likes
+        bool LikeEvent(int eventId);
+        ToggleLikeResult ToggleLike(int eventId, string userId);
     }
 }

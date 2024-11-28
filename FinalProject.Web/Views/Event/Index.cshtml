@@ -30,8 +30,6 @@
 }
 else
 {
-
-
     <table class="table table-hover mt-4 table-headings">
         <thead>
             <tr>
@@ -51,6 +49,10 @@ else
                     <td>@e.EventTime</td>
                     <td>@e.Location</td>
                     <td class="text-end">
+                        <a href="#" title="Are you going?" data-id="@e.Id" class="like-btn"> 
+                            <i class="bi @(e.UserHasLiked ? "bi-hand-thumbs-up-fill" : "bi-hand-thumbs-up")"></i>
+                            <span class="like-count">@e.Likes</span>
+                        </a>
                         <a asp-action="Details" asp-route-id=@e.Id title="More details"> <i class="bi bi-info-square click-icon"></i>
                         </a>
             

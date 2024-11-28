@@ -1,8 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
-using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
 namespace FinalProject.Data.Entities;
+using System.ComponentModel.DataAnnotations.Schema;
 
 public class Event
 {
@@ -11,8 +10,6 @@ public class Event
     public string Title { get; set; }
     [Required]
     public DateTime EventTime { get; set; }
-    // [Required]
-    // public string Time { get; set; }  // time separate to date
     [Required]
     public string Location { get; set; }  // I can add Google Maps URL here later
     public string Description { get; set; }
@@ -29,6 +26,11 @@ public class Event
 
     //past event gallery
     public IList<PastEventImage> PastEventImages { get; set; } = new List<PastEventImage>();
+
+    //like button
+    public int Likes { get; set; }
+    [NotMapped]
+    public bool UserHasLiked { get; set; }
 
 }
 
