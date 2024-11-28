@@ -602,6 +602,19 @@ footer .container {
   margin: 0 auto;
 }
 
+.small-carousel {
+  max-width: 700px;
+  max-height: 500px;
+  overflow: hidden;
+  margin: 0 auto;
+}
+
+.small-carousel img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
 /*Training Page*/
 
 .hero-section {
