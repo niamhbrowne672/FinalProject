@@ -53,16 +53,16 @@ else
                     <td>@u.Email</td>
                     <td>@u.Role</td>
                     <td class="text-end">
+                        <!-- Delete user -->
+                        <a data-bs-toggle="modal" data-bs-target="#deleteUserModal-@u.Id">
+                            <i class="bi bi-trash click-icon"></i>
+                        </a>
                         <a asp-action="Update" asp-route-id="@u.Id" title="Edit User">
                             <i class="bi bi-pencil-fill click-icon"></i>
                         </a>
                         <!-- Link to profile page -->
                         <a asp-action="Profile" asp-route-id="@u.Id" title="View Profile">
                             <i class="bi bi-person-circle click-icon"></i>
-                        </a>
-                        <!-- Delete user -->
-                        <a data-bs-toggle="modal" data-bs-target="#deleteUserModal-@u.Id">
-                            <i class="bi bi-trash click-icon"></i>
                         </a>
                     </td>
                 </tr>
