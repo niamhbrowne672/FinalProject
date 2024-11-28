@@ -1,369 +1,414 @@
-<!-- woof and wag banner -->
-<img src="~/images/banners/Breeds.svg" class="banner-full-width img-fluid" alt="Recommended Dog Breeds banner">
+<div class="breed-page">
+    <!-- woof and wag banner -->
+    <img src="~/images/banners/Breeds.svg" class="banner-full-width img-fluid" alt="Recommended Dog Breeds banner">
 
-<!-- Search Bar for Breeds-->
-<div class="search-bar-container">
-    <input type="text" id="search-bar" placeholder="Search for a breed..."/>
-    <button id="search-button" class="btn btn-green">Find Breed</button>
-</div>
-<!--container for search results-->
-<div class="search-results"></div>
+    <!--container for search results-->
+    <div class="search-results"></div>
 
-<div class="text-center">
-    <h3>Are you thinking about getting a dog? <a href="https://www.selectadogbreed.com/find-your-matches/"
-            target="_blank">Take a test and find your perfect breed!</a></h3>
-</div>
-
-<!--Modal for dog breed test!-->
-<div class="modal" tabindex="-1">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Are you thinking about getting a dog?</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <p>Choosing the right breed is essential when getting a new dog! Take the test and find your pawfect match!</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-green"><a href="https://www.selectadogbreed.com/find-your-matches/">Take the test!</a></button>
-      </div>
+    <!-- Breed selection test card at the top -->
+    <div class="card mb-4 text-center shadow-lg">
+        <div class="card-body">
+            <h3 class="card-title">Thinking About Getting a Dog?</h3>
+            <p class="card-text">Choosing the right breed is one of the most important decisions when welcoming a new
+                furry friend into your life. The perfect breed ensures harmony in your home, matching your lifestyle,
+                energy levels, and preferences.</p>
+            <a href="https://www.selectadogbreed.com/find-your-matches/" target="_blank" class="btn btn-green btn-lg">
+                <i class="bi bi-paw"></i> Take the Test and Find Your Perfect Breed!
+            </a>
+        </div>
     </div>
-  </div>
-</div>
 
-<!-- divider for sections-->
-<hr class="section-divider">
+    <!-- Explanation about choosing the right breed -->
+    <div class="text-center mb-5">
+        <p class="fs-5">
+            Bringing a dog into your home is a lifetime commitment, and choosing the right breed ensures a happy and
+            harmonious relationship. From energy levels to space requirements, every breed has unique characteristics
+            that make them suited to specific lifestyles. Let us guide you in finding the perfect match for you and your
+            family!
+        </p>
+    </div>
 
-<!-- Breed cards -->
-<div class="container breed-cards-container">
-    <h1 class="text-center">Popular Breeds</h1>
+    <!--Modal for dog breed test!-->
+    <div class="modal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Are you thinking about getting a dog?</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Choosing the right breed is essential when getting a new dog! Take the test and find your pawfect
+                        match!</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-green"><a
+                            href="https://www.selectadogbreed.com/find-your-matches/">Take the test!</a></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- divider for sections-->
     <hr class="section-divider">
-    <!--Row 1-->
-    <div class="row">
-        <!--Labrador-->
-        <div class="col-md-4 mb-4">
-            <div class="card h-100">
-                <img src="~/images/breeds/Labrador.jpg" alt="Labrador" class="card-img-top breed-image">
-                <div class="card-body">
-                    <h5 class="card-title">Labrador</h5>
-                    <p class="card-text short-description">Friendly, outgoing, and great with families. Labs are known
-                        for their...</p>
-                    <p class="card-text full-description" style="display: none;">Friendly, outgoing, and great with
-                        families. Labs are known for their loyalty and gentle nature.</p>
-                    <button class="btn btn-green toggle-description">Learn more</button>
-                </div>
-            </div>
-        </div>
 
-        <!--Cocker Spaniel-->
-        <div class="col-md-4 mb-4">
-            <div class="card h-100">
-                <img src="~/images/breeds/CockerSpaniel.jpg" alt="Cocker Spaniel" class="card-img-top breed-image">
-                <div class="card-body">
-                    <h5 class="card-title">Cocker Spaniel</h5>
-                    <p class="card-text short-description">Gentle, affectionate, and good with families. Known for
-                        their...</p>
-                    <p class="card-text full-description">Gentle, affectionate, and good with families. Known for their
-                        expressive eyes and long, silky ears.</p>
-                    <button class="btn btn-green toggle-description">Learn more</button>
-                </div>
-            </div>
-        </div>
-
-        <!--Hungarian Vizsla-->
-        <div class="col-md-4 mb-4">
-            <div class="card h-100">
-                <img src="~/images/breeds/Vizsla.jpg" alt="Hungarian Vizsla" class="card-img-top breed-image">
-                <div class="card-body">
-                    <h5 class="card-title">Hungarian Vizsla</h5>
-                    <p class="card-text short-description">Loyal, affectionate, and athletic, Vizslas are known to be...
-                    </p>
-                    <p class="card-text full-description">Loyal, affectionate, and athletic, Vizslas are known to be
-                        excellent hunting and family dogs, known for their sleek coat and boundless energy.</p>
-                    <button class="btn btn-green toggle-description">Learn more</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-    <!--Row 2-->
-    <div class="row">
-        <!--German Shepherd-->
-        <div class="col-md-4 mb-4">
-            <div class="card h-100">
-                <img src="~/images/breeds/GermanShepherd.jpg" alt="German Shepherd" class="card-img-top breed-image">
-                <div class="card-body">
-                    <h5 class="card-title">German Shepherd</h5>
-                    <p class="card-text short-description">Intelligent and versatile, they make excellent working dogs
-                        and loyal family protectors...</p>
-                    <p class="card-text full-description">Intelligent and versatile, they make excellent working dogs
-                        and loyal family protectors.</p>
-                    <button class="btn btn-green toggle-description">Learn more</button>
-                </div>
-            </div>
-        </div>
-
-        <!--Golden Retriever-->
-        <div class="col-md-4 mb-4">
-            <div class="card h-100">
-                <img src="~/images/breeds/Golden.jpg" alt="Golden Retriever" class="card-img-top breed-image">
-                <div class="card-body">
-                    <h5 class="card-title">Golden Retriever</h5>
-                    <p class="card-text short-description">Friendly, tolerant, and great with kids. Known for their...
-                    </p>
-                    <p class="card-text full-description">Friendly, tolerant, and great with kids. Known for their
-                        playful and patient temperament.</p>
-                    <button class="btn btn-green toggle-description">Learn more</button>
-                </div>
-            </div>
-        </div>
-
-        <!--Dachshund-->
-        <div class="col-md-4 mb-4">
-            <div class="card h-100">
-                <img src="~/images/breeds/Dachshund.png" alt="Dachshund" class="card-img-top breed-image">
-                <div class="card-body">
-                    <h5 class="card-title">Dachshund</h5>
-                    <p class="card-text short-description">Clever and spirited, Dachshunds are known for their...</p>
-                    <p class="card-text full-description">Clever and spirited, Dachshunds are known for their long
-                        bodies and playful personalities.</p>
-                    <button class="btn btn-green toggle-description">Learn more</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!--Row 3-->
-    <div class="row">
-        <!--Poodle-->
-        <div class="col-md-4 mb-4">
-            <div class="card h-100">
-                <img src="~/images/breeds/Poodle.jpg" alt="Poodle" class="card-img-top breed-image">
-                <div class="card-body">
-                    <h5 class="card-title">Poodle</h5>
-                    <p class="card-text short-description">Intelligent, hypoallergenic, and versatile...</p>
-                    <p class="card-text full-description">Intelligent, hypoallergenic, and versatile. Poodles come in
-                        standard, miniature, and toy sizes.</p>
-                    <button class="btn btn-green toggle-description">Learn more</button>
-                </div>
-            </div>
-        </div>
-
-        <!--Rottweiler-->
-        <div class="col-md-4 mb-4">
-            <div class="card h-100">
-                <img src="~/images/breeds/Rottweiler.jpg" alt="Rottweiler" class="card-img-top breed-image">
-                <div class="card-body">
-                    <h5 class="card-title">Rottweiler</h5>
-                    <p class="card-text short-description">Confident, fearless, and protective...</p>
-                    <p class="card-text full-description">Confident, fearless, and protective. Rottweilers are loyal
-                        companions and excellent guardians.</p>
-                    <button class="btn btn-green toggle-description">Learn more</button>
-                </div>
-            </div>
-        </div>
-
-        <!--Yorkshire Terrier-->
-        <div class="col-md-4 mb-4">
-            <div class="card h-100">
-                <img src="~/images/breeds/YorkshireT.jpg" alt="Yorkshire Terrier" class="card-img-top breed-image">
-                <div class="card-body">
-                    <h5 class="card-title">Yorkshire Terrier</h5>
-                    <p class="card-text short-description">Small but feisty, Yorkies are affectionate, brave, and...</p>
-                    <p class="card-text full-description">Small but feisty, Yorkies are affectionate, brave, and great
-                        apartment dogs.</p>
-                    <button class="btn btn-green toggle-description">Learn more</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!--Row 4-->
-    <div class="row">
-        <!--Bulldog-->
-        <div class="col-md-4 mb-4">
-            <div class="card h-100">
-                <img src="~/images/breeds/Bulldog.jpg" alt="Bulldog" class="card-img-top breed-image">
-                <div class="card-body">
-                    <div class="breed-info">
-                        <h5 class="card-title">Bulldog</h5>
-                        <p class="card-text short-description">Loyal and calm, Bulldogs are known for their...</p>
-                        <p class="card-text full-description">Loyal and calm, Bulldogs are known for their distinctive
-                            wrinkled faces and relaxed personality.</p>
+    <!-- Breed cards -->
+    <div class="container breed-cards-container">
+        <h1 class="text-center">Popular Breeds</h1>
+        <!--Row 1-->
+        <div class="row">
+            <!--Labrador-->
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <img src="~/images/breeds/Labrador.jpg" alt="Labrador" class="card-img-top breed-image">
+                    <div class="card-body">
+                        <h5 class="card-title">Labrador</h5>
+                        <p class="card-text short-description">Friendly, outgoing, and great with families. Labs are
+                            known
+                            for their...</p>
+                        <p class="card-text full-description" style="display: none;">Friendly, outgoing, and great with
+                            families. Labs are known for their loyalty and gentle nature.</p>
+                        <button class="btn btn-green toggle-description">Learn more</button>
                     </div>
-                    <button class="btn btn-green toggle-description">Learn more</button>
+                </div>
+            </div>
+
+            <!--Cocker Spaniel-->
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <img src="~/images/breeds/CockerSpaniel.jpg" alt="Cocker Spaniel" class="card-img-top breed-image">
+                    <div class="card-body">
+                        <h5 class="card-title">Cocker Spaniel</h5>
+                        <p class="card-text short-description">Gentle, affectionate, and good with families. Known for
+                            their...</p>
+                        <p class="card-text full-description">Gentle, affectionate, and good with families. Known for
+                            their
+                            expressive eyes and long, silky ears.</p>
+                        <button class="btn btn-green toggle-description">Learn more</button>
+                    </div>
+                </div>
+            </div>
+
+            <!--Hungarian Vizsla-->
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <img src="~/images/breeds/Vizsla.jpg" alt="Hungarian Vizsla" class="card-img-top breed-image">
+                    <div class="card-body">
+                        <h5 class="card-title">Hungarian Vizsla</h5>
+                        <p class="card-text short-description">Loyal, affectionate, and athletic, Vizslas are known to
+                            be...
+                        </p>
+                        <p class="card-text full-description">Loyal, affectionate, and athletic, Vizslas are known to be
+                            excellent hunting and family dogs, known for their sleek coat and boundless energy.</p>
+                        <button class="btn btn-green toggle-description">Learn more</button>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!--Doberman Pinscher-->
-        <div class="col-md-4 mb-4">
-            <div class="card h-100">
-                <img src="~/images/breeds/Doberman.jpg" alt="Doberman Pinscher" class="card-img-top breed-image">
-                <div class="card-body">
-                    <h5 class="card-title">Doberman Pinscher</h5>
-                    <p class="card-text short-description">Intelligent, loyal, and fearless...</p>
-                    <p class="card-text full-description">Intelligent, loyal, and fearless. Dobermans make excellent
-                        guard dogs and are very trainable.</p>
-                    <button class="btn btn-green toggle-description">Learn more</button>
+
+        <!--Row 2-->
+        <div class="row">
+            <!--German Shepherd-->
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <img src="~/images/breeds/GermanShepherd.jpg" alt="German Shepherd"
+                        class="card-img-top breed-image">
+                    <div class="card-body">
+                        <h5 class="card-title">German Shepherd</h5>
+                        <p class="card-text short-description">Intelligent and versatile, they make excellent working
+                            dogs
+                            and loyal family protectors...</p>
+                        <p class="card-text full-description">Intelligent and versatile, they make excellent working
+                            dogs
+                            and loyal family protectors.</p>
+                        <button class="btn btn-green toggle-description">Learn more</button>
+                    </div>
+                </div>
+            </div>
+
+            <!--Golden Retriever-->
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <img src="~/images/breeds/Golden.jpg" alt="Golden Retriever" class="card-img-top breed-image">
+                    <div class="card-body">
+                        <h5 class="card-title">Golden Retriever</h5>
+                        <p class="card-text short-description">Friendly, tolerant, and great with kids. Known for
+                            their...
+                        </p>
+                        <p class="card-text full-description">Friendly, tolerant, and great with kids. Known for their
+                            playful and patient temperament.</p>
+                        <button class="btn btn-green toggle-description">Learn more</button>
+                    </div>
+                </div>
+            </div>
+
+            <!--Dachshund-->
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <img src="~/images/breeds/Dachshund.png" alt="Dachshund" class="card-img-top breed-image">
+                    <div class="card-body">
+                        <h5 class="card-title">Dachshund</h5>
+                        <p class="card-text short-description">Clever and spirited, Dachshunds are known for their...
+                        </p>
+                        <p class="card-text full-description">Clever and spirited, Dachshunds are known for their long
+                            bodies and playful personalities.</p>
+                        <button class="btn btn-green toggle-description">Learn more</button>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!--Shih Tzu-->
-        <div class="col-md-4 mb-4">
-            <div class="card h-100">
-                <img src="~/images/breeds/ShihTzu.jpg" alt="Shih Tzu" class="card-img-top breed-image">
-                <div class="card-body">
-                    <h5 class="card-title">Shih Tzu</h5>
-                    <p class="card-text short-description">Playful and friendly, Shih Tzus are...</p>
-                    <p class="card-text full-description">Playful and friendly, Shih Tzus are affectionate and adapt
-                        well to various living environments.</p>
-                    <button class="btn btn-green toggle-description">Learn more</button>
+        <!--Row 3-->
+        <div class="row">
+            <!--Poodle-->
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <img src="~/images/breeds/Poodle.jpg" alt="Poodle" class="card-img-top breed-image">
+                    <div class="card-body">
+                        <h5 class="card-title">Poodle</h5>
+                        <p class="card-text short-description">Intelligent, hypoallergenic, and versatile...</p>
+                        <p class="card-text full-description">Intelligent, hypoallergenic, and versatile. Poodles come
+                            in
+                            standard, miniature, and toy sizes.</p>
+                        <button class="btn btn-green toggle-description">Learn more</button>
+                    </div>
+                </div>
+            </div>
+
+            <!--Rottweiler-->
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <img src="~/images/breeds/Rottweiler.jpg" alt="Rottweiler" class="card-img-top breed-image">
+                    <div class="card-body">
+                        <h5 class="card-title">Rottweiler</h5>
+                        <p class="card-text short-description">Confident, fearless, and protective...</p>
+                        <p class="card-text full-description">Confident, fearless, and protective. Rottweilers are loyal
+                            companions and excellent guardians.</p>
+                        <button class="btn btn-green toggle-description">Learn more</button>
+                    </div>
+                </div>
+            </div>
+
+            <!--Yorkshire Terrier-->
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <img src="~/images/breeds/YorkshireT.jpg" alt="Yorkshire Terrier" class="card-img-top breed-image">
+                    <div class="card-body">
+                        <h5 class="card-title">Yorkshire Terrier</h5>
+                        <p class="card-text short-description">Small but feisty, Yorkies are affectionate...
+                        </p>
+                        <p class="card-text full-description">Small but feisty, Yorkies are affectionate, brave, and
+                            great
+                            apartment dogs.</p>
+                        <button class="btn btn-green toggle-description">Learn more</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--Row 4-->
+        <div class="row">
+
+            <!--Boxer-->
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <img src="~/images/breeds/Boxer.jpg" alt="Boxer" class="card-img-top breed-image">
+                    <div class="card-body">
+                        <h5 class="card-title">Boxer</h5>
+                        <p class="card-text short-description">Energetic and playful, Boxers are...</p>
+                        <p class="card-text full-description">Energetic and playful, Boxers are known for their
+                            boundless
+                            enthusiasm and loyalty to family.</p>
+                        <button class="btn btn-green toggle-description">Learn more</button>
+                    </div>
+                </div>
+            </div>
+
+            <!--Doberman Pinscher-->
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <img src="~/images/breeds/Doberman.jpg" alt="Doberman Pinscher" class="card-img-top breed-image">
+                    <div class="card-body">
+                        <h5 class="card-title">Doberman Pinscher</h5>
+                        <p class="card-text short-description">Intelligent, loyal, and fearless...</p>
+                        <p class="card-text full-description">Intelligent, loyal, and fearless. Dobermans make excellent
+                            guard dogs and are very trainable.</p>
+                        <button class="btn btn-green toggle-description">Learn more</button>
+                    </div>
+                </div>
+            </div>
+
+            <!--Shih Tzu-->
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <img src="~/images/breeds/ShihTzu.jpg" alt="Shih Tzu" class="card-img-top breed-image">
+                    <div class="card-body">
+                        <h5 class="card-title">Shih Tzu</h5>
+                        <p class="card-text short-description">Playful and friendly, Shih Tzus are...</p>
+                        <p class="card-text full-description">Playful and friendly, Shih Tzus are affectionate and adapt
+                            well to various living environments.</p>
+                        <button class="btn btn-green toggle-description">Learn more</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--Row 5-->
+        <div class="row">
+            <!--French Bulldog-->
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <img src="~/images/breeds/FrenchBulldog.jpg" alt="French Bulldog" class="card-img-top breed-image">
+                    <div class="card-body">
+                        <h5 class="card-title">French Bulldog</h5>
+                        <p class="card-text short-description">Affectionate and adaptable, French Bulldogs are...</p>
+                        <p class="card-text full-description">Affectionate and adaptable, French Bulldogs are great for
+                            urban living with their laid-back demeanor.</p>
+                        <button class="btn btn-green toggle-description">Learn more</button>
+                    </div>
+                </div>
+            </div>
+
+            <!--Chihuahua-->
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <img src="~/images/breeds/Chihuahua.jpg" alt="Chihuahua" class="card-img-top breed-image">
+                    <div class="card-body">
+                        <h5 class="card-title">Chihuahua</h5>
+                        <p class="card-text short-description">Small and alert, Chihuahuas are loyal and make...</p>
+                        <p class="card-text full-description">Small and alert, Chihuahuas are loyal and make great lap
+                            dogs
+                            with a big personality.</p>
+                        <button class="btn btn-green toggle-description">Learn more</button>
+                    </div>
+                </div>
+            </div>
+
+            <!--Siberian Husky-->
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <img src="~/images/breeds/Husky.jpg" alt="Siberian Husky" class="card-img-top breed-image">
+                    <div class="card-body">
+                        <h5 class="card-title">Siberian Husky</h5>
+                        <p class="card-text short-description">Friendly, energetic, and great for active owners...</p>
+                        <p class="card-text full-description">Friendly, energetic, and great for active owners. Known
+                            for
+                            their striking eyes and wolf-like appearance.</p>
+                        <button class="btn btn-green toggle-description">Learn more</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--Row 6-->
+        <div class="row">
+            <!--Pomeranian-->
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <img src="~/images/breeds/Pomeranian.jpg" alt="Pomeranian" class="card-img-top breed-image">
+                    <div class="card-body">
+                        <h5 class="card-title">Pomeranian</h5>
+                        <p class="card-text short-description">Small and lively, Pomeranians are confident, curious,
+                            and...
+                        </p>
+                        <p class="card-text full-description">Small and lively, Pomeranians are confident, curious, and
+                            known for their fluffy coats.</p>
+                        <button class="btn btn-green toggle-description">Learn more</button>
+                    </div>
+                </div>
+            </div>
+
+            <!--Great Dane-->
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <img src="~/images/breeds/GreatDane.jpg" alt="Great Dane" class="card-img-top breed-image">
+                    <div class="card-body">
+                        <h5 class="card-title">Great Dane</h5>
+                        <p class="card-text short-description">Gentle giants with a calm demeanor, Great Danes are...
+                        </p>
+                        <p class="card-text full-description">Gentle giants with a calm demeanor, Great Danes are known
+                            for
+                            their size and affectionate nature.</p>
+                        <button class="btn btn-green toggle-description">Learn more</button>
+                    </div>
+                </div>
+            </div>
+
+            <!--Irish Wolf Hound-->
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <img src="~/images/breeds/wolfhound.jpg" alt="Irish Wolf Hound" class="card-img-top breed-image">
+                    <div class="card-body">
+                        <h5 class="card-title">Irish Wolf Hound</h5>
+                        <p class="card-text short-description">Gentle, noble, and towering in size, Irish Wolfhounds
+                            are...
+                        </p>
+                        <p class="card-text full-description">Gentle, noble, and towering in size, Irish Wolfhounds are
+                            known for their calm demeanor and deep loyalty, making them gentle giants in any home.</p>
+                        <button class="btn btn-green toggle-description">Learn more</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--Row 7-->
+        <div class="row">
+            <!--Beagle-->
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <img src="~/images/breeds/Beagle.jpg" alt="Beagle" class="card-img-top breed-image">
+                    <div class="card-body">
+                        <h5 class="card-title">Beagle</h5>
+                        <p class="card-text short-description">Curious, energetic, and great with kids, Beagles are...
+                        </p>
+                        <p class="card-text full-description">Curious, energetic, and great with kids, Beagles are known
+                            for
+                            their keen sense of smell and love for adventure.</p>
+                        <button class="btn btn-green toggle-description">Learn more</button>
+                    </div>
+                </div>
+            </div>
+
+            <!--Jack Russel-->
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <img src="~/images/breeds/Jack.jpg" alt="Jack Russel" class="card-img-top breed-image">
+                    <div class="card-body">
+                        <h5 class="card-title">Jack Russel</h5>
+                        <p class="card-text short-description">Energetic, intelligent, and fearless, Jack Russells
+                            are...
+                        </p>
+                        <p class="card-text full-description">Energetic, intelligent, and fearless, Jack Russells are
+                            known
+                            for their lively spirit and make great companions for active owners.</p>
+                        <button class="btn btn-green toggle-description">Learn more</button>
+                    </div>
+                </div>
+            </div>
+
+             <!--Bulldog-->
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <img src="~/images/breeds/Bulldog.jpg" alt="Bulldog" class="card-img-top breed-image">
+                    <div class="card-body">
+                        <div class="breed-info">
+                            <h5 class="card-title">Bulldog</h5>
+                            <p class="card-text short-description">Loyal and calm, Bulldogs are known for their...</p>
+                            <p class="card-text full-description">Loyal and calm, Bulldogs are known for their
+                                distinctive
+                                wrinkled faces and relaxed personality.</p>
+                        </div>
+                        <button class="btn btn-green toggle-description">Learn more</button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-
-    <!--Row 5-->
-    <div class="row">
-        <!--French Bulldog-->
-        <div class="col-md-4 mb-4">
-            <div class="card h-100">
-                <img src="~/images/breeds/FrenchBulldog.jpg" alt="French Bulldog" class="card-img-top breed-image">
-                <div class="card-body">
-                    <h5 class="card-title">French Bulldog</h5>
-                    <p class="card-text short-description">Affectionate and adaptable, French Bulldogs are...</p>
-                    <p class="card-text full-description">Affectionate and adaptable, French Bulldogs are great for
-                        urban living with their laid-back demeanor.</p>
-                    <button class="btn btn-green toggle-description">Learn more</button>
-                </div>
-            </div>
-        </div>
-
-        <!--Chihuahua-->
-        <div class="col-md-4 mb-4">
-            <div class="card h-100">
-                <img src="~/images/breeds/Chihuahua.jpg" alt="Chihuahua" class="card-img-top breed-image">
-                <div class="card-body">
-                    <h5 class="card-title">Chihuahua</h5>
-                    <p class="card-text short-description">Small and alert, Chihuahuas are loyal and make...</p>
-                    <p class="card-text full-description">Small and alert, Chihuahuas are loyal and make great lap dogs
-                        with a big personality.</p>
-                    <button class="btn btn-green toggle-description">Learn more</button>
-                </div>
-            </div>
-        </div>
-
-        <!--Siberian Husky-->
-        <div class="col-md-4 mb-4">
-            <div class="card h-100">
-                <img src="~/images/breeds/Husky.jpg" alt="Siberian Husky" class="card-img-top breed-image">
-                <div class="card-body">
-                    <h5 class="card-title">Siberian Husky</h5>
-                    <p class="card-text short-description">Friendly, energetic, and great for active owners...</p>
-                    <p class="card-text full-description">Friendly, energetic, and great for active owners. Known for
-                        their striking eyes and wolf-like appearance.</p>
-                    <button class="btn btn-green toggle-description">Learn more</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!--Row 6-->
-    <div class="row">
-        <!--Pomeranian-->
-        <div class="col-md-4 mb-4">
-            <div class="card h-100">
-                <img src="~/images/breeds/Pomeranian.jpg" alt="Pomeranian" class="card-img-top breed-image">
-                <div class="card-body">
-                    <h5 class="card-title">Pomeranian</h5>
-                    <p class="card-text short-description">Small and lively, Pomeranians are confident, curious, and...
-                    </p>
-                    <p class="card-text full-description">Small and lively, Pomeranians are confident, curious, and
-                        known for their fluffy coats.</p>
-                    <button class="btn btn-green toggle-description">Learn more</button>
-                </div>
-            </div>
-        </div>
-
-        <!--Great Dane-->
-        <div class="col-md-4 mb-4">
-            <div class="card h-100">
-                <img src="~/images/breeds/GreatDane.jpg" alt="Great Dane" class="card-img-top breed-image">
-                <div class="card-body">
-                    <h5 class="card-title">Great Dane</h5>
-                    <p class="card-text short-description">Gentle giants with a calm demeanor, Great Danes are...</p>
-                    <p class="card-text full-description">Gentle giants with a calm demeanor, Great Danes are known for
-                        their size and affectionate nature.</p>
-                    <button class="btn btn-green toggle-description">Learn more</button>
-                </div>
-            </div>
-        </div>
-
-        <!--Irish Wolf Hound-->
-        <div class="col-md-4 mb-4">
-            <div class="card h-100">
-                <img src="~/images/breeds/wolfhound.jpg" alt="Irish Wolf Hound" class="card-img-top breed-image">
-                <div class="card-body">
-                    <h5 class="card-title">Irish Wolf Hound</h5>
-                    <p class="card-text short-description">Gentle, noble, and towering in size, Irish Wolfhounds are...
-                    </p>
-                    <p class="card-text full-description">Gentle, noble, and towering in size, Irish Wolfhounds are
-                        known for their calm demeanor and deep loyalty, making them gentle giants in any home.</p>
-                    <button class="btn btn-green toggle-description">Learn more</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!--Row 7-->
-    <div class="row">
-        <!--Beagle-->
-        <div class="col-md-4 mb-4">
-            <div class="card h-100">
-                <img src="~/images/breeds/Beagle.jpg" alt="Beagle" class="card-img-top breed-image">
-                <div class="card-body">
-                    <h5 class="card-title">Beagle</h5>
-                    <p class="card-text short-description">Curious, energetic, and great with kids, Beagles are...</p>
-                    <p class="card-text full-description">Curious, energetic, and great with kids, Beagles are known for
-                        their keen sense of smell and love for adventure.</p>
-                    <button class="btn btn-green toggle-description">Learn more</button>
-                </div>
-            </div>
-        </div>
-
-        <!--Jack Russel-->
-        <div class="col-md-4 mb-4">
-            <div class="card h-100">
-                <img src="~/images/breeds/Jack.jpg" alt="Jack Russel" class="card-img-top breed-image">
-                <div class="card-body">
-                    <h5 class="card-title">Jack Russel</h5>
-                    <p class="card-text short-description">Energetic, intelligent, and fearless, Jack Russells are...
-                    </p>
-                    <p class="card-text full-description">Energetic, intelligent, and fearless, Jack Russells are known
-                        for their lively spirit and make great companions for active owners.</p>
-                    <button class="btn btn-green toggle-description">Learn more</button>
-                </div>
-            </div>
-        </div>
-
-        <!--Boxer-->
-        <div class="col-md-4 mb-4">
-            <div class="card h-100">
-                <img src="~/images/breeds/Boxer.jpg" alt="Boxer" class="card-img-top breed-image">
-                <div class="card-body">
-                    <h5 class="card-title">Boxer</h5>
-                    <p class="card-text short-description">Energetic and playful, Boxers are...</p>
-                    <p class="card-text full-description">Energetic and playful, Boxers are known for their boundless
-                        enthusiasm and loyalty to family.</p>
-                    <button class="btn btn-green toggle-description">Learn more</button>
-                </div>
-            </div>
-        </div>
+    <!-- Missing breed suggestion section -->
+    <div class="text-center mt-5">
+        <p class="fs-4"><strong>Don't see the breed you're looking for?</strong></p>
+        <p class="fs-5">We're always looking to expand our list. <br><a asp-controller="Contact" asp-action="Contact" class="btn-link">Contact us</a>
+            and let us know so we can add it!</p>
     </div>
 </div>

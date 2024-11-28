@@ -826,6 +826,10 @@ footer .container {
 }
 
 /******************************************** Breed Page**/
+.breed-page {
+  color: #004d2a;
+}
+
 /**Images same height and width**/
 .breed-image {
   height: 100%;
