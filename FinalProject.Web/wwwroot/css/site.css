@@ -1038,6 +1038,8 @@ td.text-end a {
   margin-right: 0;
 }
 
+/*******************Calendar*/
+
 #calendar {
   text-decoration: #004d2a;
 }
@@ -1045,6 +1047,27 @@ td.text-end a {
 .center-button {
   display: flex;
   justify-content: center;
+}
+
+.fc-toolbar-chunk .fc-col-header-cell {
+  color: #004d2a;
+  font-weight: bold;
+}
+
+.fc-daygrid-day-number {
+  color: #007a50;
+  font-size: 1.1em;
+}
+
+.fc-toolbar-title {
+  color: #004d2a;
+  font-weight: bold;
+}
+
+.fc-col-header-cell a {
+  color: #004d2a;
+  text-decoration: none;
+  font-weight: bold;
 }
 
 /************************************County section*/
