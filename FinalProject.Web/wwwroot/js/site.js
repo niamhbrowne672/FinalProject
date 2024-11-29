@@ -85,3 +85,33 @@ document.querySelectorAll('.like-btn').forEach(button => {
         .catch(error => console.error('Error:', error));
     });
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+    const form = document.getElementById("createReviewForm");
+
+    form.addEventListener("submit", function (e) {
+        e.preventDefault(); // Prevent the default form submission
+
+        const formData = new FormData(form);
+        const url = '/Event/ReviewCreate'; // Update with your controller's action route
+
+        fetch(url, {
+            method: "POST",
+            body: formData,
+            headers: {
+                "X-Requested-With": "XMLHttpRequest",
+            },
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                if (data.success) {
+                    // If success, reload the page to reflect the new review
+                    location.reload();
+                } else {
+                    // Display the error message
+                    alert(data.message || "An error occurred while submitting the review.");
+                }
+            })
+            .catch((error) => console.error("Error:", error));
+    });
+});

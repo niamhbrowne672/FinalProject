@@ -20,8 +20,8 @@ public class EventController : BaseController
     public IActionResult Index(string searchQuery, int page = 1, int size = 20, string order = "id", string direction = "asc")
     {
         var userId = User.Identity.Name;
-        
-        var query = string.IsNullOrWhiteSpace(searchQuery) 
+
+        var query = string.IsNullOrWhiteSpace(searchQuery)
             ? _eventService.GetAllEvents(userId)
             : _eventService.SearchEvents(searchQuery);
 
@@ -194,20 +194,16 @@ public class EventController : BaseController
     public IActionResult ReviewCreate(Review review)
     {
         if (ModelState.IsValid)
-        {                
-            var createdReview = _eventService.CreateReview(review); 
-            if (createdReview != null)
-            {
-                Alert("Review Created Successfully.", AlertType.success);
-                return RedirectToAction(nameof(Details), new { id = review.EventId});
-            }
-            else
-            {
-                Alert("Review could not be created.", AlertType.warning);
-            }
+        {
+            return PartialView("_CreateReviewModal", review);
         }
-        // redisplay the form for editing
-        return View(review);
+        var createdReview = _eventService.CreateReview(review);
+        if (createdReview != null)
+        {
+            return Json(new { success = true });
+        }
+
+        return Json(new { success = false, message = "Review could not be created. Please try again." });
     }
 
     [Authorize(Roles = "admin")]
@@ -220,8 +216,8 @@ public class EventController : BaseController
         {
             Alert("Review does not exist.", AlertType.warning);
             return RedirectToAction(nameof(Index));
-        }     
-        
+        }
+
         // pass review to view for deletion confirmation
         return View(review);
     }
@@ -234,13 +230,13 @@ public class EventController : BaseController
         var deleted = _eventService.DeleteReview(id);
 
         if (deleted)
-            {
-                Alert("Review deleted Successfully.", AlertType.success);
-            }
-            else
-            {
-                Alert("Review could not be deleted.", AlertType.warning);
-            }
+        {
+            Alert("Review deleted Successfully.", AlertType.success);
+        }
+        else
+        {
+            Alert("Review could not be deleted.", AlertType.warning);
+        }
 
         // redirect to the event details view
         return RedirectToAction(nameof(Details), new { Id = eventId });
@@ -256,7 +252,7 @@ public class EventController : BaseController
 
         if (!result.Success)
         {
-            return BadRequest(new { success = false, message = result.Message});
+            return BadRequest(new { success = false, message = result.Message });
         }
 
         return Ok(new

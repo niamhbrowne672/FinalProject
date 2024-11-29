@@ -79,3 +79,4 @@
     <partial name="_Reviews" />
 </div>
 <partial name="_DeleteModal" />
+@await Html.PartialAsync("_CreateReviewModal", new Review { EventId = Model.Id })
