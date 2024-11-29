@@ -3,11 +3,14 @@
 <!-- Title -->
 <div class="mb-3 d-flex border-bottom align-items-center justify-content-between reviews">
     <h4>Comments</h4>
-    <a asp-controller="Post" asp-action="CommentCreate" asp-route-id="@Model.Id" class="btn btn-sm btn-green"
-        aria-label="create comment">
-        <i class="bi bi-chat-square-text"></i>
-        <span class="ms-1 d-none d-md-inline">Add Comment</span>
-    </a>
+    @if (User.Identity.IsAuthenticated)
+    {
+        <a asp-controller="Post" asp-action="CommentCreate" asp-route-id="@Model.Id" class="btn btn-sm btn-green"
+            aria-label="create comment">
+            <i class="bi bi-chat-square-text"></i>
+            <span class="ms-1 d-none d-md-inline">Add Comment</span>
+        </a>
+    }
 </div>
 
 <table class="table table-sm reviews-table">
