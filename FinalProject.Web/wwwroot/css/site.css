@@ -142,7 +142,7 @@ h1, h2, h3, h4, h5 {
   border-color: #aa2733;
 } */
 
-/***************************Footer styling *********************/
+
 /*************************** Footer Styling ***************************/
 /* Footer container */
 footer {
@@ -284,6 +284,14 @@ footer .container {
   }
 }
 
+/*=====================HOME PAGE======================*/
+/*what we do section*/
+.square-img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 40px;
+}
 /*Why choose woof and wag home page*/
 .why-choose-icon {
   color: #0a5732;
