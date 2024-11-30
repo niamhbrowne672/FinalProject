@@ -457,7 +457,10 @@ footer .container {
   visibility: visible;
   opacity: 1;
 }
-
+/*Contact us page*/
+.contact-us {
+  color: #004d2a;
+}
 /*Privacy Page*/
 
 .custom-nav-pills .nav-link {

@@ -6,21 +6,19 @@
 
     <!-- Divider for sections -->
     <hr class="section-divider">
-
-    <h2>Contact Us</h2>
-    <p>If you have any questions, feedback, or concerns, feel free to reach out to us using the form below.</p>
+    <h4 class="text-center">If you have any questions, feedback, or concerns, feel free to <br>reach out to us using the form below.</h4>
 
     <form asp-action="SendMessage" asp-controller="Contact" method="post" class="mt-4">
         <div class="mb-3">
-            <label for="Name" class="form-label">Your Name</label>
+            <label for="Name" class="form-label"><i class="bi bi-person-circle"></i> Your Name:</label>
             <input type="text" id="Name" name="Name" class="form-control" value="@Model?.Name" required maxlength="100" />
         </div>
         <div class="mb-3">
-            <label for="Email" class="form-label">Your Email</label>
+            <label for="Email" class="form-label"><i class="bi bi-envelope-at"></i> Your Email:</label>
             <input type="email" name="Email" id="Email" class="form-control" value="@Model?.Email" required maxlength="100" />
         </div>
         <div class="mb-3">
-            <label for="Message" class="form-label">Your Message</label>
+            <label for="Message" class="form-label"><i class="bi bi-chat-square-text"></i> Your Message:</label>
             <textarea name="Message" id="Message" class="form-control" rows="5" required maxlength="1000">@Model?.Message</textarea>
         </div>
         <button type="submit" class="btn btn-green">Send</button>
