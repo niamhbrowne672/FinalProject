@@ -459,6 +459,24 @@ footer .container {
 }
 
 /*Privacy Page*/
+
+.custom-nav-pills .nav-link {
+  color: #004d2a;
+  background-color: transparent;
+  border-radius: 10px;
+  transition: background-color 0.3 ease; /* smooth hover effect*/
+}
+
+.custom-nav-pills .nav-link:hover {
+  background-color: #3cb371;
+}
+
+.custom-nav-pills .nav-link.active {
+  background-color: #3cb371;
+  color: #004d2a;
+  font-weight: bold;
+}
+
 .scrollspy-example {
   position: relative;
   height: 400px;
