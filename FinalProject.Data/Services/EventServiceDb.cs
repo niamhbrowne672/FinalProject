@@ -184,10 +184,24 @@ public class EventServiceDb : IEventService
     }
 
     //convenience method to align Review creation format used in Event Creation
+    // public Review CreateReview(Review review)
+    // {
+    //     return CreateReview(review.EventId, review.Name, review.Comment, review.Rating);
+    // }
     public Review CreateReview(Review review)
     {
-        return CreateReview(review.EventId, review.Name, review.Comment, review.Rating);
+        var eventToReview = GetEventById(review.EventId);
+        if (eventToReview == null)
+        {
+            return null;
+        }
+
+        review.On = DateTime.Now; // Ensure timestamp is set
+        ctx.Reviews.Add(review); // Add review to context
+        ctx.SaveChanges();       // Save changes to database
+        return review;
     }
+
 
     public Review GetReview(int id)
     {
@@ -241,13 +255,13 @@ public class EventServiceDb : IEventService
         ctx.SaveChanges();
         return true;
     }
-    
+
     public ToggleLikeResult ToggleLike(int eventId, string userId)
     {
         var eventToLike = GetEventById(eventId);
         if (eventToLike == null)
         {
-            return new ToggleLikeResult { Success = false, Message = "Event not found."};
+            return new ToggleLikeResult { Success = false, Message = "Event not found." };
         }
 
         //check if user has already liked the event

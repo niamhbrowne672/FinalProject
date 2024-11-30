@@ -16,7 +16,7 @@ public class Review
     public string Comment { get; set; }
 
     [Required]
-    [Range(0,5)]
+    [Range(1, 5)]
     public int Rating { get; set;}
 
     //review owned by an event

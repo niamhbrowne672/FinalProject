@@ -195,16 +195,21 @@ public class EventController : BaseController
     {
         if (ModelState.IsValid)
         {
-            return PartialView("_CreateReviewModal", review);
+            var createdReview = _eventService.CreateReview(review);
+            if (createdReview != null)
+            {
+                Alert("Review created successfully.", AlertType.success);
+                return RedirectToAction(nameof(Details), new { id = review.EventId });
+            }
+            Alert("There was an issue saving your review. Please try again.", AlertType.danger);
         }
-        var createdReview = _eventService.CreateReview(review);
-        if (createdReview != null)
+        else
         {
-            return Json(new { success = true });
+            Alert("Please correct the errors and try again.", AlertType.warning);
         }
-
-        return Json(new { success = false, message = "Review could not be created. Please try again." });
+        return RedirectToAction(nameof(Details), new { id = review.EventId });
     }
+
 
     [Authorize(Roles = "admin")]
     public IActionResult ReviewDelete(int id)

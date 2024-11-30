@@ -875,16 +875,163 @@ public static class Seeder
 
     private static void SeedCalendars(ICalendarService calendarService)
     {
-        var calendar1 = new Calendar
+        var calendars = new List<Calendar>
+    {
+        new Calendar
         {
-            Title = "Dog Walk in Belfast",
-            Location = "Belfast",
-            Start = new DateTime(2024, 11, 20, 10, 0, 0),
-            End = new DateTime(2024, 11, 20, 12, 0, 0),
-            CountyId = 1,
+            Title = "Hungarian Vizsla Meet-Up",
+            Location = "Belfast City Hall",
+            Start = new DateTime(2024, 11, 20, 14, 0, 0),
+            End = new DateTime(2024, 11, 20, 16, 0, 0),
+            CountyId = 2, // Antrim
             UserId = 1
-        };
-        calendarService.AddCalendar(calendar1);
+        },
+        new Calendar
+        {
+            Title = "Golden Retriever Meet-Up",
+            Location = "Lagan Valley Regional Park, Lisburn",
+            Start = new DateTime(2024, 12, 15, 11, 0, 0),
+            End = new DateTime(2024, 12, 15, 13, 0, 0),
+            CountyId = 5, // Down
+            UserId = 1
+        },
+        new Calendar
+        {
+            Title = "Dachshund Meet-Up",
+            Location = "The Gobbins Cliff Path, Larne",
+            Start = new DateTime(2025, 3, 10, 13, 30, 0),
+            End = new DateTime(2025, 3, 10, 15, 30, 0),
+            CountyId = 2, // Antrim
+            UserId = 1
+        },
+        new Calendar
+        {
+            Title = "Labrador Meet-Up",
+            Location = "Lough Neagh Discovery Centre, Craigavon",
+            Start = new DateTime(2025, 6, 5, 10, 0, 0),
+            End = new DateTime(2025, 6, 5, 12, 0, 0),
+            CountyId = 3, // Armagh
+            UserId = 1
+        },
+        new Calendar
+        {
+            Title = "Shih Tzu Meet-Up",
+            Location = "Armagh Palace Demesne Park, Armagh City",
+            Start = new DateTime(2023, 9, 28, 15, 0, 0),
+            End = new DateTime(2023, 9, 28, 17, 0, 0),
+            CountyId = 3, // Armagh
+            UserId = 1
+        },
+        new Calendar
+        {
+            Title = "Cocker Spaniel Meet-Up",
+            Location = "Fota House Arboretum and Gardens, Cork",
+            Start = new DateTime(2024, 10, 12, 12, 30, 0),
+            End = new DateTime(2024, 10, 12, 14, 30, 0),
+            CountyId = 10, // Cork
+            UserId = 1
+        },
+        new Calendar
+        {
+            Title = "Pug Meet-Up",
+            Location = "Elizabeth Fort, Cork City",
+            Start = new DateTime(2025, 1, 7, 14, 0, 0),
+            End = new DateTime(2025, 1, 7, 16, 0, 0),
+            CountyId = 10, // Cork
+            UserId = 1
+        },
+        new Calendar
+        {
+            Title = "Border Collie Meet-Up",
+            Location = "Phoenix Park, Dublin",
+            Start = new DateTime(2025, 9, 16, 10, 30, 0),
+            End = new DateTime(2025, 9, 16, 12, 30, 0),
+            CountyId = 12, // Dublin
+            UserId = 1
+        },
+        new Calendar
+        {
+            Title = "French Bulldog Meet-Up",
+            Location = "Sandymount Strand, Dublin",
+            Start = new DateTime(2023, 8, 20, 13, 0, 0),
+            End = new DateTime(2023, 8, 20, 15, 0, 0),
+            CountyId = 12, // Dublin
+            UserId = 1
+        },
+        new Calendar
+        {
+            Title = "German Shepherd Meet-Up",
+            Location = "Eyre Square, Galway City",
+            Start = new DateTime(2024, 5, 18, 11, 0, 0),
+            End = new DateTime(2024, 5, 18, 13, 0, 0),
+            CountyId = 13, // Galway
+            UserId = 1
+        },
+        new Calendar
+        {
+            Title = "Beagle Meet-Up",
+            Location = "Connemara National Park, Galway",
+            Start = new DateTime(2025, 2, 23, 10, 0, 0),
+            End = new DateTime(2025, 2, 23, 12, 0, 0),
+            CountyId = 13, // Galway
+            UserId = 1
+        },
+        new Calendar
+        {
+            Title = "Siberian Husky Meet-Up",
+            Location = "Killarney National Park, Kerry",
+            Start = new DateTime(2025, 12, 3, 15, 0, 0),
+            End = new DateTime(2025, 12, 3, 17, 0, 0),
+            CountyId = 14, // Kerry
+            UserId = 1
+        },
+        new Calendar
+        {
+            Title = "Jack Russell Meet-Up",
+            Location = "Inch Beach, Kerry",
+            Start = new DateTime(2023, 7, 14, 11, 30, 0),
+            End = new DateTime(2023, 7, 14, 13, 30, 0),
+            CountyId = 14, // Kerry
+            UserId = 1
+        },
+        new Calendar
+        {
+            Title = "Yorkshire Terrier Meet-Up",
+            Location = "Gortin Glen Forest Park, Omagh",
+            Start = new DateTime(2024, 4, 20, 14, 0, 0),
+            End = new DateTime(2024, 4, 20, 16, 0, 0),
+            CountyId = 1, // Tyrone
+            UserId = 1
+        }
+    };
+
+        // Add the calendars to the service
+        foreach (var calendar in calendars)
+        {
+            calendarService.AddCalendar(calendar);
+        }
+
+        // var calendar1 = new Calendar
+        // {
+        //     Title = "Dog Walk in Belfast",
+        //     Location = "Belfast",
+        //     Start = new DateTime(2024, 11, 20, 10, 0, 0),
+        //     End = new DateTime(2024, 11, 20, 12, 0, 0),
+        //     CountyId = 1,
+        //     UserId = 1
+        // };
+        // calendarService.AddCalendar(calendar1);
+
+        // var calendar2 = new Calendar
+        // {
+        //     Title = "Dog Walk in Belfast",
+        //     Location = "Belfast",
+        //     Start = new DateTime(2024, 11, 20, 10, 0, 0),
+        //     End = new DateTime(2024, 11, 20, 12, 0, 0),
+        //     CountyId = 2,
+        //     UserId = 1
+        // };
+        // calendarService.AddCalendar(calendar2);
     }
 }
 
