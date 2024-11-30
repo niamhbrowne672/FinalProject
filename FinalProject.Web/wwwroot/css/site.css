@@ -284,6 +284,8 @@ footer .container {
   }
 }
 
+
+
 /*=====================HOME PAGE======================*/
 /*what we do section*/
 .square-img {
@@ -332,7 +334,8 @@ footer .container {
 }
 
 .review-card img {
-  height: 180px;
+  width: 100%;
+  height: 170px;
   object-fit: cover;
 }
 
@@ -340,6 +343,7 @@ footer .container {
   display: flex;
   flex-direction: column;
   flex-grow: 1;
+  color: #004d2a;
 }
 
 .review-name {
@@ -353,7 +357,7 @@ footer .container {
 }
 
 .user-icon {
-  color: black;
+  color: #004d2a;
 }
 
 /*Dog Benefits section Home page*/
@@ -580,6 +584,18 @@ footer .container {
   background-color: rgba(10, 87, 50, 0.05);
   padding: 15px;
   border-radius: 8px;
+}
+
+.review-card-about img {
+  width: 100%;
+  height: 170px;
+  object-fit: cover;
+}
+
+.review-card-about {
+  height: 400px;
+  display: flex;
+  flex-direction: column;
 }
 
 /*********************** Recommendations Section*/
