@@ -115,3 +115,18 @@ document.addEventListener("DOMContentLoaded", function () {
             .catch((error) => console.error("Error:", error));
     });
 });
+
+//products category filter
+document.getElementById('categoryFilter').addEventListener('change', function() {
+    const selectedCategory = this.value;
+    const products = document.querySelectorAll('.product-card');
+
+    products.forEach(product => {
+        const category = product.getAttribute('data-category');
+        if (selectedCategory == 'all' || category == selectedCategory) {
+            product.classList.remove('hidden');
+        } else {
+            product.classList.add('hidden');
+        }
+    });
+});
