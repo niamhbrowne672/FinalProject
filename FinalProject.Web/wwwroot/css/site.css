@@ -144,147 +144,124 @@ h1, h2, h3, h4, h5 {
 
 
 /*************************** Footer Styling ***************************/
+
 /* Footer container */
 footer {
   background-color: #004d2a;
   color: white;
-  padding: 30px 15px;
+  padding: 20px 15px;
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
+  flex-direction: column;
   gap: 20px;
 }
 
-/* Footer left section */
+/* Main Footer Content */
+.footer-container {
+  display: flex;
+  justify-content: space-between; /* Align sections horizontally */
+  align-items: center; /* Center items vertically */
+  flex-wrap: wrap; /* Allow wrapping on smaller screens */
+  gap: 20px;
+  padding: 0 30px; /* Add padding on the left and right sides */
+}
+
+/* Footer Left Section (Logo and Social Media) */
 .footer-left {
   flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   text-align: center;
 }
 
+/* Logo and Slogan */
 .footer-logo img {
-  width: 150px;
-  margin-bottom: 10px;
+  width: 120px;
+  margin-bottom: 8px;
 }
 
 .footer-logo p {
-  font-size: 14px;
+  font-size: 12px;
   font-style: italic;
-  margin: 10px 0;
+  margin: 8px 0;
   color: #ffffff;
 }
 
 /* Social Media Links */
 .social-media-links {
   display: flex;
-  gap: 20px; /* Space between icons */
-  margin: 15px 0;
+  justify-content: center;
+  gap: 15px;
+  margin: 12px 0;
 }
 
 .social-media-links a {
-  color: white;
-  font-size: 24px; /* Bigger icons for better visibility */
+  color: white !important;
+  font-size: 24px;
   text-decoration: none;
+  transition: color 0.3s ease;
 }
 
 .social-media-links a:hover {
-  color: #dddddd;
+  color: #3cb371 !important;
 }
 
-/* Store Links */
-.footer-store-links {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin-top: 15px;
-}
-
-.footer-store-links img {
-  width: 140px;
-}
-
-/* Footer Main Links Section */
+/* Footer Sections (Left and Right Links) */
 .footer-section {
-  flex: 2;
   display: flex;
   gap: 40px; /* Space between columns */
-  flex-wrap: wrap;
-  justify-content: space-around;
+  flex-wrap: wrap; /* Wrap content on smaller screens */
+  justify-content: center; /* Center the text in each section */
+  text-align: center; /* Ensure all text in sections is centered */
+  padding: 15px 15px; /* Add padding around each section */
 }
 
 .footer-column {
   display: flex;
   flex-direction: column;
-  text-align: center;
+  align-items: center; /* Center align the content */
 }
 
 .footer-column h3 {
-  font-size: 16px;
-  margin-bottom: 10px;
+  font-size: 14px;
+  margin-bottom: 8px;
+  color: #3cb371;
 }
 
 .footer-column a {
   color: white;
   text-decoration: none;
-  font-size: 14px;
-  margin-bottom: 5px;
+  font-size: 13px;
+  margin-bottom: 4px;
+  font-weight: bold;
+  transition: color 0.3s ease, text-shadow 0.3s ease;
 }
 
 .footer-column a:hover {
-  text-decoration: underline;
-}
-
-/* Footer Recommendations and Events Sections */
-.footer-recommendations, .footer-events {
-  flex: 1;
-  text-align: center;
-}
-
-.footer-recommendations h3, .footer-events h3 {
-  font-size: 16px;
-  margin-bottom: 10px;
-}
-
-.footer-recommendations a, .footer-events a {
-  color: white;
-  text-decoration: none;
-  font-size: 14px;
-  margin: 5px 0;
-}
-
-.footer-recommendations a:hover, .footer-events a:hover {
-  text-decoration: underline;
+  color: #3cb371;
 }
 
 /* Footer Bottom Section */
 footer .container {
   text-align: center;
-  margin-top: 20px;
-  font-size: 14px;
+  font-size: 12px;
   color: #dddddd;
+  padding: 10px 15px; /* Add padding for bottom section */
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
-  footer {
-    flex-direction: column;
+  .footer-container {
+    flex-direction: column; /* Stack sections vertically */
     align-items: center;
-    gap: 30px;
   }
 
   .footer-section {
-    flex-direction: column;
-    gap: 20px;
+    justify-content: center;
   }
 
-  .footer-left {
+  .footer-column {
     align-items: center;
+    text-align: center;
   }
 }
-
-
 
 /*=====================HOME PAGE======================*/
 /*what we do section*/
