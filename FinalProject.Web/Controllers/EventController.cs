@@ -59,12 +59,33 @@ public class EventController : BaseController
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public IActionResult Create(Event e)
+    public IActionResult Create(Event e, IFormFile EventImage)
     {
         //validate title as unique
         if (_eventService.GetEventByTitle(e.Title) != null)
         {
             ModelState.AddModelError(nameof(e.Title), "Event is already in the database.");
+        }
+
+        //handle image upload
+        if (EventImage != null && EventImage.Length > 0)
+        {
+            var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/uploads");
+            if (!Directory.Exists(uploadsFolder))
+            {
+                Directory.CreateDirectory(uploadsFolder);
+            }
+
+            var uniqueFileName = Guid.NewGuid().ToString() + Path.GetExtension(EventImage.FileName);
+            var filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+            using (var fileStream = new FileStream(filePath, FileMode.Create))
+            {
+                EventImage.CopyTo(fileStream);
+            }
+            e.ImageUrl = $"/uploads/{uniqueFileName}";
+
+            Console.WriteLine($"ImageUrl assigned: {e.ImageUrl}");
         }
 
         //complete POST action to add event
@@ -98,9 +119,8 @@ public class EventController : BaseController
     [HttpPost]
     [ValidateAntiForgeryToken]
     [Authorize(Roles = "admin")]
-    public IActionResult Edit(int id, Event updatedEvent)
+    public IActionResult Edit(int id, Event updatedEvent, IFormFile uploadedImage)
     {
-        //check if the provided even ID matches the ID of the updated post
         if (id != updatedEvent.Id)
         {
             return NotFound();
@@ -110,32 +130,57 @@ public class EventController : BaseController
         {
             var existingEvent = _eventService.GetEventById(id);
 
-            //check if the event exists in the database
             if (existingEvent == null)
             {
                 Alert($"Event {id} not found.", AlertType.warning);
                 return RedirectToAction(nameof(Index));
             }
 
-            //update the existing event entity with the new values
+            // Handle the uploaded image
+            if (uploadedImage != null && uploadedImage.Length > 0)
+            {
+                // Define a folder path for image uploads
+                var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/uploads");
+
+                // Ensure the uploads folder exists
+                if (!Directory.Exists(uploadsFolder))
+                {
+                    Directory.CreateDirectory(uploadsFolder);
+                }
+
+                // Generate a unique file name
+                var uniqueFileName = Guid.NewGuid().ToString() + Path.GetExtension(uploadedImage.FileName);
+                var filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+                // Save the image to the server
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    uploadedImage.CopyTo(fileStream);
+                }
+
+                // Update the image URL
+                existingEvent.ImageUrl = $"/uploads/{uniqueFileName}";
+            }
+
+            // Update other properties
             existingEvent.Title = updatedEvent.Title;
             existingEvent.EventTime = updatedEvent.EventTime;
             existingEvent.Location = updatedEvent.Location;
             existingEvent.Description = updatedEvent.Description;
-            existingEvent.ImageUrl = updatedEvent.ImageUrl;
 
-            //save the changes to the database
+            // Save changes
             var savedEvent = _eventService.UpdateEvent(existingEvent);
 
             if (savedEvent != null)
             {
-                Alert($"Event updated.", AlertType.success);
+                Alert("Event updated successfully.", AlertType.success);
                 return RedirectToAction(nameof(Details), new { id = savedEvent.Id });
             }
         }
-        //if ModelState is not valid or event update failed, redisplay the form for editing
+
         return View(updatedEvent);
     }
+
 
     [Authorize(Roles = "admin")]
     public IActionResult Delete(int id)

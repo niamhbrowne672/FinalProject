@@ -13,7 +13,7 @@ public class Event
     [Required]
     public string Location { get; set; }  // I can add Google Maps URL here later
     public string Description { get; set; }
-    public string ImageUrl { get; set; }  // URL for the image
+    public string ImageUrl { get; set; } 
     public int? UserId { get; set; }  // Foreign key for user who created the event
     public User User { get; set; }
     public string Breed { get; set; }

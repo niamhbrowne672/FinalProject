@@ -3,7 +3,7 @@
 
 
 <!-- card is only visible when authorised -->
-<div asp-condition="@(User.Identity.IsAuthenticated)" class="card">
+@* <div asp-condition="@(User.Identity.IsAuthenticated)" class="card">
     <div class="card-body">
         <h4 class="card-title">Authorized</h4>
         <p class="card-text">This content is only visible if you are <span class="text-success">Authorized.</span></p>
@@ -20,7 +20,7 @@
         <p asp-condition=@User.HasOneOfRoles("admin,manager")>This content is visible if you have the <span
                 class="text-danger">admin or manager</span> roles</p>
     </div>
-</div>
+</div> *@
 
 <!-- divider for sections-->
 <hr class="section-divider">
