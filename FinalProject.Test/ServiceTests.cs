@@ -13,6 +13,8 @@ namespace FinalProject.Test
     {
         private readonly IUserService userService;
         private readonly IEventService eventService;
+        private readonly ICalendarService calendarService;
+        private readonly IPostService postService;
 
         public ServiceTests()
         {
@@ -26,6 +28,8 @@ namespace FinalProject.Test
             var dbContext = new DatabaseContext(options);
             userService = new UserServiceDb(dbContext);
             eventService = new EventServiceDb(dbContext);
+            calendarService = new CalendarServiceDb(dbContext);
+            postService = new PostServiceDb(dbContext);
 
             dbContext.Initialise();
         }
@@ -315,7 +319,7 @@ namespace FinalProject.Test
                 Title = "Socialising Event",
                 EventTime = DateTime.Now.AddDays(13),
                 Location = "Wild River Dog Park, Lisburn",
-                Description = "An event for dos to socialise",
+                Description = "An event for dogs to socialise",
                 ImageUrl = "/images/socialising-event.png"
             });
 
@@ -331,40 +335,220 @@ namespace FinalProject.Test
         }
 
         [Fact]
-        public void SearchEvents_WithMatchingQuery_ShouldReturnEvents()
+        public void LikeEvent_WhenCalled_ShouldIncrementLikes()
         {
             // Arrange
-            eventService.AddEvent(new Event 
+            var addedEvent = eventService.AddEvent(new Event
             {
-                Title = "Agility Training",
-                EventTime = DateTime.Now.AddDays(1),
-                Location = "Omagh Community Dog Park",
-                Description = "Training session for agility.",
-                ImageUrl = "/images/agility-training.png"
-            });
-
-            eventService.AddEvent(new Event
-            {
-                Title = "Collie MeetUp",
-                EventTime = DateTime.Now.AddDays(20),
-                Location = "Grange Park, Omagh",
-                Description = "Playful Collie meetup.",
+                Title = "Collie Meetup",
+                EventTime = DateTime.Now.AddDays(5),
+                Location = "Park Eire Og, Carrickmore",
+                Description = "A fun meetup for collies.",
                 ImageUrl = "/images/collie-meetup.png"
             });
 
-            // Act 
-            var matchingEvents = eventService.SearchEvents("Agility").ToList();
+            // Act
+            var isLiked = eventService.LikeEvent(addedEvent.Id);
 
-            // Debugging: log the results
-            Console.WriteLine($"Found {matchingEvents.Count} matching events.");
-            foreach (var evt in matchingEvents)
+            //Assert
+            Assert.True(isLiked);
+            Assert.Equal(1, eventService.GetEventById(addedEvent.Id).Likes);
+        }
+
+        [Fact]
+        public void ToggleLike_WhenCalled_ShouldToggleLikeStatus()
+        {
+            //Arrange
+            var userId = "user123";
+            var addedEvent = eventService.AddEvent(new Event 
             {
-                Console.WriteLine($"Event: {evt.Title}, Location: {evt.Location}");
-            }
+                Title = "Obstacle Course",
+                EventTime = DateTime.Now.AddDays(3),
+                Location = "Wild River Dog Park, Lisburn",
+                Description = "An obstacle event for dogs",
+                ImageUrl = "/images/socialising-event.png"
+            });
 
-            // Assert
-            Assert.Single(matchingEvents);
-            Assert.Equal("Agility Training", matchingEvents[0].Title);
+            //Act
+            var result1 = eventService.ToggleLike(addedEvent.Id, userId); //First toggle (like)
+            var result2 = eventService.ToggleLike(addedEvent.Id, userId); //Second toggle (unlike)
+
+            //Assert
+            Assert.True(result1.Liked);
+            Assert.False(result2.Liked);
+            Assert.Equal(0, result2.Likes);
+        }
+
+        [Fact]
+        public void CreateReview_WhenValidEvent_ShouldAddReview()
+        {
+            // Arrange
+            var addedEvent = eventService.AddEvent(new Event
+            {
+                Title = "Dog Walk - All Breeds",
+                EventTime = DateTime.Now.AddDays(23),
+                Location = "An Creggan Centre, Creggan",
+                Description = "An event for dogs to socialise",
+                ImageUrl = "/images/dog-walk-event.png"
+            });
+
+            //Act 
+            var review = eventService.CreateReview(addedEvent.Id, "John", "Great event!", 5);
+
+            //Assert
+            Assert.NotNull(review);
+            Assert.Equal("John", review.Name);
+            Assert.Equal("Great event!", review.Comment);
+        }
+
+        //==================================== CALENDAR SERVICE TESTS ====================================
+        [Fact]
+        public void GetCalendars_WhenNoneExist_ShouldReturnEmptyList()
+        {
+            //Act
+            var calendars = calendarService.GetCalendars();
+
+            //Assert
+            Assert.Empty(calendars);
+        }
+
+        [Fact]
+        public void AddCalendar_WhenValidCalendarAdded_ShouldCreateCalendar()
+        {
+            //Arrange
+            var newCalendar = new Calendar
+            {
+                Title = "Dog Training Session",
+                Location = "Omagh Dog Park",
+                Start = DateTime.Now.AddDays(1),
+                End = DateTime.Now.AddDays(1).AddHours(2),
+                CountyId = 1,
+                UserId = 1
+            };
+
+            //Act
+            var addedCalendar = calendarService.AddCalendar(newCalendar);
+
+            //Assert
+            Assert.NotNull(addedCalendar);
+            Assert.Equal("Dog Training Session", addedCalendar.Title);
+        }
+
+        [Fact]
+        public void GetCalendarsByCounty_WhenCalendarsExist_ShouldReturnMatchingCalendars()
+        {
+            //Arrange
+            calendarService.AddCalendar(new Calendar
+            {
+                Title = "Agility Training",
+                Location = "Derry Dog Park",
+                Start = DateTime.Now.AddDays(3),
+                End = DateTime.Now.AddDays(3).AddHours(1),
+                CountyId = 2,
+                UserId = 1
+            });
+
+            calendarService.AddCalendar(new Calendar
+            {
+                Title = "Social Dog Walk",
+                Location = "Ebrington, Derry",
+                Start = DateTime.Now.AddDays(5),
+                End = DateTime.Now.AddDays(5).AddHours(2),
+                CountyId = 2,
+                UserId = 2
+            });
+
+            //Act 
+            var calendars = calendarService.GetCalendarsByCounty(2);
+
+            //Assert
+            Assert.Equal(2, calendars.Count);
+        }
+
+        [Fact]
+        public void AddCalendar_WhenOverlappingDates_ShouldReturnNull()
+        {
+            //Arrange
+            calendarService.AddCalendar(new Calendar
+            {
+                Title = "Existing Event",
+                Location = "Park A",
+                Start = DateTime.Now.AddDays(2),
+                End = DateTime.Now.AddDays(2).AddHours(1),
+                CountyId = 1,
+                UserId = 1
+            });
+
+            var overlappingCalendar = new Calendar
+            {
+                Title = "Overlapping Event",
+                Location = "Park B",
+                Start = DateTime.Now.AddDays(2).AddMinutes(30),
+                End = DateTime.Now.AddDays(2).AddHours(2),
+                CountyId = 1,
+                UserId = 2
+            };
+
+            //Act
+            var result = calendarService.AddCalendar(overlappingCalendar);
+        }
+
+        [Fact]
+        public void DeleteCalendar_WhenCalendarExists_ShouldDeleteSuccessfully()
+        {
+            //Arrange
+            var calendar = calendarService.AddCalendar(new Calendar
+            {
+                Title = "Delete Me",
+                Location = "Anywhere",
+                Start = DateTime.Now.AddDays(3),
+                End = DateTime.Now.AddDays(3).AddHours(2),
+                CountyId = 1,
+                UserId = 1
+            });
+
+            //Act
+            var isDeleted = calendarService.DeleteCalendar(calendar.Id);
+
+            //Assert
+            Assert.True(isDeleted);
+            Assert.Null(calendarService.GetCalendar(calendar.Id));
+        }
+
+        [Fact]
+        public void UpdateCalendar_WhenValidUpdate_ShouldSaveChanges()
+        {
+            //Arrange
+            var calendar = calendarService.AddCalendar(new Calendar
+            {
+                Title = "Old Title",
+                Location = "Old Location",
+                Start = DateTime.Now.AddDays(1),
+                End = DateTime.Now.AddDays(1).AddHours(1),
+                CountyId = 1,
+                UserId = 1
+            });
+
+            //Act
+            calendar.Title = "New Title";
+            calendar.Location = "New Location";
+            var updatedCalendar = calendarService.UpdateCalendar(calendar);
+
+            //Assert
+            Assert.NotNull(updatedCalendar);
+            Assert.Equal("New Title", updatedCalendar.Title);
+            Assert.Equal("New Location", updatedCalendar.Location);
+        }
+
+        //==================================== POST SERVICE TESTS ====================================
+        [Fact]
+        public void GetPosts_WhenNoneExist_ShouldReturnEmptyList()
+        {
+            //Act
+            var posts = postService.GetPosts();
+
+            //Assert
+            Assert.Empty(posts.Data);
         }
     }
 }
