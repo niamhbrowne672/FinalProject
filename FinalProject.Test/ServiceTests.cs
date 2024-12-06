@@ -6,6 +6,7 @@ using FinalProject.Data.Services;
 using Microsoft.EntityFrameworkCore;
 using FinalProject.Data.Repositories;
 using FinalProject.Data.Security;
+using System.Runtime.CompilerServices;
 
 namespace FinalProject.Test
 {
@@ -19,7 +20,7 @@ namespace FinalProject.Test
         public ServiceTests()
         {
             // configure the data context options to use sqlite for testing
-            var options = DatabaseContext.OptionsBuilder                            
+            var options = DatabaseContext.OptionsBuilder
                             .UseSqlite("Filename=test.db")
                             //.LogTo(Console.WriteLine)
                             .Options;
@@ -35,7 +36,7 @@ namespace FinalProject.Test
         }
 
         //==================================== USER SERVICE TESTS ====================================
-         [Fact]
+        [Fact]
         public void GetUsers_WhenNoneExist_ShouldReturnNone()
         {
             // act
@@ -44,7 +45,7 @@ namespace FinalProject.Test
             // assert
             Assert.Empty(pagedUsers.Data);
         }
-        
+
         [Fact]
         public void AddUser_When2ValidUsersAdded_ShouldCreate2Users()
         {
@@ -68,7 +69,7 @@ namespace FinalProject.Test
             userService.AddUser("guest", "guest@mail.com", "guest", Role.guest, "Beagle", "/images/guest.png");
 
             // return first page with 2 users per page
-            var pagedUsers = userService.GetUsers(1,2);
+            var pagedUsers = userService.GetUsers(1, 2);
 
             // assert
             Assert.Equal(2, pagedUsers.TotalPages);
@@ -82,7 +83,7 @@ namespace FinalProject.Test
             userService.AddUser("manager", "manager@mail.com", "manager", Role.manager, "Labrador", "/images/manager.png");
             userService.AddUser("guest", "guest@mail.com", "guest", Role.guest, "Beagle", "/images/guest.png");
 
-            var pagedUsers = userService.GetUsers(1,2);
+            var pagedUsers = userService.GetUsers(1, 2);
 
             // assert
             Assert.Equal(2, pagedUsers.Data.Count);
@@ -92,7 +93,7 @@ namespace FinalProject.Test
         public void GetPage1_When0UsersExist_ShouldReturn0Pages()
         {
             // act
-            var pagedUsers = userService.GetUsers(1,2);
+            var pagedUsers = userService.GetUsers(1, 2);
 
             // assert
             Assert.Equal(0, pagedUsers.TotalPages);
@@ -105,10 +106,10 @@ namespace FinalProject.Test
         {
             // arrange
             var user = userService.AddUser("admin", "admin@mail.com", "admin", Role.admin, "Golden Retriever", "/images/admin.png");
-            
+
             // act
             user.Name = "administrator";
-            user.Email = "admin@mail.com";            
+            user.Email = "admin@mail.com";
             var updatedUser = userService.UpdateUser(user);
 
             // assert
@@ -121,13 +122,13 @@ namespace FinalProject.Test
         {
             // arrange
             userService.AddUser("admin", "admin@mail.com", "admin", Role.admin, "Golden Retriever", "/images/admin.png");
-            
+
             // act            
-            var user = userService.Authenticate("admin@mail.com","admin");
+            var user = userService.Authenticate("admin@mail.com", "admin");
 
             // assert
             Assert.NotNull(user);
-           
+
         }
 
         [Fact]
@@ -137,11 +138,11 @@ namespace FinalProject.Test
             userService.AddUser("admin", "admin@mail.com", "admin", Role.admin, "Golden Retriever", "/images/admin.png");
 
             // act      
-            var user = userService.Authenticate("admin@mail.com","xxx");
+            var user = userService.Authenticate("admin@mail.com", "xxx");
 
             // assert
             Assert.Null(user);
-           
+
         }
 
         [Fact]
@@ -155,20 +156,20 @@ namespace FinalProject.Test
 
             // assert
             Assert.NotNull(token);
-           
+
         }
 
         [Fact]
         public void ForgotPasswordRequest_ForInValidUser_ShouldReturnNull()
         {
             // arrange
-          
+
             // act      
             var token = userService.ForgotPassword("admin@mail.com");
 
             // assert
             Assert.Null(token);
-           
+
         }
 
         [Fact]
@@ -177,13 +178,13 @@ namespace FinalProject.Test
             // arrange
             userService.AddUser("admin", "admin@mail.com", "admin", Role.admin, "Golden Retriever", "/images/admin.png");
             var token = userService.ForgotPassword("admin@mail.com");
-            
+
             // act      
             var user = userService.ResetPassword("admin@mail.com", token, "password");
-        
+
             // assert
             Assert.NotNull(user);
-            Assert.True(Hasher.ValidateHash(user.Password, "password"));          
+            Assert.True(Hasher.ValidateHash(user.Password, "password"));
         }
 
         [Fact]
@@ -193,34 +194,34 @@ namespace FinalProject.Test
             userService.AddUser("admin", "admin@mail.com", "admin", Role.admin, "Golden Retriever", "/images/admin.png");
             var expiredToken = userService.ForgotPassword("admin@mail.com");
             userService.ForgotPassword("admin@mail.com");
-            
+
             // act      
             var user = userService.ResetPassword("admin@mail.com", expiredToken, "password");
-        
+
             // assert
-            Assert.Null(user);  
+            Assert.Null(user);
         }
 
         [Fact]
         public void ResetPasswordRequest_WithInValidUserAndValidToken_ShouldReturnNull()
         {
             // arrange
-            userService.AddUser("admin", "admin@mail.com", "admin", Role.admin, "Golden Retriever", "/images/admin.png");          
+            userService.AddUser("admin", "admin@mail.com", "admin", Role.admin, "Golden Retriever", "/images/admin.png");
             var token = userService.ForgotPassword("admin@mail.com");
-            
+
             // act      
             var user = userService.ResetPassword("unknown@mail.com", token, "password");
-        
+
             // assert
-            Assert.Null(user);  
+            Assert.Null(user);
         }
 
         [Fact]
         public void ResetPasswordRequests_WhenAllCompleted_ShouldExpireAllTokens()
         {
             // arrange
-            userService.AddUser("admin", "admin@mail.com", "admin", Role.admin, "Golden Retriever", "/images/admin.png");       
-            userService.AddUser("guest", "guest@mail.com", "guest", Role.guest, "Beagle", "/images/guest.png");          
+            userService.AddUser("admin", "admin@mail.com", "admin", Role.admin, "Golden Retriever", "/images/admin.png");
+            userService.AddUser("guest", "guest@mail.com", "guest", Role.guest, "Beagle", "/images/guest.png");
 
             // create token and reset password - token then invalidated
             var token1 = userService.ForgotPassword("admin@mail.com");
@@ -229,10 +230,10 @@ namespace FinalProject.Test
             // create token and reset password - token then invalidated
             var token2 = userService.ForgotPassword("guest@mail.com");
             userService.ResetPassword("guest@mail.com", token2, "password");
-         
+
             // act  
             // retrieve valid tokens 
-            var tokens = userService.GetValidPasswordResetTokens();   
+            var tokens = userService.GetValidPasswordResetTokens();
 
             // assert
             Assert.Empty(tokens);
@@ -274,7 +275,7 @@ namespace FinalProject.Test
         public void GetEventsById_WhenEventExists_ShouldReturnEvent()
         {
             // Arrange
-            var addedEvent = eventService.AddEvent(new Event 
+            var addedEvent = eventService.AddEvent(new Event
             {
                 Title = "Puppy Training",
                 EventTime = DateTime.Now.AddDays(10),
@@ -295,7 +296,8 @@ namespace FinalProject.Test
         public void DeleteEvent_WhenEventExists_ShouldRemoveEvent()
         {
             // Arrange
-            var addedEvent = eventService.AddEvent(new Event {
+            var addedEvent = eventService.AddEvent(new Event
+            {
                 Title = "Obedience Class",
                 EventTime = DateTime.Now.AddDays(7),
                 Location = "Carrickmore Youth Club",
@@ -315,7 +317,8 @@ namespace FinalProject.Test
         public void UpdateEvent_WhenEventExists_ShouldUpdateDetails()
         {
             // Arrange
-            var addedEvent = eventService.AddEvent(new Event {
+            var addedEvent = eventService.AddEvent(new Event
+            {
                 Title = "Socialising Event",
                 EventTime = DateTime.Now.AddDays(13),
                 Location = "Wild River Dog Park, Lisburn",
@@ -360,7 +363,7 @@ namespace FinalProject.Test
         {
             //Arrange
             var userId = "user123";
-            var addedEvent = eventService.AddEvent(new Event 
+            var addedEvent = eventService.AddEvent(new Event
             {
                 Title = "Obstacle Course",
                 EventTime = DateTime.Now.AddDays(3),
@@ -549,6 +552,115 @@ namespace FinalProject.Test
 
             //Assert
             Assert.Empty(posts.Data);
+        }
+
+        [Fact]
+        public void AddPost_WhenValidPostAdded_ShouldCreatePost()
+        {
+            //Arrange
+            var newPost = new Post
+            {
+                Title = "Dog Training Tips",
+                Content = "Helpful tips for training your dog.",
+                PostedOn = DateTime.Now,
+                CreatedBy = "admin",
+                ImagePath = "/images/dog-training.png"
+            };
+
+            //Act
+            var addedPost = postService.AddPost(newPost);
+
+            //Assert
+            Assert.NotNull(addedPost);
+            Assert.Equal("Dog Training Tips", addedPost.Title);
+        }
+
+        [Fact]
+        public void GetPostsById_WhenPostExists_ShouldReturnPost()
+        {
+            //Arrange
+            var addedPost = postService.AddPost(new Post
+            {
+                Title = "Adoption Stories",
+                Content = "Heartwarming stories about do adoption.",
+                PostedOn = DateTime.Now,
+                CreatedBy = "user1",
+                ImagePath = "/images/adoption-stories.png"
+            });
+
+            //Act
+            var retrievedPost = postService.GetPostById(addedPost.Id);
+
+            //Assert
+            Assert.NotNull(retrievedPost);
+            Assert.Equal("Adoption Stories", retrievedPost.Title);
+        }
+
+        [Fact]
+        public void DeletePost_WhenPostExists_ShouldRemovePost()
+        {
+            //Arrange
+            var addedPost = postService.AddPost(new Post
+            {
+                Title = "Dog Parks in Belfast",
+                Content = "A guide to the best dog parks in Belfast.",
+                PostedOn = DateTime.Now,
+                CreatedBy = "admin",
+                ImagePath = "/images/dog-parks.png"
+            });
+
+            //Act
+            var isDeleted = postService.DeletePost(addedPost.Id);
+
+            //Assert
+            Assert.True(isDeleted);
+            Assert.Null(postService.GetPostById(addedPost.Id));
+        }
+
+        [Fact]
+        public void UpdatePost_WhenPostExists_ShouldUpdateDetails()
+        {
+            //Arrange
+            var addedPost = postService.AddPost(new Post
+            {
+                Title = "Dog Health",
+                Content = "Tips for keeping your dog healthy.",
+                PostedOn = DateTime.Now,
+                CreatedBy = "admin",
+                ImagePath = "/images/dog-health.png"
+            });
+
+            //Act
+            addedPost.Title = "Dog Health Guide";
+            addedPost.Content = "Comprehensive guide for dog health.";
+            var updatedPost = postService.UpdatePost(addedPost);
+
+            //Assert
+            Assert.NotNull(updatedPost);
+            Assert.Equal("Dog Health Guide", updatedPost.Title);
+            Assert.Equal("Comprehensive guide for dog health.", updatedPost.Content);
+        }
+
+        [Fact]
+        public void CreateComment_WhenValidPost_ShouldAddComment()
+        {
+            //Arrange
+            var addedPost = postService.AddPost(new Post
+            {
+                Title = "Dog Nutrition",
+                Content = "Best foods for dogs.",
+                PostedOn = DateTime.Now,
+                CreatedBy = "admin",
+                ImagePath = "/images/dog-nutrition.png"
+            });
+
+            //Act
+            var comment = postService.CreateComment(addedPost.Id, "Great article!", "user123");
+
+            //Assert
+            Assert.NotNull(comment);
+            Assert.Equal("Great article!", comment.Comments);
+            Assert.Equal("user123", comment.CreatedBy);
         }
     }
 }
