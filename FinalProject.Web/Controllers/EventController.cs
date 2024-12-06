@@ -118,7 +118,7 @@ public class EventController : BaseController
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    [Authorize(Roles = "admin")]
+    [Authorize(Roles = "admin, organiser")]
     public IActionResult Edit(int id, Event updatedEvent, IFormFile uploadedImage)
     {
         if (id != updatedEvent.Id)

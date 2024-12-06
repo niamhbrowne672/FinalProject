@@ -134,6 +134,7 @@ public class UserController : BaseController
             Id = user.Id,
             Name = user.Name,
             Email = user.Email,
+            DogBreed = user.DogBreed,
             Role = user.Role
         };
         return View(profileViewModel);
@@ -160,7 +161,7 @@ public class UserController : BaseController
     [Authorize]
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> UpdateProfile([Bind("Id,Name,Email")] ProfileViewModel m)
+    public async Task<IActionResult> UpdateProfile([Bind("Id,Name,Email,DogBreed,ProfileImage")] ProfileViewModel m)
     {
         var user = _svc.GetUser(m.Id);
         // check if form is invalid and redisplay
@@ -172,6 +173,8 @@ public class UserController : BaseController
         // update user details and call service
         user.Name = m.Name;
         user.Email = m.Email;
+        user.DogBreed = m.DogBreed;
+        user.ProfileImageUrl = m.ProfileImageUrl;
         var updated = _svc.UpdateUser(user);
 
         // check if error updating service
@@ -200,6 +203,8 @@ public class UserController : BaseController
             Id = user.Id,
             Name = user.Name,
             Email = user.Email,
+            DogBreed = user.DogBreed,
+            ProfileImageUrl = user.ProfileImageUrl,
             Role = user.Role
         };
         return View(profileViewModel);
@@ -209,7 +214,7 @@ public class UserController : BaseController
     [Authorize(Roles = "admin")]
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public IActionResult Update([Bind("Id,Name,Email,Role")] ProfileViewModel m)
+    public IActionResult Update([Bind("Id,Name,Email,DogBreed,ProfileImageUrl,Role")] ProfileViewModel m)
     {
         var user = _svc.GetUser(m.Id);
         // check if form is invalid and redisplay
@@ -218,10 +223,33 @@ public class UserController : BaseController
             return View(m);
         }
 
+        //handle the uploaded profile image 
+        if (m.ProfileImage != null && m.ProfileImage.Length > 0)
+        {
+            var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/uploads");
+
+            if (!Directory.Exists(uploadsFolder))
+            {
+                Directory.CreateDirectory(uploadsFolder);
+            }
+
+            var uniqueFileName = Guid.NewGuid().ToString() + Path.GetExtension(m.ProfileImage.FileName);
+            var filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+            using (var stream = new FileStream(filePath, FileMode.Create))
+            {
+                m.ProfileImage.CopyTo(stream);
+            }
+
+            user.ProfileImageUrl = $"/uploads/{uniqueFileName}";
+        }
+
         // update user details and call service
         user.Name = m.Name;
         user.Email = m.Email;
+        user.DogBreed = m.DogBreed;
         user.Role = m.Role;
+        
         var updated = _svc.UpdateUser(user);
 
         // check if error updating service

@@ -44,7 +44,7 @@ public class DatabaseContext : DbContext
         modelBuilder.Entity<Calendar>().Property(c => c.Id).ValueGeneratedOnAdd();
     }
 
-    //public static DbContextOptionsBuilder<DatabaseContext> OptionsBuilder => new();
+    public static DbContextOptionsBuilder<DatabaseContext> OptionsBuilder => new();
 
     // Convenience method to recreate the database thus ensuring the new database takes 
     // account of any changes to Models or DatabaseContext. ONLY to be used in development

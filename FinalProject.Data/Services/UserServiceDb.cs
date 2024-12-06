@@ -115,6 +115,8 @@ namespace FinalProject.Data.Services
             // update the details of the User retrieved and save
             User.Name = updated.Name;
             User.Email = updated.Email;
+            User.DogBreed = updated.DogBreed;
+            User.ProfileImageUrl = updated.ProfileImageUrl ?? User.ProfileImageUrl;
             User.Password = Hasher.CalculateHash(updated.Password);  
             User.Role = updated.Role; 
 

@@ -11,7 +11,8 @@ namespace FinalProject.Test
 {
     public class ServiceTests
     {
-        private readonly IUserService service;
+        private readonly IUserService userService;
+        private readonly IEventService eventService;
 
         public ServiceTests()
         {
@@ -22,15 +23,19 @@ namespace FinalProject.Test
                             .Options;
 
             // create service with new context
-            service = new UserServiceDb(new DatabaseContext(options));
-            service.Initialise();
+            var dbContext = new DatabaseContext(options);
+            userService = new UserServiceDb(dbContext);
+            eventService = new EventServiceDb(dbContext);
+
+            dbContext.Initialise();
         }
 
+        //==================================== USER SERVICE TESTS ====================================
          [Fact]
         public void GetUsers_WhenNoneExist_ShouldReturnNone()
         {
             // act
-            var pagedUsers = service.GetUsers();
+            var pagedUsers = userService.GetUsers();
 
             // assert
             Assert.Empty(pagedUsers.Data);
@@ -40,11 +45,11 @@ namespace FinalProject.Test
         public void AddUser_When2ValidUsersAdded_ShouldCreate2Users()
         {
             // arrange
-            service.AddUser("admin", "admin@mail.com", "admin", Role.admin );
-            service.AddUser("guest", "guest@mail.com", "guest", Role.guest);
+            userService.AddUser("admin", "admin@mail.com", "admin", Role.admin, "Golden Retriever", "/images/admin.png");
+            userService.AddUser("guest", "guest@mail.com", "guest", Role.guest, "Beagle", "/images/guest.png");
 
             // act
-            var pagedUsers = service.GetUsers();
+            var pagedUsers = userService.GetUsers();
 
             // assert
             Assert.Equal(2, pagedUsers.Data.Count);
@@ -54,12 +59,12 @@ namespace FinalProject.Test
         public void GetPage1WithpageSize2_When3UsersExist_ShouldReturn2Pages()
         {
             // act
-            service.AddUser("admin", "admin@mail.com", "admin", Role.admin );
-            service.AddUser("manager", "manager@mail.com", "manager", Role.manager);
-            service.AddUser("guest", "guest@mail.com", "guest", Role.guest);
+            userService.AddUser("admin", "admin@mail.com", "admin", Role.admin, "Golden Retriever", "/images/admin.png");
+            userService.AddUser("manager", "manager@mail.com", "manager", Role.manager, "Labrador", "/images/manager.png");
+            userService.AddUser("guest", "guest@mail.com", "guest", Role.guest, "Beagle", "/images/guest.png");
 
             // return first page with 2 users per page
-            var pagedUsers = service.GetUsers(1,2);
+            var pagedUsers = userService.GetUsers(1,2);
 
             // assert
             Assert.Equal(2, pagedUsers.TotalPages);
@@ -69,11 +74,11 @@ namespace FinalProject.Test
         public void GetPage1WithPageSize2_When3UsersExist_ShouldReturnPageWith2Users()
         {
             // act
-            service.AddUser("admin", "admin@mail.com", "admin", Role.admin );
-            service.AddUser("manager", "manager@mail.com", "manager", Role.manager);
-            service.AddUser("guest", "guest@mail.com", "guest", Role.guest);
+            userService.AddUser("admin", "admin@mail.com", "admin", Role.admin, "Golden Retriever", "/images/admin.png");
+            userService.AddUser("manager", "manager@mail.com", "manager", Role.manager, "Labrador", "/images/manager.png");
+            userService.AddUser("guest", "guest@mail.com", "guest", Role.guest, "Beagle", "/images/guest.png");
 
-            var pagedUsers = service.GetUsers(1,2);
+            var pagedUsers = userService.GetUsers(1,2);
 
             // assert
             Assert.Equal(2, pagedUsers.Data.Count);
@@ -83,7 +88,7 @@ namespace FinalProject.Test
         public void GetPage1_When0UsersExist_ShouldReturn0Pages()
         {
             // act
-            var pagedUsers = service.GetUsers(1,2);
+            var pagedUsers = userService.GetUsers(1,2);
 
             // assert
             Assert.Equal(0, pagedUsers.TotalPages);
@@ -95,12 +100,12 @@ namespace FinalProject.Test
         public void UpdateUser_WhenUserExists_ShouldWork()
         {
             // arrange
-            var user = service.AddUser("admin", "admin@mail.com", "admin", Role.admin );
+            var user = userService.AddUser("admin", "admin@mail.com", "admin", Role.admin, "Golden Retriever", "/images/admin.png");
             
             // act
             user.Name = "administrator";
             user.Email = "admin@mail.com";            
-            var updatedUser = service.UpdateUser(user);
+            var updatedUser = userService.UpdateUser(user);
 
             // assert
             Assert.Equal("administrator", updatedUser.Name);
@@ -111,10 +116,10 @@ namespace FinalProject.Test
         public void Login_WithValidCredentials_ShouldWork()
         {
             // arrange
-            service.AddUser("admin", "admin@mail.com", "admin", Role.admin );
+            userService.AddUser("admin", "admin@mail.com", "admin", Role.admin, "Golden Retriever", "/images/admin.png");
             
             // act            
-            var user = service.Authenticate("admin@mail.com","admin");
+            var user = userService.Authenticate("admin@mail.com","admin");
 
             // assert
             Assert.NotNull(user);
@@ -125,10 +130,10 @@ namespace FinalProject.Test
         public void Login_WithInvalidCredentials_ShouldNotWork()
         {
             // arrange
-            service.AddUser("admin", "admin@mail.com", "admin", Role.admin );
+            userService.AddUser("admin", "admin@mail.com", "admin", Role.admin, "Golden Retriever", "/images/admin.png");
 
             // act      
-            var user = service.Authenticate("admin@mail.com","xxx");
+            var user = userService.Authenticate("admin@mail.com","xxx");
 
             // assert
             Assert.Null(user);
@@ -139,10 +144,10 @@ namespace FinalProject.Test
         public void ForgotPasswordRequest_ForValidUser_ShouldGenerateToken()
         {
             // arrange
-            service.AddUser("admin", "admin@mail.com", "admin", Role.admin );
+            userService.AddUser("admin", "admin@mail.com", "admin", Role.admin, "Golden Retriever", "/images/admin.png");
 
             // act      
-            var token = service.ForgotPassword("admin@mail.com");
+            var token = userService.ForgotPassword("admin@mail.com");
 
             // assert
             Assert.NotNull(token);
@@ -155,7 +160,7 @@ namespace FinalProject.Test
             // arrange
           
             // act      
-            var token = service.ForgotPassword("admin@mail.com");
+            var token = userService.ForgotPassword("admin@mail.com");
 
             // assert
             Assert.Null(token);
@@ -166,11 +171,11 @@ namespace FinalProject.Test
         public void ResetPasswordRequest_WithValidUserAndToken_ShouldReturnUser()
         {
             // arrange
-            service.AddUser("admin", "admin@mail.com", "admin", Role.admin );
-            var token = service.ForgotPassword("admin@mail.com");
+            userService.AddUser("admin", "admin@mail.com", "admin", Role.admin, "Golden Retriever", "/images/admin.png");
+            var token = userService.ForgotPassword("admin@mail.com");
             
             // act      
-            var user = service.ResetPassword("admin@mail.com", token, "password");
+            var user = userService.ResetPassword("admin@mail.com", token, "password");
         
             // assert
             Assert.NotNull(user);
@@ -181,12 +186,12 @@ namespace FinalProject.Test
         public void ResetPasswordRequest_WithValidUserAndExpiredToken_ShouldReturnNull()
         {
             // arrange
-            service.AddUser("admin", "admin@mail.com", "admin", Role.admin );
-            var expiredToken = service.ForgotPassword("admin@mail.com");
-            service.ForgotPassword("admin@mail.com");
+            userService.AddUser("admin", "admin@mail.com", "admin", Role.admin, "Golden Retriever", "/images/admin.png");
+            var expiredToken = userService.ForgotPassword("admin@mail.com");
+            userService.ForgotPassword("admin@mail.com");
             
             // act      
-            var user = service.ResetPassword("admin@mail.com", expiredToken, "password");
+            var user = userService.ResetPassword("admin@mail.com", expiredToken, "password");
         
             // assert
             Assert.Null(user);  
@@ -196,11 +201,11 @@ namespace FinalProject.Test
         public void ResetPasswordRequest_WithInValidUserAndValidToken_ShouldReturnNull()
         {
             // arrange
-            service.AddUser("admin", "admin@mail.com", "admin", Role.admin );          
-            var token = service.ForgotPassword("admin@mail.com");
+            userService.AddUser("admin", "admin@mail.com", "admin", Role.admin, "Golden Retriever", "/images/admin.png");          
+            var token = userService.ForgotPassword("admin@mail.com");
             
             // act      
-            var user = service.ResetPassword("unknown@mail.com", token, "password");
+            var user = userService.ResetPassword("unknown@mail.com", token, "password");
         
             // assert
             Assert.Null(user);  
@@ -210,24 +215,156 @@ namespace FinalProject.Test
         public void ResetPasswordRequests_WhenAllCompleted_ShouldExpireAllTokens()
         {
             // arrange
-            service.AddUser("admin", "admin@mail.com", "admin", Role.admin );       
-            service.AddUser("guest", "guest@mail.com", "guest", Role.guest );          
+            userService.AddUser("admin", "admin@mail.com", "admin", Role.admin, "Golden Retriever", "/images/admin.png");       
+            userService.AddUser("guest", "guest@mail.com", "guest", Role.guest, "Beagle", "/images/guest.png");          
 
             // create token and reset password - token then invalidated
-            var token1 = service.ForgotPassword("admin@mail.com");
-            service.ResetPassword("admin@mail.com", token1, "password");
+            var token1 = userService.ForgotPassword("admin@mail.com");
+            userService.ResetPassword("admin@mail.com", token1, "password");
 
             // create token and reset password - token then invalidated
-            var token2 = service.ForgotPassword("guest@mail.com");
-            service.ResetPassword("guest@mail.com", token2, "password");
+            var token2 = userService.ForgotPassword("guest@mail.com");
+            userService.ResetPassword("guest@mail.com", token2, "password");
          
             // act  
             // retrieve valid tokens 
-            var tokens = service.GetValidPasswordResetTokens();   
+            var tokens = userService.GetValidPasswordResetTokens();   
 
             // assert
             Assert.Empty(tokens);
         }
 
+        //==================================== EVENT SERVICE TESTS ====================================
+        [Fact]
+        public void GetEvents_WhenNoneExist_ShouldReturnNone()
+        {
+            // Act
+            var pagedEvents = eventService.GetEvents();
+
+            // Assert
+            Assert.Empty(pagedEvents.Data);
+        }
+
+        [Fact]
+        public void AddEvent_WhenValidEventAdded_ShouldCreateEvent()
+        {
+            // Arrange
+            var newEvent = new Event
+            {
+                Title = "Dog Meetup",
+                EventTime = DateTime.Now.AddDays(5),
+                Location = "Belfast City Hall",
+                Description = "A fun meetup for dog owners and their furry friends.",
+                ImageUrl = "/images/dog-meetup.png"
+            };
+
+            // Act
+            var addedEvent = eventService.AddEvent(newEvent);
+
+            // Assert
+            Assert.NotNull(addedEvent);
+            Assert.Equal("Dog Meetup", addedEvent.Title);
+        }
+
+        [Fact]
+        public void GetEventsById_WhenEventExists_ShouldReturnEvent()
+        {
+            // Arrange
+            var addedEvent = eventService.AddEvent(new Event 
+            {
+                Title = "Puppy Training",
+                EventTime = DateTime.Now.AddDays(10),
+                Location = "Omagh Leisure Center",
+                Description = "Training for puppies.",
+                ImageUrl = "/images/puppy-training.png"
+            });
+
+            // Act
+            var retrievedEvent = eventService.GetEventById(addedEvent.Id);
+
+            // Assert
+            Assert.NotNull(retrievedEvent);
+            Assert.Equal("Puppy Training", retrievedEvent.Title);
+        }
+
+        [Fact]
+        public void DeleteEvent_WhenEventExists_ShouldRemoveEvent()
+        {
+            // Arrange
+            var addedEvent = eventService.AddEvent(new Event {
+                Title = "Obedience Class",
+                EventTime = DateTime.Now.AddDays(7),
+                Location = "Carrickmore Youth Club",
+                Description = "A class for training obedient dogs.",
+                ImageUrl = "/images/obedience-class.png"
+            });
+
+            // Act
+            var isDeleted = eventService.DeleteEvent(addedEvent.Id);
+
+            // Assert
+            Assert.True(isDeleted);
+            Assert.Null(eventService.GetEventById(addedEvent.Id));
+        }
+
+        [Fact]
+        public void UpdateEvent_WhenEventExists_ShouldUpdateDetails()
+        {
+            // Arrange
+            var addedEvent = eventService.AddEvent(new Event {
+                Title = "Socialising Event",
+                EventTime = DateTime.Now.AddDays(13),
+                Location = "Wild River Dog Park, Lisburn",
+                Description = "An event for dos to socialise",
+                ImageUrl = "/images/socialising-event.png"
+            });
+
+            // Act
+            addedEvent.Title = "Dog Socialising Event";
+            addedEvent.Location = "Wild River Dog Park, Ballynahinch";
+            var updatedEvent = eventService.UpdateEvent(addedEvent);
+
+            // Assert
+            Assert.NotNull(updatedEvent);
+            Assert.Equal("Dog Socialising Event", updatedEvent.Title);
+            Assert.Equal("Wild River Dog Park, Ballynahinch", updatedEvent.Location);
+        }
+
+        [Fact]
+        public void SearchEvents_WithMatchingQuery_ShouldReturnEvents()
+        {
+            // Arrange
+            eventService.AddEvent(new Event 
+            {
+                Title = "Agility Training",
+                EventTime = DateTime.Now.AddDays(1),
+                Location = "Omagh Community Dog Park",
+                Description = "Training session for agility.",
+                ImageUrl = "/images/agility-training.png"
+            });
+
+            eventService.AddEvent(new Event
+            {
+                Title = "Collie MeetUp",
+                EventTime = DateTime.Now.AddDays(20),
+                Location = "Grange Park, Omagh",
+                Description = "Playful Collie meetup.",
+                ImageUrl = "/images/collie-meetup.png"
+            });
+
+            // Act 
+            var matchingEvents = eventService.SearchEvents("Agility").ToList();
+
+            // Debugging: log the results
+            Console.WriteLine($"Found {matchingEvents.Count} matching events.");
+            foreach (var evt in matchingEvents)
+            {
+                Console.WriteLine($"Event: {evt.Title}, Location: {evt.Location}");
+            }
+
+            // Assert
+            Assert.Single(matchingEvents);
+            Assert.Equal("Agility Training", matchingEvents[0].Title);
+        }
     }
 }
