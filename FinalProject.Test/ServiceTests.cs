@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using FinalProject.Data.Repositories;
 using FinalProject.Data.Security;
 using System.Runtime.CompilerServices;
+using System.Net.Http.Headers;
 
 namespace FinalProject.Test
 {
@@ -661,6 +662,29 @@ namespace FinalProject.Test
             Assert.NotNull(comment);
             Assert.Equal("Great article!", comment.Comments);
             Assert.Equal("user123", comment.CreatedBy);
+        }
+
+        [Fact]
+        public void DeleteComment_WhenCommentExists_ShouldRemoveComment()
+        {
+            //Arrange
+            var addedPost = postService.AddPost(new Post
+            {
+                Title = "ExerciseTips",
+                Content = "How to keep your dog active.",
+                PostedOn = DateTime.Now,
+                CreatedBy = "admin",
+                ImagePath = "/images/dog-exercise.png"
+            });
+
+            var comment = postService.CreateComment(addedPost.Id, "Very useful tips!", "user456");
+
+            //Act
+            var isDeleted = postService.DeleteComment(comment.Id);
+
+            //Assert
+            Assert.True(isDeleted);
+            Assert.Null(postService.GetComment(comment.Id));
         }
     }
 }
