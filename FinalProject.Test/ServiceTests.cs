@@ -17,6 +17,7 @@ namespace FinalProject.Test
         private readonly IEventService eventService;
         private readonly ICalendarService calendarService;
         private readonly IPostService postService;
+        private readonly IGalleryService galleryService;
 
         public ServiceTests()
         {
@@ -32,6 +33,7 @@ namespace FinalProject.Test
             eventService = new EventServiceDb(dbContext);
             calendarService = new CalendarServiceDb(dbContext);
             postService = new PostServiceDb(dbContext);
+            galleryService = new GalleryServiceDb(dbContext);
 
             dbContext.Initialise();
         }
@@ -685,6 +687,85 @@ namespace FinalProject.Test
             //Assert
             Assert.True(isDeleted);
             Assert.Null(postService.GetComment(comment.Id));
+        }
+
+        //==================================== GALLERY SERVICE TESTS ====================================
+        [Fact]
+        public void GetAllImages_WhenNoImagesExist_ShouldReturnEmptyList()
+        {
+            //Act
+            var images = galleryService.GetAllImages();
+
+            //Assert
+            Assert.Empty(images);
+        }
+
+        [Fact]
+        public void AddImage_WhenValidImageAdded_ShouldCreateImage()
+        {
+            //Arrange
+            var newImage = new PastEventImage
+            {
+                ImageTitle = "Dog Park Meetup",
+                ImageDescription = "A fun day at the dog park with all breeds.",
+                GalleryImageUrls = new List<string>{ "/images/meetup1.jpg", "/images/meetup2.jpg" }
+            };
+
+            //Act
+            var addedImage = galleryService.AddImage(newImage);
+
+            //Assert
+            Assert.NotNull(addedImage);
+            Assert.Equal("Dog Park Meetup", addedImage.ImageTitle);
+            Assert.Equal(2, addedImage.GalleryImageUrls.Count);
+        }
+
+        [Fact]
+        public void AddImage_WhenImageIsInvalid_ShouldReturnNull()
+        {
+            //Arrange
+            var invalidImage = new PastEventImage
+            {
+                ImageTitle = "Incomplete Image",
+                ImageDescription = "", //missing required descrition
+                GalleryImageUrls = null //missing required image
+            };
+
+            //Act
+            var result = galleryService.AddImage(invalidImage);
+
+            //Assert
+            Assert.Null(result);
+        }
+
+        [Fact]
+        public void DeleteImage_WhenImageExists_ShouldRemoveImage()
+        {
+            //Arrange
+            var newImage = new PastEventImage
+            {
+                ImageTitle = "Event to Delete.",
+                ImageDescription = "This event will be deleted.",
+                GalleryImageUrls = new List<string>{ "/images/deleted1.jpg" }
+            };
+            var addedImage = galleryService.AddImage(newImage);
+
+            //Act
+            var isDeleted = galleryService.DeleteImage(addedImage.Id);
+
+            //Assert
+            Assert.True(isDeleted);
+            Assert.Empty(galleryService.GetAllImages());
+        }
+
+        [Fact]
+        public void DeleteImage_WhenImageDoesNotExist_ShouldReturnFalse()
+        {
+            //Act
+            var result = galleryService.DeleteImage(999); //non existent ID
+
+            //Assert
+            Assert.False(result);
         }
     }
 }
