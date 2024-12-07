@@ -79,4 +79,10 @@
     <partial name="_Reviews" />
 </div>
 <partial name="_DeleteModal" />
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+
 @* @await Html.PartialAsync("_CreateReviewModal", new Review { EventId = Model.Id }) *@

@@ -29,7 +29,7 @@
 
 @if (User.IsInRole("admin"))
 {
-    <a asp-condition=@User.IsInRole("organiser") class="btn btn-green" asp-controller="Event" asp-action="Create"
+    <a asp-condition=@User.IsInRole("admin") class="btn btn-green" asp-controller="Event" asp-action="Create"
         title="add an event" aria-label="add an event">Create Event</a>
 }
 

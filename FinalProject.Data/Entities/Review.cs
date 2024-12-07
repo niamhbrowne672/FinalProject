@@ -8,7 +8,6 @@ public class Review
     public DateTime On { get; set; } = DateTime.Now;
 
     [Required]
-    [StringLength(100, MinimumLength = 5)]
     public string Name { get; set; }
 
     [Required]

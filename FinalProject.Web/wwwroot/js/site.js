@@ -130,3 +130,31 @@ document.getElementById('categoryFilter').addEventListener('change', function() 
         }
     });
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+    const form = document.getElementById("createReviewForm");
+
+    form.addEventListener("submit", function (e) {
+        e.preventDefault(); // Prevent the default form submission
+
+        const formData = new FormData(form);
+        fetch(form.action, {
+            method: "POST",
+            body: formData,
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                if (data.success) {
+                    location.reload(); // Reload to reflect the new review
+                } else {
+                    alert(data.message || "An error occurred while submitting the review.");
+                }
+            })
+            .catch((error) => console.error("Error:", error));
+    });
+
+    // Reset the form on modal close
+    document.getElementById("createReviewModal").addEventListener("hidden.bs.modal", function () {
+        form.reset();
+    });
+});

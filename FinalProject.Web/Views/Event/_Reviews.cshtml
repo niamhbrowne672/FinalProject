@@ -6,11 +6,11 @@
     <h3>Reviews</h3>
     @if (User.Identity.IsAuthenticated)
     {
-        <a class="btn btn-sm btn-green" data-bs-toggle="modal" data-bs-target="#createReviewModal"
+        <button class="btn btn-sm btn-green" data-bs-toggle="modal" data-bs-target="#createReviewModal"
             aria-label="create review">
             <i class="bi bi-chat-square-text"></i>
             <span class="ms-1 d-none d-md-inline">Add Review</span>
-        </a>
+        </button>
     }
 </div>
 
@@ -59,4 +59,9 @@
     </tbody>
 </table>
 
-@await Html.PartialAsync("_CreateReviewModal", new Review { EventId = Model.Id })
+<partial name="_CreateReviewModal" model="new Review { EventId = Model.Id }" />
+@* @section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+} *@

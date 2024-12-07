@@ -231,7 +231,7 @@ public class EventController : BaseController
         //create a review view model and set foreign key
         var review = new Review { EventId = id };
         //render blank form
-        return View(review);
+        return PartialView("_CreateReviewModal", review);
     }
 
     [HttpPost]
@@ -243,17 +243,18 @@ public class EventController : BaseController
             var createdReview = _eventService.CreateReview(review);
             if (createdReview != null)
             {
-                Alert("Review created successfully.", AlertType.success);
+                if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
+                {
+                    return Json(new { success = true });
+                }
                 return RedirectToAction(nameof(Details), new { id = review.EventId });
             }
-            Alert("There was an issue saving your review. Please try again.", AlertType.danger);
+            return Json(new { success = false, message = "Failed to create review." });
         }
-        else
-        {
-            Alert("Please correct the errors and try again.", AlertType.warning);
-        }
-        return RedirectToAction(nameof(Details), new { id = review.EventId });
+        return Json(new { success = false, message = "Invalid input." });
     }
+
+
 
 
     [Authorize(Roles = "admin")]
