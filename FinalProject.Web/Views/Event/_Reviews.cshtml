@@ -6,11 +6,20 @@
     <h3>Reviews</h3>
     @if (User.Identity.IsAuthenticated)
     {
-        <button class="btn btn-sm btn-green" data-bs-toggle="modal" data-bs-target="#createReviewModal"
-            aria-label="create review">
-            <i class="bi bi-chat-square-text"></i>
-            <span class="ms-1 d-none d-md-inline">Add Review</span>
-        </button>
+        @if (Model.EventTime <= DateTime.Now)
+        {
+            <button class="btn btn-sm btn-green" data-bs-toggle="modal" data-bs-target="#createReviewModal"
+                aria-label="create review">
+                <i class="bi bi-chat-square-text"></i>
+                <span class="ms-1 d-none d-md-inline">Add Review</span>
+            </button>
+        }
+        else
+        {
+            <span class="text-muted">
+                <p>You can add a review after the event date.</p>
+            </span>
+        }
     }
 </div>
 

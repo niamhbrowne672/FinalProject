@@ -1,4 +1,6 @@
-﻿<!-- woof and wag banner -->
+﻿@model IEnumerable<FinalProject.Data.Entities.Event>
+
+<!-- woof and wag banner -->
 <img src="~/images/banners/Welcome.svg" class="banner-full-width img-fluid" alt="Welcome banner">
 
 
@@ -22,6 +24,39 @@
     </div>
 </div> *@
 
+<section class="upcoming-events mt-5 upcomingevents">
+    <h2 class="text-center">Upcoming Events</h2>
+    <p class="text-center">Check out the latest events happening near you!</p>
+
+    <div class="row justify-content-center">
+        @if (Model == null || !Model.Any())
+        {
+            <p class="text-center text-muted">No upcoming events at the moment. Check back soon!</p>
+        }
+        else
+        {
+            @foreach (var eventItem in Model)
+            {
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <img src="@Url.Content(eventItem.ImageUrl ?? "~/images/placeholders/event-placeholder.jpg")"
+                            class="card-img-top" alt="@eventItem.Title">
+                        <div class="card-body">
+                            <h5 class="card-title">@eventItem.Title</h5>
+                            <p class="card-text">
+                                <strong><i class="bi bi-calendar-date"></i> Date:</strong> @eventItem.EventTime.ToString("MMM dd, yyyy - hh:mm tt")<br>
+                                <strong><i class="bi bi-geo-alt"></i> Location:</strong> @eventItem.Location
+                            </p>
+                            <a asp-controller="Event" asp-action="Details" asp-route-id="@eventItem.Id"
+                                class="btn btn-green">More Details</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</section>
+
 <!-- divider for sections-->
 <hr class="section-divider">
 
@@ -33,7 +68,8 @@
             <h5><i class="why-choose-icon bi bi-broadcast"></i> Socialise with Your Dog's Breed</h5>
             <p>Dogs feel more at ease when interacting with others of their own breed, which can lead to happier,
                 healthier social interactions. Breed meet-ups offer a chance for your dog to bond with similar pups,
-                fostering familiarity and confidence. Join Woof & Wander to set up safe and friendly playdates with local
+                fostering familiarity and confidence. Join Woof & Wander to set up safe and friendly playdates with
+                local
                 dogs just like yours!</p>
         </div>
         <div class="col-md-6 col-lg-6 mb-4 benefit">
@@ -51,7 +87,8 @@
         </div>
         <div class="col-md-6 col-lg-6 mb-4 benefit">
             <h5><i class="why-choose-icon bi bi-chat-left-text"></i> Join a Supportive Community</h5>
-            <p>When you join Woof & Wander, you're becoming part of a supportive community of dog lovers who are dedicated
+            <p>When you join Woof & Wander, you're becoming part of a supportive community of dog lovers who are
+                dedicated
                 to creating a safe and friendly environment for their pets. Share experiences, give and receive advice,
                 and contribute to a space where everyone feels valued and heard. Your opinions matter here!</p>
         </div>
@@ -289,101 +326,109 @@
         <!--Column 1 : Restaurants-->
         <div class="col-md-2 col-sm-6 mb-3">
             <h4>Restaurants</h4>
-            <a href="https://www.barkingdogbelfast.com/" target="_blank" rel="noopener noreferrer" class="restaurant-link">The Barking Dog<span
-                    class="tooltip">Belfast</span></a>
-            <a href="https://thedirtyonion.com/" target="_blank" rel="noopener noreferrer" class="restaurant-link">The Dirty Onion<span
-                    class="tooltip">Belfast</span></a>
-            <a href="https://www.theparadorinn.co.uk/" target="_blank" rel="noopener noreferrer" class="restaurant-link">The Parador<span
-                    class="tooltip">Cushendall</span></a>
-            <a href="https://www.thetaste.ie/bull-and-ram-review" target="_blank" rel="noopener noreferrer" class="restaurant-link">The Bull & Ram<span
-                    class="tooltip">Ballynahinch</span></a>
-            <a href="https://www.thewoollenmills.com/" target="_blank" rel="noopener noreferrer" class="restaurant-link">The Woollen Mills<span
-                    class="tooltip">Dublin</span></a>
-            <a href="https://dawsonlounge.ie/" target="_blank" rel="noopener noreferrer" class="restaurant-link">The Dawson Lounge<span
-                    class="tooltip">Dublin</span></a>
-            <a href="https://www.thetaste.ie/greenhouse-restaurant-dublin" target="_blank" rel="noopener noreferrer" class="restaurant-link">The Greenhouse<span
-                    class="tooltip">Dublin</span></a>
-            <a href="https://thehappypear.ie/" target="_blank" rel="noopener noreferrer" class="restaurant-link">The Happy Pear<span
-                    class="tooltip">Greystones</span></a>
+            <a href="https://www.barkingdogbelfast.com/" target="_blank" rel="noopener noreferrer"
+                class="restaurant-link">The Barking Dog<span class="tooltip">Belfast</span></a>
+            <a href="https://thedirtyonion.com/" target="_blank" rel="noopener noreferrer" class="restaurant-link">The
+                Dirty Onion<span class="tooltip">Belfast</span></a>
+            <a href="https://www.theparadorinn.co.uk/" target="_blank" rel="noopener noreferrer"
+                class="restaurant-link">The Parador<span class="tooltip">Cushendall</span></a>
+            <a href="https://www.thetaste.ie/bull-and-ram-review" target="_blank" rel="noopener noreferrer"
+                class="restaurant-link">The Bull & Ram<span class="tooltip">Ballynahinch</span></a>
+            <a href="https://www.thewoollenmills.com/" target="_blank" rel="noopener noreferrer"
+                class="restaurant-link">The Woollen Mills<span class="tooltip">Dublin</span></a>
+            <a href="https://dawsonlounge.ie/" target="_blank" rel="noopener noreferrer" class="restaurant-link">The
+                Dawson Lounge<span class="tooltip">Dublin</span></a>
+            <a href="https://www.thetaste.ie/greenhouse-restaurant-dublin" target="_blank" rel="noopener noreferrer"
+                class="restaurant-link">The Greenhouse<span class="tooltip">Dublin</span></a>
+            <a href="https://thehappypear.ie/" target="_blank" rel="noopener noreferrer" class="restaurant-link">The
+                Happy Pear<span class="tooltip">Greystones</span></a>
         </div>
         <!--Column 2 : Hotels-->
         <div class="col-md-2 col-sm-6 mb-3">
             <h4>Hotels</h4>
-            <a href="https://www.fitzwilliamhotelbelfast.com/" target="_blank" rel="noopener noreferrer" class="restaurant-link">The Fitzwilliam Hotel<span
+            <a href="https://www.fitzwilliamhotelbelfast.com/" target="_blank" rel="noopener noreferrer"
+                class="restaurant-link">The Fitzwilliam Hotel<span class="tooltip">Belfast</span></a>
+            <a href="https://www.themerchanthotel.com/?msclkid=84014162c8fa1fc33dbf264f9f210cdf&utm_source=bing&utm_medium=cpc&utm_campaign=Brand%20NI&utm_term=merchants%20hotel%20belfast&utm_content=The%20Merchant%20Hotel"
+                target="_blank" rel="noopener noreferrer" class="restaurant-link">The Merchant Hotel<span
                     class="tooltip">Belfast</span></a>
-            <a href="https://www.themerchanthotel.com/?msclkid=84014162c8fa1fc33dbf264f9f210cdf&utm_source=bing&utm_medium=cpc&utm_campaign=Brand%20NI&utm_term=merchants%20hotel%20belfast&utm_content=The%20Merchant%20Hotel" target="_blank" rel="noopener noreferrer" class="restaurant-link">The Merchant Hotel<span
-                    class="tooltip">Belfast</span></a>
-            <a href="https://www.bushmillsinn.com/" target="_blank" rel="noopener noreferrer" class="restaurant-link">The Bushmills Inn Hotel<span
-                    class="tooltip">Bushmills</span></a>
-            <a href="https://www.greatsouthernkillarney.com/" target="_blank" rel="noopener noreferrer" class="restaurant-link">The Malton Hotel<span
-                    class="tooltip">Killarney</span></a>
-            <a href="https://www.guestreservations.com/ballyseede-castle/booking?msclkid=fb8704a3af2915467941638ef778324e" target="_blank" rel="noopener noreferrer" class="restaurant-link">The Castle Hotel<span
+            <a href="https://www.bushmillsinn.com/" target="_blank" rel="noopener noreferrer"
+                class="restaurant-link">The Bushmills Inn Hotel<span class="tooltip">Bushmills</span></a>
+            <a href="https://www.greatsouthernkillarney.com/" target="_blank" rel="noopener noreferrer"
+                class="restaurant-link">The Malton Hotel<span class="tooltip">Killarney</span></a>
+            <a href="https://www.guestreservations.com/ballyseede-castle/booking?msclkid=fb8704a3af2915467941638ef778324e"
+                target="_blank" rel="noopener noreferrer" class="restaurant-link">The Castle Hotel<span
                     class="tooltip">Tralee</span></a>
-            <a href="https://ashfordcastle.com/?msclkid=403cc8779185194ee55aaf5ac903bd17&utm_source=bing&utm_medium=cpc&utm_campaign=Ashford%20Castle%20-%20Brand%20-%20All%20Visitors%20-%20UK%20-%20EN%20%28updated%29&utm_term=ashford%20castle%20%2B%20cong&utm_content=Ashford%20Castle" target="_blank" rel="noopener noreferrer" class="restaurant-link">Ashford Castle<span
+            <a href="https://ashfordcastle.com/?msclkid=403cc8779185194ee55aaf5ac903bd17&utm_source=bing&utm_medium=cpc&utm_campaign=Ashford%20Castle%20-%20Brand%20-%20All%20Visitors%20-%20UK%20-%20EN%20%28updated%29&utm_term=ashford%20castle%20%2B%20cong&utm_content=Ashford%20Castle"
+                target="_blank" rel="noopener noreferrer" class="restaurant-link">Ashford Castle<span
                     class="tooltip">Cong</span></a>
-            <a href="https://www.themerchanthouse.ie/" target="_blank" rel="noopener noreferrer" class="restaurant-link">The Merchant House<span
-                    class="tooltip">Dublin</span></a>
-            <a href="https://www.glenviewhotel.com/" target="_blank" rel="noopener noreferrer" class="restaurant-link">The Glenview Hotel<span
-                    class="tooltip">Wicklow</span></a>
+            <a href="https://www.themerchanthouse.ie/" target="_blank" rel="noopener noreferrer"
+                class="restaurant-link">The Merchant House<span class="tooltip">Dublin</span></a>
+            <a href="https://www.glenviewhotel.com/" target="_blank" rel="noopener noreferrer"
+                class="restaurant-link">The Glenview Hotel<span class="tooltip">Wicklow</span></a>
         </div>
         <!--Column 3 : Activities-->
         <div class="col-md-2 col-sm-6 mb-3">
             <h4>Activities</h4>
-            <a href="https://www.belfastcity.gov.uk/zoo/home" target="_blank" rel="noopener noreferrer" class="restaurant-link">Belfast Zoo<span
-                    class="tooltip">Belfast</span></a>
-            <a href="https://www.nationaltrust.org.uk/visit/northern-ireland/giants-causeway" target="_blank" rel="noopener noreferrer" class="restaurant-link">Giant's Causeway<span
+            <a href="https://www.belfastcity.gov.uk/zoo/home" target="_blank" rel="noopener noreferrer"
+                class="restaurant-link">Belfast Zoo<span class="tooltip">Belfast</span></a>
+            <a href="https://www.nationaltrust.org.uk/visit/northern-ireland/giants-causeway" target="_blank"
+                rel="noopener noreferrer" class="restaurant-link">Giant's Causeway<span
                     class="tooltip">Antrim</span></a>
-            <a href="https://www.phoenixpark.ie/" target="_blank" rel="noopener noreferrer" class="restaurant-link">Dublin's Phoenix Park<span
-                    class="tooltip">Dublin</span></a>
-            <a href="https://www.nationalparks.ie/wicklow/" target="_blank" rel="noopener noreferrer" class="restaurant-link">Glendalough National Park<span
-                    class="tooltip">Wicklow</span></a>
-            <a href="https://www.nationaltrust.org.uk/visit/northern-ireland/carrick-a-rede?awc=3795_1731025407_fa00873701fb2182729b094e6eb86588&campid=Affiliates_Central_Mem_AWIN_Standard&aff=271445" target="_blank" rel="noopener noreferrer" class="restaurant-link">Carrick-a-Rede Rope Bridge<span
+            <a href="https://www.phoenixpark.ie/" target="_blank" rel="noopener noreferrer"
+                class="restaurant-link">Dublin's Phoenix Park<span class="tooltip">Dublin</span></a>
+            <a href="https://www.nationalparks.ie/wicklow/" target="_blank" rel="noopener noreferrer"
+                class="restaurant-link">Glendalough National Park<span class="tooltip">Wicklow</span></a>
+            <a href="https://www.nationaltrust.org.uk/visit/northern-ireland/carrick-a-rede?awc=3795_1731025407_fa00873701fb2182729b094e6eb86588&campid=Affiliates_Central_Mem_AWIN_Standard&aff=271445"
+                target="_blank" rel="noopener noreferrer" class="restaurant-link">Carrick-a-Rede Rope Bridge<span
                     class="tooltip">Antrim</span></a>
-            <a href="https://www.ballygallycastlehotel.com/?msclkid=b12654fea6a2145c301533d3fcaffd25&utm_source=bing&utm_medium=cpc&utm_campaign=Ballygally%20%3E%20NI%20%3E%20Brand&utm_term=ballygally%20castle&utm_content=Ballygally%20Castle%20Hotel" target="_blank" rel="noopener noreferrer" class="restaurant-link">Ballygally Castle<span
+            <a href="https://www.ballygallycastlehotel.com/?msclkid=b12654fea6a2145c301533d3fcaffd25&utm_source=bing&utm_medium=cpc&utm_campaign=Ballygally%20%3E%20NI%20%3E%20Brand&utm_term=ballygally%20castle&utm_content=Ballygally%20Castle%20Hotel"
+                target="_blank" rel="noopener noreferrer" class="restaurant-link">Ballygally Castle<span
                     class="tooltip">Antrim</span></a>
-            <a href="https://www.strandhillsurfschool.com/" target="_blank" rel="noopener noreferrer" class="restaurant-link">The Strandhill Surf School<span
-                    class="tooltip">Strandhill</span></a>
-            <a href="https://www.secretvalley.ie/" target="_blank" rel="noopener noreferrer" class="restaurant-link">Wildlife Safari<span
-                    class="tooltip">Wexford Wildfowl Reserve</span></a>
+            <a href="https://www.strandhillsurfschool.com/" target="_blank" rel="noopener noreferrer"
+                class="restaurant-link">The Strandhill Surf School<span class="tooltip">Strandhill</span></a>
+            <a href="https://www.secretvalley.ie/" target="_blank" rel="noopener noreferrer"
+                class="restaurant-link">Wildlife Safari<span class="tooltip">Wexford Wildfowl Reserve</span></a>
         </div>
         <!--Column 4 : Dog Parks-->
         <div class="col-md-2 col-sm-6 mb-3">
             <h4>Dog Parks</h4>
-            <a href="https://www.wildriverdogpark.co.uk/" target="_blank" rel="noopener noreferrer" class="restaurant-link">Wild River Dog Park<span
-                    class="tooltip">Ballynahinch</span></a>
-            <a href="https://www.barkparkwoodlands.com/" target="_blank" rel="noopener noreferrer" class="restaurant-link">Bark Park<span
-                    class="tooltip">Lisburn</span></a>
-            <a href="https://www.lisburncastlereagh.gov.uk/news" target="_blank" rel="noopener noreferrer" class="restaurant-link">The Dog Park<span
-                    class="tooltip">Moira Demesne</span></a>
-            <a href="https://thedogbark.co.uk/" target="_blank" rel="noopener noreferrer" class="restaurant-link">The Dog Bark<span
-                    class="tooltip">Craigavon</span></a>
-            <a href="https://dublin-5-du.irelands-advisor.com/dublin-balloons/" target="_blank" rel="noopener noreferrer" class="restaurant-link">Dublin Dog Park<span
-                    class="tooltip">Dublin</span></a>
-            <a href="https://www.woofpark.co.uk/" target="_blank" rel="noopener noreferrer" class="restaurant-link">Woof Dog Park<span
-                    class="tooltip">Ashbourne</span></a>
-            <a href="https://www.unleashedni.co.uk/" target="_blank" rel="noopener noreferrer" class="restaurant-link">Unleashed
+            <a href="https://www.wildriverdogpark.co.uk/" target="_blank" rel="noopener noreferrer"
+                class="restaurant-link">Wild River Dog Park<span class="tooltip">Ballynahinch</span></a>
+            <a href="https://www.barkparkwoodlands.com/" target="_blank" rel="noopener noreferrer"
+                class="restaurant-link">Bark Park<span class="tooltip">Lisburn</span></a>
+            <a href="https://www.lisburncastlereagh.gov.uk/news" target="_blank" rel="noopener noreferrer"
+                class="restaurant-link">The Dog Park<span class="tooltip">Moira Demesne</span></a>
+            <a href="https://thedogbark.co.uk/" target="_blank" rel="noopener noreferrer" class="restaurant-link">The
+                Dog Bark<span class="tooltip">Craigavon</span></a>
+            <a href="https://dublin-5-du.irelands-advisor.com/dublin-balloons/" target="_blank"
+                rel="noopener noreferrer" class="restaurant-link">Dublin Dog Park<span class="tooltip">Dublin</span></a>
+            <a href="https://www.woofpark.co.uk/" target="_blank" rel="noopener noreferrer" class="restaurant-link">Woof
+                Dog Park<span class="tooltip">Ashbourne</span></a>
+            <a href="https://www.unleashedni.co.uk/" target="_blank" rel="noopener noreferrer"
+                class="restaurant-link">Unleashed
                 Centre<span class="tooltip">Lurgan</span></a>
-            <a href="https://thedogpaddock.com/" target="_blank" rel="noopener noreferrer" class="restaurant-link">The Dog Paddock<span
-                    class="tooltip">Belfast</span></a>
+            <a href="https://thedogpaddock.com/" target="_blank" rel="noopener noreferrer" class="restaurant-link">The
+                Dog Paddock<span class="tooltip">Belfast</span></a>
         </div>
         <!--Column 5 : Pubs-->
         <div class="col-md-2 col-sm-6 mb-3">
             <h4>Pubs</h4>
-            <a href="https://boundarybrewing.coop/pages/the-john-hewitt" target="_blank" rel="noopener noreferrer" class="restaurant-link">The John Hewitt<span
-                    class="tooltip">Belfast</span></a>
-            <a href="https://themuddlersclubbelfast.com/" target="_blank" rel="noopener noreferrer" class="restaurant-link">The Muddler's Club<span
-                    class="tooltip">Belfast</span></a>
-            <a href="https://www.doghouse.pub/our-highlights/" target="_blank" rel="noopener noreferrer" class="restaurant-link">The Dog House<span
-                    class="tooltip">Derry</span></a>
-            <a href="https://www.killarneyroyal.ie/" target="_blank" rel="noopener noreferrer" class="restaurant-link">The Royal Oak<span
-                    class="tooltip">Killarney</span></a>
-            <a href="https://www.facebook.com/TheSnugBar/?_rdc=1&_rdr" target="_blank" rel="noopener noreferrer" class="restaurant-link">The Snug Bar<span
-                    class="tooltip">Ennis</span></a>
-            <a href="https://thetemplebarpub.com/" target="_blank" rel="noopener noreferrer" class="restaurant-link">The Porterhouse<span
-                    class="tooltip">Dublin</span></a>
-            <a href="https://www.facebook.com/groups/435489683311826/" target="_blank" rel="noopener noreferrer" class="restaurant-link">The Oar House<span
-                    class="tooltip">Kinsale</span></a>
-            <a href="https://www.facebook.com/pages/Fiddlers%20Elbow%20Pub%20and%20Bistro/317593111633257/" target="_blank" rel="noopener noreferrer" class="restaurant-link">The Fiddler's Elbow<span
+            <a href="https://boundarybrewing.coop/pages/the-john-hewitt" target="_blank" rel="noopener noreferrer"
+                class="restaurant-link">The John Hewitt<span class="tooltip">Belfast</span></a>
+            <a href="https://themuddlersclubbelfast.com/" target="_blank" rel="noopener noreferrer"
+                class="restaurant-link">The Muddler's Club<span class="tooltip">Belfast</span></a>
+            <a href="https://www.doghouse.pub/our-highlights/" target="_blank" rel="noopener noreferrer"
+                class="restaurant-link">The Dog House<span class="tooltip">Derry</span></a>
+            <a href="https://www.killarneyroyal.ie/" target="_blank" rel="noopener noreferrer"
+                class="restaurant-link">The Royal Oak<span class="tooltip">Killarney</span></a>
+            <a href="https://www.facebook.com/TheSnugBar/?_rdc=1&_rdr" target="_blank" rel="noopener noreferrer"
+                class="restaurant-link">The Snug Bar<span class="tooltip">Ennis</span></a>
+            <a href="https://thetemplebarpub.com/" target="_blank" rel="noopener noreferrer" class="restaurant-link">The
+                Porterhouse<span class="tooltip">Dublin</span></a>
+            <a href="https://www.facebook.com/groups/435489683311826/" target="_blank" rel="noopener noreferrer"
+                class="restaurant-link">The Oar House<span class="tooltip">Kinsale</span></a>
+            <a href="https://www.facebook.com/pages/Fiddlers%20Elbow%20Pub%20and%20Bistro/317593111633257/"
+                target="_blank" rel="noopener noreferrer" class="restaurant-link">The Fiddler's Elbow<span
                     class="tooltip">Belfast</span></a>
         </div>
     </div>

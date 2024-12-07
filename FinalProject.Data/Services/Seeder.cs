@@ -397,7 +397,7 @@ public static class Seeder
         var e4 = esvc.AddEvent(new Event
         {
             Title = "Labrador Meet-Up",
-            EventTime = new DateTime(2025, 6, 5, 10, 0, 0),
+            EventTime = new DateTime(2024, 6, 5, 10, 0, 0),
             Location = "Lough Neagh Discovery Centre, Craigavon",
             Description = "A morning of fun, games, and swimming for labradors at Lough Neagh.",
             ImageUrl = "~/images/events/e4.jpg"
@@ -649,6 +649,15 @@ public static class Seeder
             Location = "Mountsandel Forest, Coleraine",
             Description = "A woodland meet-up for Collies to run, play, and socialize.",
             ImageUrl = "~/images/events/e31.jpg"
+        });
+
+        var e32 = esvc.AddEvent(new Event
+        {
+            Title = "Puppy Training",
+            EventTime = new DateTime(2024, 12, 08, 14, 0, 0),
+            Location = "Belfast City Hall",
+            Description = "Join us for a great event play with other vizslas",
+            ImageUrl = "/images/events/e1.jpg"
         });
 
         var r1 = esvc.CreateReview(e2.Id, "Niamh Browne", "I've been to this meet-up before and my dog Rex had the best time playing with all of his friends! Would highly recommend.", 5);

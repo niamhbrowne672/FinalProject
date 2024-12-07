@@ -238,6 +238,12 @@ public class EventController : BaseController
     [ValidateAntiForgeryToken]
     public IActionResult ReviewCreate(Review review)
     {
+        var eventItem = _eventService.GetEventById(review.EventId);
+        if (eventItem == null || eventItem.EventTime > DateTime.Now)
+        {
+            Alert("Reviews can only be added after the event date.", AlertType.warning);
+            return RedirectToAction(nameof(Details), new { id = review.EventId });
+        }
         if (ModelState.IsValid)
         {
             var createdReview = _eventService.CreateReview(review);
@@ -312,5 +318,11 @@ public class EventController : BaseController
             liked = result.Liked,
             likes = result.Likes
         });
+    }
+
+    public IActionResult GetUpComingEvents()
+    {
+        var events = _eventService.GetUpComingEvents(3);
+        return PartialView("_UpcomingEvents", events);
     }
 }

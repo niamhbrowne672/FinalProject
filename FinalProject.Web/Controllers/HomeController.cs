@@ -7,21 +7,25 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using FinalProject.Web.Models;
+using FinalProject.Data.Services;
 
 namespace FinalProject.Web.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly IEventService _eventService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IEventService eventService)
         {
             _logger = logger;
+            _eventService = eventService;
         }
 
         public IActionResult Index()
         {
-            return View();
+            var upcomingEvents = _eventService.GetUpComingEvents(3);
+            return View(upcomingEvents);
         }
 
         [Authorize]

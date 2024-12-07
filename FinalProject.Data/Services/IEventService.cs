@@ -42,5 +42,8 @@ namespace FinalProject.Data.Services
         //likes
         bool LikeEvent(int eventId);
         ToggleLikeResult ToggleLike(int eventId, string userId);
+
+        //=================== Home Page Upcomming Events cards ========================
+        IList<Event> GetUpComingEvents(int count);
     }
 }

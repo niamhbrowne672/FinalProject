@@ -1,0 +1,18 @@
+@model IList<FinalProject.Data.Entities.Event>
+
+<div class="row">
+    @foreach (var ev in Model)
+    {
+        <div class="col-md-4">
+            <div class="card shadow-sm mb-4">
+                <img src="@Url.Content(ev.ImageUrl)" class="card-img-top" alt="@ev.Title">
+                <div class="card-body">
+                    <h5 class="card-title">@ev.Title</h5>
+                    <p class="card-text">@ev.EventTime.ToString("MMM dd, yyyy - HH:mm")</p>
+                    <a href="@Url.Action("Details", "Event", new { id = ev.Id })" class="btn btn-primary">More Details</a>
+                </div>
+            </div>
+        </div>
+    }
+}
+</div>

@@ -289,4 +289,13 @@ public class EventServiceDb : IEventService
             Likes = eventToLike.Likes
         };
     }
+
+    public IList<Event> GetUpComingEvents(int count)
+    {
+        return ctx.Events
+            .Where(e => e.EventTime > DateTime.Now)
+            .OrderBy(e => e.EventTime)
+            .Take(count)
+            .ToList();
+    }
 }
