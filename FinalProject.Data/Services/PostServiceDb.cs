@@ -20,7 +20,12 @@ public class PostServiceDb : IPostService
         ctx.Initialise();
     }
 
-    public Paged<Post> GetPosts(int page, int pageSize, string orderBy = "id", string direction = "asc")
+    public Paged<Post> GetPosts()
+        {
+            return ctx.Posts.ToPaged();
+        }
+
+    public Paged<Post> GetPosts(int page=1, int pageSize=10, string orderBy = "id", string direction = "asc")
     {
         var query = (orderBy.ToLower(),direction.ToLower()) switch
         {
@@ -35,8 +40,14 @@ public class PostServiceDb : IPostService
             _                    => ctx.Posts.OrderBy(r => r.Id)
         };
 
-        return query.Include(p => p.User).ToPaged(page,pageSize,orderBy,direction);
+        return query.ToPaged(page,pageSize,orderBy,direction);
     }
+
+    // Retrive User by Id 
+        public Post GetPost(int id)
+        {
+            return ctx.Posts.FirstOrDefault(s => s.Id == id);
+        }
 
     public IQueryable<Post> SearchPosts(string searchQuery)
     {
@@ -46,11 +57,6 @@ public class PostServiceDb : IPostService
      public IQueryable<Post> GetAllPosts()
     {
         return ctx.Posts;
-    }
-
-    public Paged<Post> GetPosts()
-    {
-        return ctx.Posts.ToPaged();
     }
 
     public Post GetPostById(int id)

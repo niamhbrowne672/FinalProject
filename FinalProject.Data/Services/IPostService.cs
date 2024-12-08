@@ -7,7 +7,7 @@ public interface IPostService
 {
     //Get all posts
     Paged<Post> GetPosts();
-    Paged<Post> GetPosts(int page, int pageSize, string orderBy = "id", string direction = "asc");
+    Paged<Post> GetPosts(int page=1, int pageSize=20, string orderBy = "id", string direction = "asc");
     Post GetPostByTitle(string title);
     
     //Add a new post
