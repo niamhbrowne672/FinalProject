@@ -18,5 +18,7 @@ public class User
     //Default to "NoProfileImage.jpg" if no image is provided
     public string ProfileImageUrl { get; set; } = "/images/users/NoProfileImageNew.svg";
 
+    //Registration
+    public ICollection<Registration> Registrations { get; set; }
 }
 

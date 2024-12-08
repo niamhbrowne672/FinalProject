@@ -2,6 +2,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 namespace FinalProject.Data.Entities;
 using System.ComponentModel.DataAnnotations.Schema;
+using Bogus.Extensions.UnitedKingdom;
 
 public class Event
 {
@@ -31,6 +32,9 @@ public class Event
     public int Likes { get; set; }
     [NotMapped]
     public bool UserHasLiked { get; set; }
+
+    //Registration
+    public ICollection<Registration> Registrations { get; set; } = new List<Registration>();
 
 }
 

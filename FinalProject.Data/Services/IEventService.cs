@@ -45,5 +45,9 @@ namespace FinalProject.Data.Services
 
         //=================== Home Page Upcomming Events cards ========================
         IList<Event> GetUpComingEvents(int count);
+
+        //=================== Register to event ====================
+        bool IsUserRegistered(int eventId, string userId);
+        bool RegisterUserForEvent(int eventId, string userId);
     }
 }

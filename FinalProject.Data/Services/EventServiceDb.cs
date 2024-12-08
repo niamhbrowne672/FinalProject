@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.Extensions.Logging;
 using System.Data.Common;
 using System.Collections.Immutable;
+using Microsoft.EntityFrameworkCore.Query;
 
 namespace FinalProject.Data.Services;
 
@@ -84,7 +85,10 @@ public class EventServiceDb : IEventService
     //get the event by the id
     public Event GetEventById(int id)
     {
-        return ctx.Events.Include(e => e.Reviews).FirstOrDefault(e => e.Id == id);
+        return ctx.Events
+            .Include(e => e.Reviews)
+            .Include(e => e.Registrations)
+            .FirstOrDefault(e => e.Id == id);
     }
 
     public Event GetEventByTitle(string title)
@@ -298,4 +302,42 @@ public class EventServiceDb : IEventService
             .Take(count)
             .ToList();
     }
+
+    // Register for event
+    public bool IsUserRegistered(int eventId, string userId)
+    {
+        if (!int.TryParse(userId, out int userIdInt))
+        {
+            throw new ArgumentException("Invalid userId format");
+        }
+        return ctx.Registrations.Any(r => r.EventId == eventId && r.UserId == userIdInt);
+    }
+
+    public bool RegisterUserForEvent(int eventId, string userId)
+    {
+        if (!int.TryParse(userId, out int userIdInt))
+        {
+            throw new ArgumentException("Invalid userId format");
+        }
+
+        var eventItem = GetEventById(eventId);
+        if (eventItem == null || IsUserRegistered(eventId, userId))
+        {
+            return false;
+        }
+
+        var registration = new Registration
+        {
+            EventId = eventId,
+            UserId = userIdInt,
+            RegisteredOn = DateTime.Now
+        };
+
+        ctx.Registrations.Add(registration);
+        ctx.SaveChanges();
+
+        return true;
+    }
+
+
 }

@@ -25,6 +25,7 @@ public class DatabaseContext : DbContext
     public DbSet<Calendar> Calendars { get; set; }
     public DbSet<County> Counties { get; set; }
     public DbSet<EventLike> EventLikes { get; set; }
+    public DbSet<Registration> Registrations { get; set; }
    // public DbSet<ToggleLikeResult> ToggleLikeResults { get; set; }
 
     public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)
@@ -42,6 +43,14 @@ public class DatabaseContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Calendar>().Property(c => c.Id).ValueGeneratedOnAdd();
+        modelBuilder.Entity<Registration>()
+            .HasOne(r => r.Event)
+            .WithMany(e => e.Registrations)
+            .HasForeignKey(r => r.EventId);
+        modelBuilder.Entity<Registration>()
+            .HasOne(r => r.User)
+            .WithMany(u => u.Registrations)
+            .HasForeignKey(r => r.UserId);
     }
 
     public static DbContextOptionsBuilder<DatabaseContext> OptionsBuilder => new();

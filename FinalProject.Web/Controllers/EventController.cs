@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 using FinalProject.Data.Entities;
 using FinalProject.Data.Services;
 using FinalProject.Data.Extensions;
@@ -11,10 +12,14 @@ namespace FinalProject.Web.Controllers;
 public class EventController : BaseController
 {
     private readonly IEventService _eventService;
+    private readonly IUserService _userService;
+    private readonly IMailService _mailer;
 
-    public EventController(IEventService eventService)
+    public EventController(IEventService eventService, IUserService userService, IMailService mailer)
     {
         _eventService = eventService;
+        _userService = userService;
+        _mailer = mailer;
     }
 
     public IActionResult Index(string searchQuery, int page = 1, int size = 20, string order = "id", string direction = "asc")
@@ -325,4 +330,70 @@ public class EventController : BaseController
         var events = _eventService.GetUpComingEvents(3);
         return PartialView("_UpcomingEvents", events);
     }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    [Authorize]
+    public async Task<IActionResult> Register(int eventId)
+    {
+        var userEmail = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
+
+        if (string.IsNullOrEmpty(userEmail))
+        {
+            Alert("Unable to identify the user. Please log in again.", AlertType.warning);
+            return RedirectToAction(nameof(Index)); // Return added here
+        }
+
+        var user = _userService.GetUserByEmail(userEmail);
+        if (user == null)
+        {
+            Alert("User not found.", AlertType.warning);
+            return RedirectToAction(nameof(Index)); // Return added here
+        }
+
+        var eventItem = _eventService.GetEventById(eventId);
+        if (eventItem == null)
+        {
+            Alert("Event not found.", AlertType.warning);
+            return RedirectToAction(nameof(Index)); // Return added here
+        }
+
+        if (_eventService.IsUserRegistered(eventId, user.Id.ToString()))
+        {
+            Alert("You are already registered for this event.", AlertType.info);
+            return RedirectToAction(nameof(Details), new { id = eventId }); // Return added here
+        }
+
+        var success = _eventService.RegisterUserForEvent(eventId, user.Id.ToString());
+
+        if (success)
+        {
+            Alert($"You've registered for {eventItem.Title}! We can't wait to see you there.", AlertType.success);
+
+            var subject = $"You're Registered for {eventItem.Title}";
+            var body = $@"
+            <h3>Thank you for registering!</h3>
+            <p>You have successfully registered for the event: <strong>{eventItem.Title}</strong>.</p>
+            <p>Date & Time: {eventItem.EventTime:MMMM dd, yyyy - HH:mm}</p>
+            <p>Location: {eventItem.Location}</p>
+            <p>We can't wait to see you there!</p>";
+
+            var mailSuccess = await _mailer.SendMailAsync(subject, body, userEmail);
+
+            if (!mailSuccess)
+            {
+                Alert("Your registration is confirmed, but we couldn't send you an email. Please contact us for details.", AlertType.warning);
+            }
+
+            return RedirectToAction(nameof(Details), new { id = eventId }); // Return added here
+        }
+        else
+        {
+            Alert("There was an issue registering for the event. Please try again.", AlertType.danger);
+            return RedirectToAction(nameof(Details), new { id = eventId }); // Return added here
+        }
+    }
+
+
+
 }
