@@ -315,6 +315,11 @@ public class EventServiceDb : IEventService
 
     public bool RegisterUserForEvent(int eventId, string userId)
     {
+        if (string.IsNullOrEmpty(userId))
+        {
+            throw new ArgumentException("Invalid userId format");
+        }
+        
         if (!int.TryParse(userId, out int userIdInt))
         {
             throw new ArgumentException("Invalid userId format");

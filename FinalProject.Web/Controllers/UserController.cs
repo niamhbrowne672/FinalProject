@@ -10,6 +10,8 @@ using FinalProject.Data.Services;
 using FinalProject.Data.Security;
 using FinalProject.Web.Models.User;
 using FinalProject.Data.Extensions;
+using Bogus.DataSets;
+using System.ComponentModel.DataAnnotations;
 
 /**
  *  User Management Controller
@@ -127,7 +129,7 @@ public class UserController : BaseController
     [Authorize]
     public IActionResult UpdateProfile()
     {
-        // use BaseClass helper method to retrieve Id of signed in user 
+       // use BaseClass helper method to retrieve Id of signed in user 
         var user = _svc.GetUser(User.GetSignedInUserId());
         var profileViewModel = new ProfileViewModel
         {

@@ -22,7 +22,7 @@ public static class Seeder
         SeedUsers(svc);
         SeedPosts(psvc);
         SeedComments(psvc);
-        SeedEvents(esvc);
+        SeedEvents(esvc, svc);
         SeedGalleryImages(galleryService);
         SeedCounties(calendarService);
         SeedCalendars(calendarService);
@@ -365,7 +365,7 @@ public static class Seeder
     }
 
     //data for events
-    private static void SeedEvents(IEventService esvc)
+    private static void SeedEvents(IEventService esvc, IUserService svc)
     {
         var e1 = esvc.AddEvent(new Event
         {
@@ -707,6 +707,46 @@ public static class Seeder
 
         var r33 = esvc.CreateReview(e1.Id, "Laura Green", "Beautiful location and great company, highly recommend!", 5);
         var r34 = esvc.CreateReview(e1.Id, "Sarah Black", "My dog loved the open spaces, great event overall!", 4);
+    
+        AddAttendees(esvc, e1.Id, svc);
+        AddAttendees(esvc, e2.Id, svc);
+        AddAttendees(esvc, e4.Id, svc);
+        AddAttendees(esvc, e5.Id, svc);
+        AddAttendees(esvc, e6.Id, svc);
+        AddAttendees(esvc, e7.Id, svc);
+        AddAttendees(esvc, e9.Id, svc);
+        AddAttendees(esvc, e10.Id, svc);
+        AddAttendees(esvc, e11.Id, svc);
+        AddAttendees(esvc, e13.Id, svc);
+        AddAttendees(esvc, e14.Id, svc);
+        AddAttendees(esvc, e16.Id, svc);
+        AddAttendees(esvc, e18.Id, svc);
+        AddAttendees(esvc, e20.Id, svc);
+        AddAttendees(esvc, e21.Id, svc);
+        AddAttendees(esvc, e23.Id, svc);
+        AddAttendees(esvc, e25.Id, svc);
+        AddAttendees(esvc, e26.Id, svc);
+        AddAttendees(esvc, e28.Id, svc);
+        AddAttendees(esvc, e30.Id, svc);
+        AddAttendees(esvc, e32.Id, svc);
+    }
+
+    private static readonly Random RandomInstance = new Random();
+
+    private static void AddAttendees(IEventService esvc, int eventId, IUserService svc)
+    {
+        var users = svc.GetUsers().Data.ToList();
+        var random = new Random();
+
+        var shuffledUsers = users.OrderBy(_ => RandomInstance.Next()).ToList();
+
+        int attendeeCount = RandomInstance.Next(10, Math.Min(31, users.Count));
+        var attendees = shuffledUsers.Take(attendeeCount).ToList();
+
+        foreach (var user in attendees)
+        {
+            esvc.RegisterUserForEvent(eventId, user.Id.ToString());
+        }
     }
 
     private static void SeedGalleryImages(IGalleryService galleryService)

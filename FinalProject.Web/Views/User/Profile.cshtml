@@ -6,4 +6,11 @@
     <h3 class="text-center mt-3">@Model.Name</h3>
     <p class="text-center">Email: @Model.Email</p>
     <p class="text-center">Dog Breed: @Model.DogBreed</p>
+
+    <!-- Edit User Profile button-->
+    <div class="text-center mt-4">
+        <a class="btn btn-green" asp-controller="User" asp-action="Update" asp-route-id="@Model.Id">
+            Edit Profile
+        </a>
+    </div>
 </div>
