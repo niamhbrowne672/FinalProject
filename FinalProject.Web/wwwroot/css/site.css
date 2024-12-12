@@ -997,6 +997,18 @@ iframe {
   box-shadow: 0 4px 8px rgb(0, 0, 0, 0.2);
 }
 
+/*Registration*/
+.registration-section {
+  border-radius: 10px;
+  padding: 2px;
+  text-align: center;
+}
+
+.registration-section h4 {
+  color: #004d2a;
+  font-weight: bold;
+}
+
 .table-headings {
   color: #004d2a;
 }
