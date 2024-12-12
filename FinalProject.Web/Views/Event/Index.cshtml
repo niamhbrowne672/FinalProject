@@ -27,9 +27,9 @@
     </div>
 </form>
 
-@if (User.IsInRole("admin"))
+@if (User.IsInRole("admin") || User.IsInRole("manager"))
 {
-    <a asp-condition=@User.IsInRole("admin") class="btn btn-green" asp-controller="Event" asp-action="Create"
+    <a class="btn btn-green" asp-controller="Event" asp-action="Create"
         title="add an event" aria-label="add an event">Create Event</a>
 }
 
@@ -72,7 +72,7 @@ else
                         </a>
 
                         <!--  authorisation check -->
-                        @if (User.IsInRole("admin"))
+                        @if (User.IsInRole("admin") || User.IsInRole("manager"))
                         {
                             <a asp-action="Edit" asp-route-id=@e.Id title="Edit event">
                                 <i class="bi bi-pencil-square click-icon"></i>

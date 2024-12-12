@@ -48,7 +48,7 @@
                         </a>
             
                         <!--  authorisation check -->
-                        @if (User.IsInRole("admin"))
+                        @if (User.IsInRole("admin") || User.IsInRole("manager"))
                         {
                             <a asp-action="Edit" asp-route-id=@p.Id title="Edit post">
                                 <i class="bi bi-pencil-square click-icon"></i>

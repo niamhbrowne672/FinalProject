@@ -38,7 +38,7 @@
 
             <!-- Navigation links -->
             <div>
-                @if (User.IsInRole("admin"))
+                @if (User.IsInRole("admin") || User.IsInRole("manager"))
                 {
                     <!-- Edit Button visible to admin and support -->
                     <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-sm btn-secondary">

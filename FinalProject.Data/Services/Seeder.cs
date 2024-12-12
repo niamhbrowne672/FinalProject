@@ -32,7 +32,7 @@ public static class Seeder
     private static void SeedUsers(IUserService svc)
     {
         svc.AddUser("Administrator", "admin@mail.com", "admin", Role.admin, "N/A", null);
-        svc.AddUser("Organiser", "organiser@mail.com", "organiser", Role.manager, "N/A", null);
+        svc.AddUser("Manager", "manager@mail.com", "manager", Role.manager, "N/A", null);
         svc.AddUser("Guest", "guest@mail.com", "guest", Role.guest, "Golden Retriever", null);
 
 

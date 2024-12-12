@@ -88,7 +88,7 @@
                     <p class="card-text">@image.ImageDescription</p>
                     <p class="card-text"><small><i class="bi bi-person-fill"></i> Uploaded by: @image.ImagePostedBy</small></p>
 
-                    @if (isAdmin)
+                    @if (User.IsInRole("admin") || User.IsInRole("manager"))
                     {
                         <!-- Delete Button -->
                         <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal-@image.Id">

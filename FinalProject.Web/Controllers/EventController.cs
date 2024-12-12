@@ -56,7 +56,7 @@ public class EventController : BaseController
         return View(eventItem);
     }
 
-    [Authorize(Roles = "admin")]
+    [Authorize(Roles = "admin,manager")]
     public IActionResult Create()
     {
         return View();
@@ -111,7 +111,7 @@ public class EventController : BaseController
         return View(e);
     }
 
-    [Authorize(Roles = "admin")]
+    [Authorize(Roles = "admin,manager")]
     public IActionResult Edit(int id)
     {
         //load the event using the service
@@ -129,7 +129,7 @@ public class EventController : BaseController
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    [Authorize(Roles = "admin, manager")]
+    [Authorize(Roles = "admin,manager")]
     public IActionResult Edit(int id, Event updatedEvent, IFormFile uploadedImage)
     {
         if (updatedEvent.EndTime <= updatedEvent.EventTime)
@@ -199,7 +199,7 @@ public class EventController : BaseController
     }
 
 
-    [Authorize(Roles = "admin")]
+    [Authorize(Roles = "admin,manager")]
     public IActionResult Delete(int id)
     {
         //load the event using the service
@@ -217,7 +217,7 @@ public class EventController : BaseController
 
     [HttpPost, ActionName("DeleteConfirm")]
     [ValidateAntiForgeryToken]
-    [Authorize(Roles = "admin")]
+    [Authorize(Roles = "admin,manager")]
     public IActionResult DeleteConfirmed(int id)
     {
         //delete event via service
@@ -280,7 +280,7 @@ public class EventController : BaseController
 
 
 
-    [Authorize(Roles = "admin")]
+    [Authorize(Roles = "admin,manager")]
     public IActionResult ReviewDelete(int id)
     {
         // load the ticket using the service
@@ -298,7 +298,7 @@ public class EventController : BaseController
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    [Authorize(Roles = "admin")]
+    [Authorize(Roles = "admin,manager")]
     public IActionResult ReviewDeleteConfirm(int id, int eventId)
     {
         var deleted = _eventService.DeleteReview(id);
@@ -405,7 +405,4 @@ public class EventController : BaseController
             return RedirectToAction(nameof(Details), new { id = eventId }); // Return added here
         }
     }
-
-
-
 }
