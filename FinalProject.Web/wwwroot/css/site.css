@@ -984,6 +984,18 @@ td.text-end a {
 }
 
 /*=========================== Events section=======================*/
+.map-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0;
+}
+
+iframe {
+  max-width: 90%;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgb(0, 0, 0, 0.2);
+}
 
 .table-headings {
   color: #004d2a;

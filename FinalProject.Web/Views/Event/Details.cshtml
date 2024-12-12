@@ -103,6 +103,14 @@ else
     <h5>Attendees: @Model?.Registrations?.Count</h5>
 </div>
 
+<!-- google Maps -->
+<div class="map-container">
+    <iframe width="100%" height="500" style="border:0" loading="lazy" allowfullscreen
+        referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCstGVlyhTD5N91MuAWtSFum407hgO8Wxo
+    &q==@Uri.EscapeDataString(Model.Location)">
+    </iframe>
+</div>
+
 <!-- Reviews -->
 <div class="card rounded shadow p-4 mt-4">
     <partial name="_Reviews" />
