@@ -371,6 +371,7 @@ public static class Seeder
         {
             Title = "Hungarian Vizsla Meet-Up",
             EventTime = new DateTime(2024, 11, 20, 14, 0, 0),
+            EndTime = new DateTime(2024, 11, 20, 15, 0, 0),
             Location = "Belfast City Hall",
             Description = "Join us for a great event play with other vizslas",
             ImageUrl = "/images/events/e1.jpg"
@@ -380,6 +381,7 @@ public static class Seeder
         {
             Title = "Golden Retriever Meet-Up",
             EventTime = new DateTime(2024, 12, 15, 11, 0, 0),
+            EndTime = new DateTime(2024, 12, 15, 13, 0, 0),
             Location = "Lagan Valley Regional Park, Lisburn",
             Description = "A festive walk for golden retrievers and their owners along the scenic Lagan Towpath.",
             ImageUrl = "~/images/events/e2.jpg"
@@ -389,6 +391,7 @@ public static class Seeder
         {
             Title = "Dachshund Meet-Up",
             EventTime = new DateTime(2025, 3, 10, 13, 30, 0),
+            EndTime = new DateTime(2025, 3, 10, 15, 0, 0),
             Location = "The Gobbins Cliff Path, Larne",
             Description = "Explore the breathtaking coastal paths with fellow sausage dogs!",
             ImageUrl = "~/images/events/e3.jpg"
@@ -398,6 +401,7 @@ public static class Seeder
         {
             Title = "Labrador Meet-Up",
             EventTime = new DateTime(2024, 6, 5, 10, 0, 0),
+            EndTime = new DateTime(2024, 6, 5, 12, 0, 0),
             Location = "Lough Neagh Discovery Centre, Craigavon",
             Description = "A morning of fun, games, and swimming for labradors at Lough Neagh.",
             ImageUrl = "~/images/events/e4.jpg"
@@ -407,6 +411,7 @@ public static class Seeder
         {
             Title = "Shih Tzu Meet-Up",
             EventTime = new DateTime(2023, 9, 28, 15, 0, 0),
+            EndTime = new DateTime(2023, 9, 28, 16, 0, 0),
             Location = "Armagh Palace Demesne Park, Armagh City",
             Description = "A social afternoon in the park for Shih Tzus to mingle and owners to share tips.",
             ImageUrl = "~/images/events/e5.jpg"
@@ -416,6 +421,7 @@ public static class Seeder
         {
             Title = "Cocker Spaniel Meet-Up",
             EventTime = new DateTime(2024, 10, 12, 12, 30, 0),
+            EndTime = new DateTime(2024, 10, 12, 14, 0, 0),
             Location = "Fota House Arboretum and Gardens, Cork",
             Description = "A lively meet-up for cocker spaniels to enjoy the open spaces of Fota Gardens.",
             ImageUrl = "~/images/events/e6.jpg"
@@ -425,6 +431,7 @@ public static class Seeder
         {
             Title = "Pug Meet-Up",
             EventTime = new DateTime(2025, 1, 7, 14, 0, 0),
+            EndTime = new DateTime(2025, 1, 7, 15, 0, 0),
             Location = "Elizabeth Fort, Cork City",
             Description = "Celebrate the new year with a historic walk and social time for pugs and their owners.",
             ImageUrl = "~/images/events/e7.jpg"
@@ -433,6 +440,7 @@ public static class Seeder
         {
             Title = "Border Collie Meet-Up",
             EventTime = new DateTime(2025, 9, 16, 10, 30, 0),
+            EndTime = new DateTime(2025, 9, 16, 12, 0, 0),
             Location = "Phoenix Park, Dublin",
             Description = "A morning of agility and fun activities for border collies in Ireland's largest park.",
             ImageUrl = "~/images/events/e8.jpg"
@@ -442,6 +450,7 @@ public static class Seeder
         {
             Title = "French Bulldog Meet-Up",
             EventTime = new DateTime(2023, 8, 20, 13, 0, 0),
+            EndTime = new DateTime(2023, 8, 20, 14, 0, 0),
             Location = "Sandymount Strand, Dublin",
             Description = "A beachside social for French bulldogs with plenty of sand and sea adventures.",
             ImageUrl = "~/images/events/e9.jpg"
@@ -451,6 +460,7 @@ public static class Seeder
         {
             Title = "German Shepherd Meet-Up",
             EventTime = new DateTime(2024, 5, 18, 11, 0, 0),
+            EndTime = new DateTime(2024, 5, 18, 12, 0, 0),
             Location = "Eyre Square, Galway City",
             Description = "A group walk and social in the heart of Galway for German shepherds.",
             ImageUrl = "~/images/events/e10.jpg"
@@ -460,6 +470,7 @@ public static class Seeder
         {
             Title = "Beagle Meet-Up",
             EventTime = new DateTime(2025, 2, 23, 10, 0, 0),
+            EndTime = new DateTime(2025, 2, 23, 12, 0, 0),
             Location = "Connemara National Park, Galway",
             Description = "Take in the rugged beauty of Connemara with your beagle companions.",
             ImageUrl = "~/images/events/e11.jpg"
@@ -469,6 +480,7 @@ public static class Seeder
         {
             Title = "Siberian Husky Meet-Up",
             EventTime = new DateTime(2025, 12, 3, 15, 0, 0),
+            EndTime = new DateTime(2025, 12, 3, 16, 0, 0),
             Location = "Killarney National Park, Kerry",
             Description = "Experience the magical winter landscapes with huskies and their owners.",
             ImageUrl = "~/images/events/e12.jpg"
@@ -478,6 +490,7 @@ public static class Seeder
         {
             Title = "Jack Russell Meet-Up",
             EventTime = new DateTime(2023, 7, 14, 11, 30, 0),
+            EndTime = new DateTime(2023, 7, 14, 15, 0, 0),
             Location = "Inch Beach, Kerry",
             Description = "A fun-filled beach meet-up for Jack Russells to run and play freely.",
             ImageUrl = "~/images/events/e13.jpg"
@@ -487,6 +500,7 @@ public static class Seeder
         {
             Title = "Yorkshire Terrier Meet-Up",
             EventTime = new DateTime(2024, 4, 20, 14, 0, 0),
+            EndTime = new DateTime(2024, 4, 20, 15, 0, 0),
             Location = "Gortin Glen Forest Park, Omagh",
             Description = "An exciting walk in the scenic forests for Yorkshire Terriers and their humans.",
             ImageUrl = "~/images/events/e14.jpg"
@@ -496,6 +510,7 @@ public static class Seeder
         {
             Title = "Springer Spaniel Meet-Up",
             EventTime = new DateTime(2025, 7, 22, 10, 30, 0),
+            EndTime = new DateTime(2025, 7, 22, 12, 0, 0),
             Location = "The Ulster American Folk Park, Omagh",
             Description = "A morning of play and learning at this fascinating historical site.",
             ImageUrl = "~/images/events/e15.jpg"
@@ -505,6 +520,7 @@ public static class Seeder
         {
             Title = "Shetland Sheepdog Meet-Up",
             EventTime = new DateTime(2023, 10, 25, 11, 0, 0),
+            EndTime = new DateTime(2023, 10, 25, 13, 0, 0),
             Location = "Roe Valley Country Park, Limavady",
             Description = "A fun-filled meet-up in the beautiful woodlands of Roe Valley for Shetland Sheepdogs.",
             ImageUrl = "~/images/events/e16.jpg"
@@ -514,6 +530,7 @@ public static class Seeder
         {
             Title = "Poodle Meet-Up",
             EventTime = new DateTime(2025, 5, 1, 14, 30, 0),
+            EndTime = new DateTime(2025, 5, 1, 15, 0, 0),
             Location = "Guildhall Square, Derry City",
             Description = "A social gathering for all poodle varieties in the heart of Derry.",
             ImageUrl = "~/images/events/e17.jpg"
@@ -523,6 +540,7 @@ public static class Seeder
         {
             Title = "West Highland Terrier Meet-Up",
             EventTime = new DateTime(2024, 8, 16, 13, 0, 0),
+            EndTime = new DateTime(2024, 8, 16, 14, 0, 0),
             Location = "Rossmore Forest Park, Monaghan Town",
             Description = "A group walk and social for Westies to explore the park together.",
             ImageUrl = "~/images/events/e18.jpg"
@@ -532,6 +550,7 @@ public static class Seeder
         {
             Title = "Irish Setter Meet-Up",
             EventTime = new DateTime(2025, 10, 4, 11, 0, 0),
+            EndTime = new DateTime(2025, 10, 4, 12, 0, 0),
             Location = "Lake Muckno Forest Park, Castleblayney",
             Description = "A lively meet-up for Irish Setters to enjoy the lakeside trails.",
             ImageUrl = "~/images/events/e19.jpg"
@@ -542,6 +561,7 @@ public static class Seeder
         {
             Title = "Boxer Meet-Up",
             EventTime = new DateTime(2024, 6, 11, 10, 30, 0),
+            EndTime = new DateTime(2024, 6, 11, 12, 0, 0),
             Location = "Enniskillen Castle, Enniskillen",
             Description = "Explore the historic castle grounds with your playful Boxer companions.",
             ImageUrl = "~/images/events/e20.jpg"
@@ -551,6 +571,7 @@ public static class Seeder
         {
             Title = "Maltese Meet-Up",
             EventTime = new DateTime(2023, 5, 28, 14, 0, 0),
+            EndTime = new DateTime(2023, 5, 28, 15, 0, 0),
             Location = "Crom Estate, Newtownbutler",
             Description = "A serene lakeside meet-up for Maltese dogs and their owners.",
             ImageUrl = "~/images/events/e21.jpg"
@@ -561,6 +582,7 @@ public static class Seeder
         {
             Title = "Corgi Meet-Up",
             EventTime = new DateTime(2025, 9, 30, 15, 0, 0),
+            EndTime = new DateTime(2025, 9, 30, 16, 0, 0),
             Location = "Glenveagh National Park, Letterkenny",
             Description = "Take in the rugged beauty of Glenveagh with a friendly group of Corgis.",
             ImageUrl = "~/images/events/e22.jpg"
@@ -570,6 +592,7 @@ public static class Seeder
         {
             Title = "Greyhound Meet-Up",
             EventTime = new DateTime(2024, 12, 9, 11, 0, 0),
+            EndTime = new DateTime(2024, 12, 9, 12, 0, 0),
             Location = "Malin Head, Donegal",
             Description = "Stretch those legs with your Greyhound at Ireland's most northerly point.",
             ImageUrl = "~/images/events/e23.jpg"
@@ -580,6 +603,7 @@ public static class Seeder
         {
             Title = "Dalmatian Meet-Up",
             EventTime = new DateTime(2025, 3, 15, 10, 0, 0),
+            EndTime = new DateTime(2025, 3, 15, 12, 0, 0),
             Location = "Botanic Gardens, Belfast",
             Description = "Spots galore! A lively meet-up for Dalmatian owners and their beautiful dogs.",
             ImageUrl = "~/images/events/e24.jpg"
@@ -589,6 +613,7 @@ public static class Seeder
         {
             Title = "Husky Meet-Up",
             EventTime = new DateTime(2023, 11, 5, 13, 30, 0),
+            EndTime = new DateTime(2023, 11, 5, 15, 0, 0),
             Location = "Ormeau Park, Belfast",
             Description = "A fun afternoon for Huskies to play and socialize in the heart of the city.",
             ImageUrl = "~/images/events/e25.jpg"
@@ -599,6 +624,7 @@ public static class Seeder
         {
             Title = "Chihuahua Meet-Up",
             EventTime = new DateTime(2024, 5, 18, 12, 0, 0),
+            EndTime = new DateTime(2024, 5, 18, 13, 0, 0),
             Location = "Wallace Park, Lisburn",
             Description = "A small but mighty meet-up for Chihuahuas and their owners to connect.",
             ImageUrl = "~/images/events/e26.jpg"
@@ -608,6 +634,7 @@ public static class Seeder
         {
             Title = "Whippet Meet-Up",
             EventTime = new DateTime(2025, 7, 14, 10, 30, 0),
+            EndTime = new DateTime(2025, 7, 14, 12, 0, 0),
             Location = "Hillsborough Castle Gardens, Lisburn",
             Description = "A regal gathering for Whippets to enjoy the castle grounds.",
             ImageUrl = "~/images/events/e27.jpg"
@@ -618,6 +645,7 @@ public static class Seeder
         {
             Title = "Terrier Meet-Up",
             EventTime = new DateTime(2024, 3, 12, 14, 0, 0),
+            EndTime = new DateTime(2024, 3, 12, 15, 0, 0),
             Location = "Cavan Burren Park, Blacklion",
             Description = "A dynamic meet-up for all terrier breeds to explore the Burren's unique landscape.",
             ImageUrl = "~/images/events/e28.jpg"
@@ -627,6 +655,7 @@ public static class Seeder
         {
             Title = "Newfoundland Meet-Up",
             EventTime = new DateTime(2025, 11, 20, 13, 0, 0),
+            EndTime = new DateTime(2025, 11, 20, 15, 0, 0),
             Location = "Killykeen Forest Park, Cavan",
             Description = "A splash-filled meet-up for Newfoundlands to enjoy the park's lakeside trails.",
             ImageUrl = "~/images/events/e29.jpg"
@@ -637,6 +666,7 @@ public static class Seeder
         {
             Title = "Bulldog Meet-Up",
             EventTime = new DateTime(2024, 8, 25, 10, 0, 0),
+            EndTime = new DateTime(2024, 8, 25, 12, 0, 0),
             Location = "Downhill Demesne, Coleraine",
             Description = "A coastal stroll for Bulldogs with stunning views of Mussenden Temple.",
             ImageUrl = "~/images/events/e30.jpg"
@@ -646,6 +676,7 @@ public static class Seeder
         {
             Title = "Collie Meet-Up",
             EventTime = new DateTime(2025, 4, 8, 11, 30, 0),
+            EndTime = new DateTime(2025, 4, 8, 13, 0, 0),
             Location = "Mountsandel Forest, Coleraine",
             Description = "A woodland meet-up for Collies to run, play, and socialize.",
             ImageUrl = "~/images/events/e31.jpg"
@@ -655,6 +686,7 @@ public static class Seeder
         {
             Title = "Puppy Training",
             EventTime = new DateTime(2024, 12, 08, 14, 0, 0),
+            EndTime = new DateTime(2024, 12, 08, 15, 0, 0),
             Location = "Belfast City Hall",
             Description = "Join us for a great event play with other vizslas",
             ImageUrl = "/images/events/e1.jpg"

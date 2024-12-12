@@ -20,8 +20,11 @@
             <!-- Event details -->
             <dl class="row details-text">
 
-                <dt class="col-4 pb-1">Date & Time</dt>
+                <dt class="col-4 pb-1">Start Time</dt>
                 <dd class="col-8 pb-1">@Model.EventTime.ToString("MMM, dd, yyy - HH:mm")</dd>
+
+                <dt class="col-4 pb-1">End Time</dt>
+                <dd class="col-8 pb-1">@Model.EndTime.ToString("MMM, dd, yyy - HH:mm")</dd>
 
                 <dt class="col-4 pb-1">Location</dt>
                 <dd class="col-8 pb-1">@Model.Location</dd>

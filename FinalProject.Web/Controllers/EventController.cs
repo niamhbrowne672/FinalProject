@@ -66,6 +66,12 @@ public class EventController : BaseController
     [ValidateAntiForgeryToken]
     public IActionResult Create(Event e, IFormFile EventImage)
     {
+
+        if (e.EndTime <= e.EventTime)
+        {
+            ModelState.AddModelError("EndTime", "End Time must be after the Start Time.");
+        }
+
         //validate title as unique
         if (_eventService.GetEventByTitle(e.Title) != null)
         {
@@ -123,9 +129,14 @@ public class EventController : BaseController
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    [Authorize(Roles = "admin, organiser")]
+    [Authorize(Roles = "admin, manager")]
     public IActionResult Edit(int id, Event updatedEvent, IFormFile uploadedImage)
     {
+        if (updatedEvent.EndTime <= updatedEvent.EventTime)
+        {
+            ModelState.AddModelError("EndTime", "End Time must be after the Start Time.");
+        }
+
         if (id != updatedEvent.Id)
         {
             return NotFound();
@@ -140,6 +151,13 @@ public class EventController : BaseController
                 Alert($"Event {id} not found.", AlertType.warning);
                 return RedirectToAction(nameof(Index));
             }
+
+            // Update other properties
+            existingEvent.Title = updatedEvent.Title;
+            existingEvent.EventTime = updatedEvent.EventTime;
+            existingEvent.EndTime = updatedEvent.EndTime;
+            existingEvent.Location = updatedEvent.Location;
+            existingEvent.Description = updatedEvent.Description;
 
             // Handle the uploaded image
             if (uploadedImage != null && uploadedImage.Length > 0)
@@ -166,12 +184,6 @@ public class EventController : BaseController
                 // Update the image URL
                 existingEvent.ImageUrl = $"/uploads/{uniqueFileName}";
             }
-
-            // Update other properties
-            existingEvent.Title = updatedEvent.Title;
-            existingEvent.EventTime = updatedEvent.EventTime;
-            existingEvent.Location = updatedEvent.Location;
-            existingEvent.Description = updatedEvent.Description;
 
             // Save changes
             var savedEvent = _eventService.UpdateEvent(existingEvent);

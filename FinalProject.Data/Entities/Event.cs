@@ -11,6 +11,7 @@ public class Event
     public string Title { get; set; }
     [Required]
     public DateTime EventTime { get; set; }
+    public DateTime EndTime { get; set; }
     [Required]
     public string Location { get; set; }  // I can add Google Maps URL here later
     public string Description { get; set; }

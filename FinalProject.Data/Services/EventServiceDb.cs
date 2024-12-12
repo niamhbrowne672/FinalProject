@@ -113,6 +113,7 @@ public class EventServiceDb : IEventService
             Id = e.Id,
             Title = e.Title,
             EventTime = e.EventTime,
+            EndTime = e.EndTime,
             Location = e.Location,
             Description = e.Description,
             ImageUrl = e.ImageUrl

@@ -21,9 +21,15 @@
         </div>
 
         <div class=" mt-3">
-            <label asp-for="EventTime" class="form-label">Date & Time</label>
+            <label asp-for="EventTime" class="form-label">Start Time</label>
             <input asp-for="EventTime" type="datetime-local" class="form-control"></input>
             <span asp-validation-for="EventTime" class="text-danger"></span>
+        </div>
+
+        <div class=" mt-3">
+            <label asp-for="EndTime" class="form-label">End Time</label>
+            <input asp-for="EndTime" type="datetime-local" class="form-control"></input>
+            <span asp-validation-for="EndTime" class="text-danger"></span>
         </div>
 
         <div class=" mt-3">
