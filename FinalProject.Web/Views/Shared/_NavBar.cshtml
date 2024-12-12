@@ -46,9 +46,12 @@
                 </li>
 
                 <!-- Post menu item -->
-                <li class="nav-item">
-                    <a class="nav-link" asp-controller="Post" asp-action="Index">Community</a>
-                </li>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Post" asp-action="Index">Community</a>
+                    </li>
+                }
 
                 <!-- Recommendations dropdown menu item -->
                 <li class="nav-item dropdown">
@@ -100,7 +103,8 @@
                     <!-- dropdown-menu-end ensures menu displays within the viewport, even near the right edge. -->
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                         <li><a class="dropdown-item" asp-controller="User" asp-action="Profile"
-                                asp-route-id="@User.GetSignedInUserId()"><i class="bi bi-person-circle"></i> View Profile</a></li>
+                                asp-route-id="@User.GetSignedInUserId()"><i class="bi bi-person-circle"></i> View
+                                Profile</a></li>
                         <li><a class="dropdown-item" asp-controller="User" asp-action="UpdateProfile"><i
                                     class="bi bi-gear"></i> Update Profile</a></li>
                         <li><a class="dropdown-item" asp-controller="User" asp-action="UpdatePassword"><i
