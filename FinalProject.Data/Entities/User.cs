@@ -1,5 +1,4 @@
-﻿using System;
-namespace FinalProject.Data.Entities;
+﻿namespace FinalProject.Data.Entities;
 
 // Add User roles relevant to your application
 public enum Role { admin, manager, guest }

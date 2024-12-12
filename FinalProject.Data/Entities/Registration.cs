@@ -1,9 +1,4 @@
-using System;
-using System.ComponentModel.DataAnnotations;
 namespace FinalProject.Data.Entities;
-using System.ComponentModel.DataAnnotations.Schema;
-using Bogus.Extensions.UnitedKingdom;
-
 public class Registration
 {
     public int Id { get; set; }

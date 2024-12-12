@@ -1,6 +1,3 @@
-using System;
-using System.Text.Json.Serialization;
-
 namespace FinalProject.Data.Entities;
 
 public class County

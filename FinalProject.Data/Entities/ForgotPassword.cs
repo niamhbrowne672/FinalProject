@@ -1,7 +1,5 @@
-﻿using System;
-namespace FinalProject.Data.Entities;
+﻿namespace FinalProject.Data.Entities;
 
-   
 public class ForgotPassword
 {
     public int Id { get; set; }
