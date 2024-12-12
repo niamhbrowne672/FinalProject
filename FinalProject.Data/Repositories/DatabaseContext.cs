@@ -1,12 +1,7 @@
-using System;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 
 // import the Entities (database models representing structure of tables in database)
 using FinalProject.Data.Entities;
-using Microsoft.Identity.Client;
-using Microsoft.EntityFrameworkCore.Internal;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace FinalProject.Data.Repositories;
 
@@ -26,7 +21,6 @@ public class DatabaseContext : DbContext
     public DbSet<County> Counties { get; set; }
     public DbSet<EventLike> EventLikes { get; set; }
     public DbSet<Registration> Registrations { get; set; }
-   // public DbSet<ToggleLikeResult> ToggleLikeResults { get; set; }
 
     public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)
     {
@@ -36,7 +30,6 @@ public class DatabaseContext : DbContext
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         // remove in production 
-        //optionsBuilder.LogTo(Console.WriteLine, LogLevel.Information).EnableSensitiveDataLogging();
         optionsBuilder.UseSqlite("Filename=events.db");
     }
 
@@ -62,6 +55,4 @@ public class DatabaseContext : DbContext
         Database.EnsureDeleted();
         Database.EnsureCreated();
     }
-
 }
-
