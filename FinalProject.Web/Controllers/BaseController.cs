@@ -1,6 +1,3 @@
-using System;
-using System.Linq;
-using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FinalProject.Web.Controllers
@@ -17,7 +14,5 @@ namespace FinalProject.Web.Controllers
             TempData["Alert.Message"] = message;
             TempData["Alert.Type"] = type.ToString();
         }
-
     }
- 
 }

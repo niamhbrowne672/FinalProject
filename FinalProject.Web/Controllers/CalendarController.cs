@@ -1,14 +1,8 @@
-using System;
 using Microsoft.AspNetCore.Mvc;
-using System.Linq;
-using System.Text.Json;
 using FinalProject.Data.Services;
 using FinalProject.Data.Entities;
-using FinalProject.Web.Models;
-using FinalProject.Data.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
-using Microsoft.AspNetCore.Mvc.TagHelpers.Cache;
 using FinalProject.Web.Models.CalendarModels;
 
 namespace FinalProject.Web.Controllers
@@ -57,7 +51,7 @@ namespace FinalProject.Web.Controllers
 
         }
 
-    [Authorize(Roles = "admin")]
+        [Authorize(Roles = "admin")]
         public IActionResult Add(int id, DateTime start, DateTime end)
         {
             var userId = User.GetSignedInUserId();
@@ -68,13 +62,14 @@ namespace FinalProject.Web.Controllers
                 return RedirectToAction("Index", "County");
             }
 
-            var c = new Calendar 
-            { CountyId = id, 
-            UserId = userId, 
-            Start = start, 
-            End = end,
-            Title = string.Empty,
-            Location = string.Empty
+            var c = new Calendar
+            {
+                CountyId = id,
+                UserId = userId,
+                Start = start,
+                End = end,
+                Title = string.Empty,
+                Location = string.Empty
             };
 
             var v = CalendarViewModel.FromCalendar(c);
@@ -92,9 +87,9 @@ namespace FinalProject.Web.Controllers
                     Alert($"Event '{vm.Title}' Successfully Created!", AlertType.info);
                     return RedirectToAction(nameof(County), new { id = added.CountyId });
                 }
-                
+
                 Alert("Event could not be created", AlertType.warning);
-                
+
             }
             return View(vm);
         }

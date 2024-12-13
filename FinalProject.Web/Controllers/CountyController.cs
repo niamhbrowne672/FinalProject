@@ -1,14 +1,11 @@
-using System;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
 using FinalProject.Data.Services;
-using FinalProject.Data.Entities;
 using Microsoft.AspNetCore.Authorization;
 using FinalProject.Web.Controllers;
 
 namespace FinalProject.Data.Controllers
 {
-  
+
     [Authorize]
     public class CountyController : BaseController
     {
@@ -18,7 +15,7 @@ namespace FinalProject.Data.Controllers
         {
             _svc = svc;
         }
-   
+
         public IActionResult Index()
         {
             var counties = _svc.GetCounties();

@@ -353,27 +353,27 @@ public class EventController : BaseController
         if (string.IsNullOrEmpty(userEmail))
         {
             Alert("Unable to identify the user. Please log in again.", AlertType.warning);
-            return RedirectToAction(nameof(Index)); // Return added here
+            return RedirectToAction(nameof(Index));
         }
 
         var user = _userService.GetUserByEmail(userEmail);
         if (user == null)
         {
             Alert("User not found.", AlertType.warning);
-            return RedirectToAction(nameof(Index)); // Return added here
+            return RedirectToAction(nameof(Index));
         }
 
         var eventItem = _eventService.GetEventById(eventId);
         if (eventItem == null)
         {
             Alert("Event not found.", AlertType.warning);
-            return RedirectToAction(nameof(Index)); // Return added here
+            return RedirectToAction(nameof(Index));
         }
 
         if (_eventService.IsUserRegistered(eventId, user.Id.ToString()))
         {
             Alert("You are already registered for this event.", AlertType.info);
-            return RedirectToAction(nameof(Details), new { id = eventId }); // Return added here
+            return RedirectToAction(nameof(Details), new { id = eventId });
         }
 
         var success = _eventService.RegisterUserForEvent(eventId, user.Id.ToString());
@@ -397,12 +397,12 @@ public class EventController : BaseController
                 Alert("Your registration is confirmed, but we couldn't send you an email. Please contact us for details.", AlertType.warning);
             }
 
-            return RedirectToAction(nameof(Details), new { id = eventId }); // Return added here
+            return RedirectToAction(nameof(Details), new { id = eventId });
         }
         else
         {
             Alert("There was an issue registering for the event. Please try again.", AlertType.danger);
-            return RedirectToAction(nameof(Details), new { id = eventId }); // Return added here
+            return RedirectToAction(nameof(Details), new { id = eventId });
         }
     }
 }

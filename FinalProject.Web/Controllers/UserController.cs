@@ -1,5 +1,4 @@
-﻿
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
@@ -10,12 +9,7 @@ using FinalProject.Data.Services;
 using FinalProject.Data.Security;
 using FinalProject.Web.Models.User;
 using FinalProject.Data.Extensions;
-using Bogus.DataSets;
-using System.ComponentModel.DataAnnotations;
 
-/**
- *  User Management Controller
- */
 namespace FinalProject.Web.Controllers;
 
 public class UserController : BaseController
@@ -35,8 +29,8 @@ public class UserController : BaseController
     [Authorize(Roles = "admin")]
     public ActionResult Index(string searchQuery, int page = 1, int size = 20, string order = "id", string direction = "asc")
     {
-        
-        var query = string.IsNullOrWhiteSpace(searchQuery) 
+
+        var query = string.IsNullOrWhiteSpace(searchQuery)
             ? _svc.GetUsers(page, size, order, direction).Data.AsQueryable()
             : _svc.SearchUsers(searchQuery);
 
@@ -129,7 +123,7 @@ public class UserController : BaseController
     [Authorize]
     public IActionResult UpdateProfile()
     {
-       // use BaseClass helper method to retrieve Id of signed in user 
+        // use BaseClass helper method to retrieve Id of signed in user 
         var user = _svc.GetUser(User.GetSignedInUserId());
         var profileViewModel = new ProfileViewModel
         {
@@ -147,7 +141,7 @@ public class UserController : BaseController
     [Authorize(Roles = "admin")]
     public IActionResult DeleteConfirmed(int id)
     {
-        var deleted =_svc.DeleteUser(id);
+        var deleted = _svc.DeleteUser(id);
         if (deleted)
         {
             Alert("User successfully deleted.", AlertType.success);
@@ -251,7 +245,7 @@ public class UserController : BaseController
         user.Email = m.Email;
         user.DogBreed = m.DogBreed;
         user.Role = m.Role;
-        
+
         var updated = _svc.UpdateUser(user);
 
         // check if error updating service

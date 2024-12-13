@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using FinalProject.Data.Entities;
 using FinalProject.Data.Services;
-using FinalProject.Data.Extensions;
 
 namespace FinalProject.Web.Controllers;
 
@@ -73,7 +72,7 @@ public class GalleryController : BaseController
 
     // Delete an image (Admin only)
     [HttpPost]
-    [Authorize(Roles = "admin")]
+    [Authorize(Roles = "admin,manager")]
     [ValidateAntiForgeryToken]
     public IActionResult DeleteImage(int id)
     {

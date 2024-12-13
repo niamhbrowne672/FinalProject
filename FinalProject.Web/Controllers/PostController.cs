@@ -3,12 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using FinalProject.Data.Entities;
 using FinalProject.Data.Services;
 using FinalProject.Data.Extensions;
-using FinalProject.Web.Models.User;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
-/**
-* Post Controller
-*/
 namespace FinalProject.Web.Controllers;
 
 public class PostController : BaseController
@@ -22,9 +17,9 @@ public class PostController : BaseController
 
     //HTTP GET - Display Paged List of Posts
 
-    public IActionResult Index(string searchQuery, int page=1, int size=20, string order="id", string direction="asc")
+    public IActionResult Index(string searchQuery, int page = 1, int size = 20, string order = "id", string direction = "asc")
     {
-        var query = string.IsNullOrWhiteSpace(searchQuery) 
+        var query = string.IsNullOrWhiteSpace(searchQuery)
             ? _postService.GetAllPosts()
             : _postService.SearchPosts(searchQuery);
 
@@ -67,7 +62,7 @@ public class PostController : BaseController
         }
 
         //handle image upload
-        if (PostImage != null && PostImage.Length >0)
+        if (PostImage != null && PostImage.Length > 0)
         {
             var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/uploads");
             if (!Directory.Exists(uploadsFolder))
@@ -101,7 +96,7 @@ public class PostController : BaseController
         return View(p);
     }
 
-    [Authorize(Roles = "admin")]
+    [Authorize(Roles = "admin,manager")]
     public IActionResult Edit(int id)
     {
         //load the post using the service
@@ -119,7 +114,7 @@ public class PostController : BaseController
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    [Authorize(Roles = "admin")]
+    [Authorize(Roles = "admin,manager")]
     public IActionResult Edit(int id, Post updatedPost, IFormFile PostImage)
     {
         //check if the provided even ID matches the ID of the updated post
@@ -181,7 +176,7 @@ public class PostController : BaseController
         return View(updatedPost);
     }
 
-    [Authorize(Roles = "admin")]
+    [Authorize(Roles = "admin,manager")]
     public IActionResult Delete(int id)
     {
         //load the post using the service
@@ -199,7 +194,7 @@ public class PostController : BaseController
 
     [HttpPost, ActionName("DeleteConfirm")]
     [ValidateAntiForgeryToken]
-    [Authorize(Roles = "admin")]
+    [Authorize(Roles = "admin,manager")]
     public IActionResult DeleteConfirmed(int id)
     {
         //delete event via service
@@ -239,12 +234,12 @@ public class PostController : BaseController
     public IActionResult CommentCreate(Comment comment)
     {
         if (ModelState.IsValid)
-        {                
-            var createdComment = _postService.CreateComment(comment); 
+        {
+            var createdComment = _postService.CreateComment(comment);
             if (createdComment != null)
             {
                 Alert("Comment Created Successfully.", AlertType.success);
-                return RedirectToAction(nameof(Details), new { id = comment.PostId});
+                return RedirectToAction(nameof(Details), new { id = comment.PostId });
             }
             else
             {
@@ -265,8 +260,8 @@ public class PostController : BaseController
         {
             Alert("Comment does not exist.", AlertType.warning);
             return RedirectToAction(nameof(Index));
-        }     
-        
+        }
+
         // pass comment to view for deletion confirmation
         return View(comment);
     }
@@ -279,13 +274,13 @@ public class PostController : BaseController
         var deleted = _postService.DeleteComment(id);
 
         if (deleted)
-            {
-                Alert("Comment deleted Successfully.", AlertType.success);
-            }
-            else
-            {
-                Alert("Comment could not be deleted.", AlertType.warning);
-            }
+        {
+            Alert("Comment deleted Successfully.", AlertType.success);
+        }
+        else
+        {
+            Alert("Comment could not be deleted.", AlertType.warning);
+        }
 
         // redirect to the post details view
         return RedirectToAction(nameof(Details), new { Id = postId });
