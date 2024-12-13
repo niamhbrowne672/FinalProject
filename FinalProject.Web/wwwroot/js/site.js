@@ -93,7 +93,7 @@ document.addEventListener("DOMContentLoaded", function () {
         e.preventDefault(); // Prevent the default form submission
 
         const formData = new FormData(form);
-        const url = '/Event/ReviewCreate'; // Update with your controller's action route
+        const url = '/Event/ReviewCreate';
 
         fetch(url, {
             method: "POST",
