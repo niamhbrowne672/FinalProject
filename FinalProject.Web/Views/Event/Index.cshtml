@@ -29,8 +29,8 @@
 
 @if (User.IsInRole("admin") || User.IsInRole("manager"))
 {
-    <a class="btn btn-green" asp-controller="Event" asp-action="Create"
-        title="add an event" aria-label="add an event">Create Event</a>
+    <a class="btn btn-green" asp-controller="Event" asp-action="Create" title="add an event"
+        aria-label="add an event">Create Event</a>
 }
 
 @if (!Model.Data.Any())

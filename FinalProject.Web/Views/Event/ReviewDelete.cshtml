@@ -8,8 +8,8 @@
 
     <h5 class="my-3 text-danger">Are you sure?</h5>
 
-    <!-- display the event using a <dl> as per Details.cshtml -->   
-    <dl class="row mt-3">       
+    <!-- display the event using a <dl> as per Details.cshtml -->
+    <dl class="row mt-3">
         <dt class="col-5">Event</dt>
         <dd class="col-7">@Model.Event.Title</dd>
 
@@ -18,24 +18,25 @@
 
         <dt class="col-5">Date Reviewed On</dt>
         <dd class="col-7">@Model.On.ToShortDateString()</dd>
-        
+
         <dt class="col-5">Comment</dt>
         <dd class="col-7">@Model.Comment</dd>
-        
+
         <dt class="col-5">Rating</dt>
         <dd class="col-7">@Model.Rating</dd>
-    </dl>   
+    </dl>
 
     <div class="mt-4">
         <!-- use a form with hidden input storing review id and EventId -->
-        <form asp-action="EventDeleteConfirm" type="post">   
+        <form asp-action="EventDeleteConfirm" type="post">
             <!-- hide non-editable values -->
-            <input type="hidden" asp-for="Id"/>
-            <input type="hidden" asp-for="EventId"/>
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="EventId" />
 
             <button type="submit" class="btn btn-danger" aria-label="confirm">Confirm</button>
-            <a class="btn btn-secondary" asp-controller="Event" asp-action="Details" asp-route-id="@Model.Event.Title" aria-label="cancel" >Cancel</a>
+            <a class="btn btn-secondary" asp-controller="Event" asp-action="Details" asp-route-id="@Model.Event.Title"
+                aria-label="cancel">Cancel</a>
         </form>
     </div>
-    
+
 </div>

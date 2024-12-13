@@ -31,8 +31,6 @@
 
   <div class="mt-4">
     <form asp-action="DeleteConfirm" asp-route-id="@Model.Id">
-      <!-- movie Id can be a route param or a hidden input field named 'Id' in the form -->
-
       <button type="submit" class="btn btn-danger" aria-label="delete">Delete</button>
       <a class="btn btn-secondary" asp-controller="Event" asp-action="Details" asp-route-id="@Model.Id">Cancel</a>
     </form>

@@ -66,14 +66,6 @@
                 <span class="text-muted" aria-label="missing location image">No image available</span>
             }
         </div>
-
-        @* <div class="col-4">
-        <img asp-condition="@(!string.IsNullOrEmpty(Model.ImageUrl))" src="@Model.ImageUrl" class="img-fluid w-50"
-        alt="Event Location Image" />
-        <span asp-condition="@string.IsNullOrEmpty(Model.ImageUrl)" class="text-muted"
-        aria-label="missing location image">No image available</span>
-        </div> *@
-
     </div>
 </div>
 </div>
@@ -92,7 +84,8 @@
         }
         else
         {
-            <p class="text-center text-danger mt-3"><i class="bi bi-exclamation-circle-fill"></i> Registration is closed for this
+            <p class="text-center text-danger mt-3"><i class="bi bi-exclamation-circle-fill"></i> Registration is closed for
+                this
                 event.</p>
         }
     }
@@ -126,5 +119,3 @@
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
 }
-
-@* @await Html.PartialAsync("_CreateReviewModal", new Review { EventId = Model.Id }) *@
