@@ -8,8 +8,8 @@
 
     <h5 class="my-3 text-danger">Are you sure you want to delete this comment?</h5>
 
-    <!-- display the post using a <dl> as per Details.cshtml -->   
-    <dl class="row mt-3">       
+    <!-- display the post using a <dl> as per Details.cshtml -->
+    <dl class="row mt-3">
         <dt class="col-5">Post</dt>
         <dd class="col-7">@Model.Post.Title</dd>
 
@@ -21,8 +21,8 @@
 
         <dt class="col-5">Created On</dt>
         <dd class="col-7">@Model.CreatedAt</dd>
-        
-         @if (!string.IsNullOrEmpty(Model.ImagePath))
+
+        @if (!string.IsNullOrEmpty(Model.ImagePath))
         {
             <dt class="col-5">Image</dt>
             <dd class="col-7"><img src="@Model.ImagePath" class="img-fluid w-50" alt="comment image" /></dd>
@@ -32,18 +32,19 @@
             <dt class="col-5">Image</dt>
             <dd class="col-7">No image available</dd>
         }
-        
-    </dl>   
+
+    </dl>
 
     <div class="mt-4">
         <!-- use a form to confirm deletion -->
-        <form asp-action="PostDeleteConfirm" type="post">   
-            <input type="hidden" asp-for="Id"/>
-            <input type="hidden" asp-for="PostId"/>
+        <form asp-action="PostDeleteConfirm" type="post">
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="PostId" />
 
             <button type="submit" class="btn btn-danger" aria-label="confirm">Confirm</button>
-            <a class="btn btn-secondary" asp-controller="Post" asp-action="Details" asp-route-id="@Model.Post.Title" aria-label="cancel" >Cancel</a>
+            <a class="btn btn-secondary" asp-controller="Post" asp-action="Details" asp-route-id="@Model.Post.Title"
+                aria-label="cancel">Cancel</a>
         </form>
     </div>
-    
+
 </div>

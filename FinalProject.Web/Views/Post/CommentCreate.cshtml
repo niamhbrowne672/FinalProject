@@ -1,7 +1,7 @@
 @model Comment
 
 <div class="card shadow rounded p-4">
-    
+
     <!-- Title bar -->
     <div class="border-bottom d-flex align-items-center justify-content-between mb-3">
         <h3>Create Comment</h3>
@@ -9,28 +9,29 @@
 
     <form asp-action="CommentCreate">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-    
-        <!-- comment PostId should be a hidden input field named 'PostId' in the form -->      
+
+        <!-- comment PostId should be a hidden input field named 'PostId' in the form -->
         <input type="hidden" asp-for="PostId" />
 
         <div class="mt-3">
-            <label asp-for="Comments" class="form-label">Help the community!</label>      
-            <textarea rows="5" asp-for="Comments" class="form-control" placeholder="Add your comment here..."></textarea>
+            <label asp-for="Comments" class="form-label">Help the community!</label>
+            <textarea rows="5" asp-for="Comments" class="form-control"
+                placeholder="Add your comment here..."></textarea>
             <span asp-validation-for="Comments" class="text-danger"></span>
         </div>
 
         <div class="mt-3">
-            <label asp-for="CreatedBy" class="form-label">Comment Left By:</label>      
-            <input asp-for="CreatedBy" class="form-control" placeholder="Add your name..."/>
+            <label asp-for="CreatedBy" class="form-label">Comment Left By:</label>
+            <input asp-for="CreatedBy" class="form-control" placeholder="Add your name..." />
             <span asp-validation-for="CreatedBy" class="text-danger"></span>
         </div>
 
         <div class="mt-3">
-            <label asp-for="CreatedAt" class="form-label">Comment Left  At:</label>      
-            <input asp-for="CreatedAt" class="form-control"/>
+            <label asp-for="CreatedAt" class="form-label">Comment Left At:</label>
+            <input asp-for="CreatedAt" class="form-control" />
             <span asp-validation-for="CreatedAt" class="text-danger"></span>
         </div>
-    
+
         <div class="mt-3">
             <button type="submit" class="btn btn-green" aria-label="create">Create</button>
             <a class="btn btn-secondary" asp-action="Details" asp-route-id=@Model.PostId aria-label="cancel">Cancel</a>
@@ -40,11 +41,13 @@
 
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-  
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
     <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
 
-    <script >
+    <script>
         const mde = new SimpleMDE({
             showIcons: ["code", "table"]
         });

@@ -4,7 +4,8 @@
     <div class="overlay"></div>
     <div class="container position-relative">
         <h1 class="display-4 fw-bold">Welcome to the Community!</h1>
-        <p class="lead">Share your thoughts, ask questions, and engage with others. Start by creating your own post or explore what others are discussing.</p>
+        <p class="lead">Share your thoughts, ask questions, and engage with others. Start by creating your own post or
+            explore what others are discussing.</p>
         <a asp-controller="Post" asp-action="Create" class="btn btn-primary btn-lg mt-3">Create Post</a>
     </div>
 </div>
@@ -32,7 +33,7 @@
                 <vc:sort-link column="createdAt" />
             </th>
             <th></th>
-            
+
         </tr>
     </thead>
     <tbody>
@@ -44,21 +45,23 @@
                 <td>@p.CreatedBy</td>
                 <td>@p.CreatedAt</td>
                 <td class="text-end">
-                        <a asp-action="Details" asp-route-id=@p.Id title="More details"> <i class="bi bi-info-square click-icon"></i>
-                        </a>
-            
-                        <!--  authorisation check -->
-                        @if (User.IsInRole("admin") || User.IsInRole("manager"))
-                        {
-                            <a asp-action="Edit" asp-route-id=@p.Id title="Edit post">
-                                <i class="bi bi-pencil-square click-icon"></i>
-                            </a>
-                        }
+                    <a asp-action="Details" asp-route-id=@p.Id title="More details"> <i
+                            class="bi bi-info-square click-icon"></i>
+                    </a>
 
-                    </td>
+                    <!--  authorisation check -->
+                    @if (User.IsInRole("admin") || User.IsInRole("manager"))
+                    {
+                        <a asp-action="Edit" asp-route-id=@p.Id title="Edit post">
+                            <i class="bi bi-pencil-square click-icon"></i>
+                        </a>
+                    }
+
+                </td>
             </tr>
             @* Delete Modal for each post*@
-            <div class="modal fade" id="deleteModal-@p.Id" tabindex="-1" aria-labelledby="deleteModalLabel-@p.Id" aria-hidden="true">
+            <div class="modal fade" id="deleteModal-@p.Id" tabindex="-1" aria-labelledby="deleteModalLabel-@p.Id"
+                aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -70,7 +73,7 @@
                         </div>
                         <div class="modal-footer">
                             <form asp-action="Delete" method="post">
-                                <input type="hidden" name="id" value="@p.Id"/>
+                                <input type="hidden" name="id" value="@p.Id" />
                                 <button type="submit" class="btn btn-danger">Delete</button>
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                             </form>
