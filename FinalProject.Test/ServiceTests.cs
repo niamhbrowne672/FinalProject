@@ -6,8 +6,6 @@ using FinalProject.Data.Services;
 using Microsoft.EntityFrameworkCore;
 using FinalProject.Data.Repositories;
 using FinalProject.Data.Security;
-using System.Runtime.CompilerServices;
-using System.Net.Http.Headers;
 
 namespace FinalProject.Test
 {
