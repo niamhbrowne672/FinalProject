@@ -126,22 +126,6 @@ h1, h2, h3, h4, h5 {
   color: #004d2a;
 }
 
-/**************Delete user modal*/
-/* .modal-header.bg-danger {
-  background-color: #dc3545 !important;
-}
-
-.btn-danger {
-  color: #fff;
-  background-color: #dc3545;
-  border-color: #dc3545;
-}
-
-.btn-danger:hover {
-  background-color: #bb2d3b;
-  border-color: #aa2733;
-} */
-
 
 /*************************** Footer Styling ***************************/
 
@@ -594,15 +578,6 @@ footer .container {
   background-color: #0a5732;
   margin: 30px auto;
 }
-
-/* Divider for sections
-.section-divider {
-  width: 80%;
-  margin: 2rem auto;
-  border: 0;
-  height: 1px;
-  background-color: rgba(0, 0, 0, 0.2);
-} */
 
 .about-us .nav {
   background-color: rgba(10, 87, 50, 0.05);
