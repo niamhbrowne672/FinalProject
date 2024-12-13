@@ -1,28 +1,39 @@
 ﻿@model IEnumerable<FinalProject.Data.Entities.Event>
 
-<!-- woof and wag banner -->
+<!-- woof and wander banner -->
 <img src="~/images/banners/Welcome.svg" class="banner-full-width img-fluid" alt="Welcome banner">
 
 
 <!-- card is only visible when authorised -->
-@* <div asp-condition="@(User.Identity.IsAuthenticated)" class="card">
+<div asp-condition="@(User.Identity.IsAuthenticated)" class="card">
     <div class="card-body">
         <h4 class="card-title">Authorized</h4>
-        <p class="card-text">This content is only visible if you are <span class="text-success">Authorized.</span></p>
+        <p class="card-text">What can you do?</p>
 
         <!-- p elements are only rendered when user has specified role(s) -->
-        <p asp-condition=@User.HasOneOfRoles("admin")>This content is only visible if you are authenticated and have the
-            <span class="text-danger">admin</span> role
+        <p asp-condition=@User.HasOneOfRoles("admin")>You can:
+            Edit and Delete Users <br>
+            Edit and Delete Community Posts <br>
+            Create, Edit and Delete Events <br>
+            Delete Gallery Cards <br>
+            Remove Comments (Community Post) & Reviews (Event)<br>
+            Add Events to the Calendar
         </p>
-        <p asp-condition=@User.HasOneOfRoles("guest")>This content is only visible if you are authenticated and have the
-            <span class="text-danger">guest</span> role
+        <p asp-condition=@User.HasOneOfRoles("guest")>You can:
+            Register & Add Reviews on Events <br>
+            Add Community Posts and Leave Comments <br>
+            Browse Events on County Specific Calendars <br>
+            Browse Recommendations            
         </p>
-        <p asp-condition=@User.HasOneOfRoles("manager")>This content is only visible if you are authenticated and have
-            the <span class="text-danger">manager</span> role</p>
+        <p asp-condition=@User.HasOneOfRoles("manager")>You can:
+            Edit and Delete Community Posts <br>
+            Create, Edit and Delete Events <br>
+            Delete Gallery Cards <br>
+            Add Events to the Calendar</p>
         <p asp-condition=@User.HasOneOfRoles("admin,manager")>This content is visible if you have the <span
                 class="text-danger">admin or manager</span> roles</p>
     </div>
-</div> *@
+</div>
 
 <section class="upcoming-events mt-5 upcomingevents">
     <h2 class="text-center">Upcoming Events</h2>
