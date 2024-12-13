@@ -1,11 +1,7 @@
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
 using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
 using FinalProject.Data.Entities;
-using SQLitePCL;
 
 namespace FinalProject.Web.Models.CalendarModels
 {
@@ -44,8 +40,8 @@ namespace FinalProject.Web.Models.CalendarModels
                     id = c.Id,
                     userId = c.UserId,
                     countyId = c.CountyId,
-                    title = c.Title,              
-                    location = c.Location,  
+                    title = c.Title,
+                    location = c.Location,
                     start = c.Start.ToString("yyyy-MM-dd HH:mm"),                  // format start date into string                   
                     end = c.End.ToString("yyyy-MM-dd HH:mm"),                      // format end date into string
                     url = $"/calendar/edit/{c.Id}",                                         // url to navigate to when event clicked
@@ -82,9 +78,7 @@ namespace FinalProject.Web.Models.CalendarModels
                 Title = this.Title,
                 Location = this.Location,
                 Start = DateTime.Parse($"{this.Start} {this.StartTime}"),
-                //Start = DateTime.ParseExact($"{this.Start}T{this.StartTime}","yyyy-MM-ddTHH:mm:ss", new CultureInfo("en-UK")),
                 End = DateTime.Parse($"{this.End} {this.EndTime}"),
-                //End = DateTime.ParseExact($"{this.End}T{this.EndTime}","yyyy-MM-ddTHH:mm:ss", new CultureInfo("en-UK")),
                 UserId = this.UserId,
                 CountyId = this.CountyId
             };

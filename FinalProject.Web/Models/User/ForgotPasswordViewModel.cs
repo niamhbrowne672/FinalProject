@@ -4,6 +4,5 @@ namespace FinalProject.Web.Models.User;
 public class ForgotPasswordViewModel
 {
     [Required]
-    public string Email { get; set; }
-    
+    public string Email { get; set; }   
 }

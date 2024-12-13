@@ -1,6 +1,3 @@
-using Microsoft.AspNetCore.Components.Routing;
-using Microsoft.Identity.Client;
-
 namespace FinalProject.Web.Models.Event;
 public class EventViewModel
 {

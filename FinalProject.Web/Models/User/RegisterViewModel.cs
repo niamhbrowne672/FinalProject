@@ -1,12 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Mvc;
-using FinalProject.Data.Entities;
 
 namespace FinalProject.Web.Models.User;
 
 public class RegisterViewModel
-{ 
+{
     [Required]
     public string Name { get; set; }
 
@@ -19,12 +17,10 @@ public class RegisterViewModel
     public string Password { get; set; }
 
     [Compare("Password", ErrorMessage = "Confirm password doesn't match, Type again !")]
-    public string PasswordConfirm  { get; set; }
+    public string PasswordConfirm { get; set; }
     [Display(Name = "Dog Breed")]
     public string DogBreed { get; set; }
     [Display(Name = "Profile Image")]
     public IFormFile ProfileImage { get; set; }
-
-
 
 }
