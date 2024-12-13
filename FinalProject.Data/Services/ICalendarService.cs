@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using FinalProject.Data.Entities;
 
 namespace FinalProject.Data.Services;
@@ -24,5 +22,4 @@ public interface ICalendarService
     IList<County> GetCounties();
     County GetCounty(int id);
     County AddCounty(County county);
-
 }

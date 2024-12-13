@@ -1,10 +1,8 @@
 
 using FinalProject.Data.Entities;
-//using FinalProject.Data.Services;
 using FinalProject.Data.Security;
 using FinalProject.Data.Repositories;
 using FinalProject.Data.Extensions;
-//using Microsoft.Extensions.Logging;
 
 namespace FinalProject.Data.Services
 {
@@ -148,7 +146,6 @@ namespace FinalProject.Data.Services
 
             // Verify the user exists and Hashed User password matches the password provided
             return (user != null && Hasher.ValidateHash(user.Password, password)) ? user : null;
-            //return (user != null && user.Password == password ) ? user: null;
         }
 
          public string ForgotPassword(string email)

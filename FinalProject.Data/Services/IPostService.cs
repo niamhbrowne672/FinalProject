@@ -1,5 +1,4 @@
 using FinalProject.Data.Entities;
-using Microsoft.EntityFrameworkCore;
 using FinalProject.Data.Extensions;
 namespace FinalProject.Data.Services;
 
@@ -28,9 +27,6 @@ public interface IPostService
     Comment CreateComment(int id, string comment, string createdBy);
     Comment CreateComment(Comment comment);
     Comment GetComment(int id);
-    //IEnumerable<Comment> GetCommentsByPostId(int postId);
-    //Comment GetCommentById(int id);
-    //Comment UpdateComment(Comment comment);
     bool DeleteComment(int id);
     IList<Comment> GetAllComments();
 }

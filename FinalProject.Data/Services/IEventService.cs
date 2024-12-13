@@ -14,8 +14,6 @@ namespace FinalProject.Data.Services
 
         Event GetEventByTitle(string title);
 
-        //Event GetAllEvents();
-
         // Get an event by ID 
         Event GetEventById(int id);
 

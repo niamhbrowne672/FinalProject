@@ -1,7 +1,6 @@
 using System.Net;
 using System.Net.Mail;
 using Microsoft.Extensions.Configuration;
-using FinalProject.Data.Services;
 
 namespace FinalProject.Data.Services;
 
@@ -90,4 +89,3 @@ public class SmtpMailService : IMailService
         }
     }
 }
-

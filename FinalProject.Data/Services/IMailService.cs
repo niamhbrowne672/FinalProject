@@ -7,4 +7,3 @@ namespace FinalProject.Data.Services
         Task<bool> SendMailAsync(string subject, string body, string to, string from = null, bool asHtml=true);
     }
 }
-

@@ -26,5 +26,4 @@ namespace FinalProject.Data.Services
         IList<string> GetValidPasswordResetTokens();
         IQueryable<User> SearchUsers(string searchQuery);
     }
-
 }

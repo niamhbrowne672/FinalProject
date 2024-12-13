@@ -7,5 +7,4 @@ public interface IGalleryService
     IEnumerable<PastEventImage> GetAllImages();
     PastEventImage AddImage(PastEventImage image);
     bool DeleteImage(int id);
-    // PastEventImage GetImageById(int id);
 }

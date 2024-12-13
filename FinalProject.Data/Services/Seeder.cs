@@ -1,5 +1,4 @@
 ﻿
-using System.Reflection;
 using Bogus;
 using FinalProject.Data.Entities;
 using FinalProject.Data.Repositories;
@@ -7,7 +6,6 @@ using FinalProject.Data.Repositories;
 namespace FinalProject.Data.Services;
 public static class Seeder
 {
-    // use this class to seed the database with dummy test data using an IUserService 
     public static void Seed(DatabaseContext ctx)
     {
 
@@ -1091,30 +1089,5 @@ public static class Seeder
         {
             calendarService.AddCalendar(calendar);
         }
-
-        // var calendar1 = new Calendar
-        // {
-        //     Title = "Dog Walk in Belfast",
-        //     Location = "Belfast",
-        //     Start = new DateTime(2024, 11, 20, 10, 0, 0),
-        //     End = new DateTime(2024, 11, 20, 12, 0, 0),
-        //     CountyId = 1,
-        //     UserId = 1
-        // };
-        // calendarService.AddCalendar(calendar1);
-
-        // var calendar2 = new Calendar
-        // {
-        //     Title = "Dog Walk in Belfast",
-        //     Location = "Belfast",
-        //     Start = new DateTime(2024, 11, 20, 10, 0, 0),
-        //     End = new DateTime(2024, 11, 20, 12, 0, 0),
-        //     CountyId = 2,
-        //     UserId = 1
-        // };
-        // calendarService.AddCalendar(calendar2);
     }
 }
-
-
-

@@ -2,11 +2,6 @@ using FinalProject.Data.Entities;
 using FinalProject.Data.Repositories;
 using Microsoft.EntityFrameworkCore;
 using FinalProject.Data.Extensions;
-using Microsoft.EntityFrameworkCore.Migrations;
-using Microsoft.Extensions.Logging;
-using System.Data.Common;
-using System.Collections.Immutable;
-using Microsoft.EntityFrameworkCore.Query;
 
 namespace FinalProject.Data.Services;
 
@@ -34,8 +29,6 @@ public class EventServiceDb : IEventService
             ("title", "desc") => ctx.Events.OrderByDescending(r => r.Title),
             ("eventTime", "asc") => ctx.Events.OrderBy(r => r.EventTime),
             ("eventTime", "desc") => ctx.Events.OrderByDescending(r => r.EventTime),
-            // ("decription","asc")      => ctx.Events.OrderBy(r => r.Description),
-            // ("description","desc")     => ctx.Events.OrderByDescending(r => r.Description),
             ("location", "asc") => ctx.Events.OrderBy(r => r.Location),
             ("location", "desc") => ctx.Events.OrderByDescending(r => r.Location),
             _ => ctx.Events.OrderBy(r => r.Id)
@@ -187,12 +180,6 @@ public class EventServiceDb : IEventService
         ctx.SaveChanges();
         return review;
     }
-
-    //convenience method to align Review creation format used in Event Creation
-    // public Review CreateReview(Review review)
-    // {
-    //     return CreateReview(review.EventId, review.Name, review.Comment, review.Rating);
-    // }
     public Review CreateReview(Review review)
     {
         var eventToReview = GetEventById(review.EventId);
@@ -344,6 +331,4 @@ public class EventServiceDb : IEventService
 
         return true;
     }
-
-
 }
