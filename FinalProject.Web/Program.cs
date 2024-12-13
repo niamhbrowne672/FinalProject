@@ -42,13 +42,6 @@ else
     using var scope = app.Services.CreateScope();
     var dbContext = scope.ServiceProvider.GetRequiredService<DatabaseContext>();
     Seeder.Seed(dbContext);
-
-    // //Retrieve services from the DI container
-    // var userService = scope.ServiceProvider.GetService<IUserService>();
-    // var postService = scope.ServiceProvider.GetService<IPostService>();
-    // var eventService = scope.ServiceProvider.GetService<IEventService>();
-
-    // Seeder.Seed(userService, postService, eventService);
 }
 
 app.UseHttpsRedirection();
